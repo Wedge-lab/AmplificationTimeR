@@ -1,0 +1,6 @@
+Package: AmplificationTimeR
+Type: Package
+Title: Timing of Individual Amplicitation Events in Cancer
+Version: 0.0.1.0
+RoxygenNote: 7.1.2
+Encoding: UTF-8
