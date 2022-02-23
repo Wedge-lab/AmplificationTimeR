@@ -11,10 +11,7 @@
 #' @param amplification_stop End position of the amplified region.  
 #' @param is_WGD logical: TRUE indicates that the sample has been whole genome duplicated.
 #' @return A data frame containing approximate timing of each amplification, and the most likely order of events. 
-#' @examples 
-#' sample1_time <- time_amplification(cn_data = sample1_cn, multiplicity_data = sample1_multiplicity, amplification_chrom = c("1"), amplification_start = c("100"), amplification_stop = c("100000"), is_WGD = FALSE);
 #' @export
-'%!in%' <- function(x,y)!('%in%'(x,y)) # opposite of %in%
 
 time_amplification <- function(cn_data, multiplicity_data, 
                                sample_id,
@@ -23,11 +20,60 @@ time_amplification <- function(cn_data, multiplicity_data,
                                amplification_stop, 
                                is_WGD){
   
+  ########
+  # Check input
   
+  # Input is right type
+  if(class(cn_data)[1] != "data.frame"){
+    stop("'cn_data' must be an object of type 'data.frame'")
+  }
+  if(class(multiplicity_data)[1] != "data.frame"){
+    stop("'multiplicity_data' must be an object of class 'data.frame'")
+  }
+  if(!is.character(sample_id)){
+    stop("'sample_id' must be an object of type 'character'")
+  }
+  if((amplification_chrom %in% c("1","2","3","4","5","6","7","8","9","10",
+                                 "11","12","13","14","15","16","17","18","19","20",
+                                 "21","22","X","Y")) == FALSE){
+    stop("Invalid chromosome supplied")
+  }
+  if(!is.numeric(amplification_start)){
+    stop("'amplification_start' must be an object of type 'numeric'")
+  }
+  if(!is.numeric(amplification_stop)){
+    stop("'amplification_stop' must be an object of type 'numeric'")
+  }
+  if(!is.logical(is_WGD)){
+    stop("'is_WGD' must be either 'TRUE' or 'FALSE'")
+  }
+  
+  # Input has right columns
+  if(!all(c("chr","startpos","endpos","nMaj1_A","nMin1_A") %in% colnames(cn_data))){
+    stop("Incorrect column names in 'cn_data'")
+  }
+  if(!all(c("chr","end","no.chrs.bearing.mut") %in% colnames(multiplicity_data))){
+    stop("Incorrect column names in 'multiplicity_data'")
+  }
+  
+  # Input has non-zero number of rows
+  if(nrow(cn_data) == 0){
+    stop("'cn_file' has no content")
+  }
+  if(nrow(multiplicity_data) == 0){
+    stop("'multiplicity_data' has no content")
+  }
+  
+  ##############################################################################
   # subset copy number file for amplified region
   tmp_cn <- subset(cn_data, chr == amplification_chrom &
                      startpos <= amplification_stop &
                      endpos >= amplification_start)
+  
+  if(nrow(tmp_cn) == 0){
+    stop("Cannot subset 'cn_data' for this region.  Double-check the region specified, and that copy number has been called in this region. ")
+  }
+  
   tmp_cn$length <- (tmp_cn$end - tmp_cn$start)+1
   
   tmp_cn$n1A <- paste(tmp_cn$nMaj1_A, "+", tmp_cn$nMin1_A, sep = "")
@@ -42,7 +88,9 @@ time_amplification <- function(cn_data, multiplicity_data,
   tmp_mult <- subset(multiplicity_data, chr == amplification_chrom & 
                        end >= amplification_start & 
                        end <= amplification_stop )
-  
+  if(nrow(tmp_mult) == 0){
+    stop("Cannot subset 'multiplicity_data' for this region.  Cannot run analysis if there are no mutations in this region.")
+  }
   ###
   # Assuming region is spanned by 1 copy number segment
   # adjust later to account for partially gained regions
@@ -50,22 +98,25 @@ time_amplification <- function(cn_data, multiplicity_data,
   
   # Check if region is amplified
   # Cannot run code if region is not amplified
+  is_amplified <- NA
   
   if(c("n2A_sum") %in% colnames(tmp_cn)){
     if(is_WGD == FALSE & tmp_cn$n1A_sum <= 2 & tmp_cn$n2A_sum <= 2){
-      print("Region not amplified in sample")
-      is_amplified <- FALSE
+      stop("Region not amplified in sample")
+      
     }else if(is_WGD == TRUE & tmp_cn$n1A_sum <= 4 & tmp_cn$n2A_sum <= 4){
-      is_amplified <- FALSE
+      stop("Region not amplified in sample")
+      
     }else{
       is_amplified <- TRUE
     }
-  }else if(c("n2A_sum") %!in% colnames(tmp_cn)){
+  }else{
     if(is_WGD == FALSE & tmp_cn$n1A_sum <= 2){
-      print("Region not amplified in sample")
-      is_amplified <- FALSE
+      stop("Region not amplified in sample")
+      
     }else if(is_WGD == TRUE & tmp_cn$n1A_sum <= 4){
-      is_amplified <- FALSE
+      stop("Region not amplified in sample")
+      
     }else{
       is_amplified <- TRUE
     }
@@ -89,28 +140,7 @@ time_amplification <- function(cn_data, multiplicity_data,
     ### calculate the multiplicity of all of the mutations
     ## First create a table to house your multiplicity values
     
-    if(nrow(tmp_mult) == 0){
-      n1 <- 0
-      n2 <- 0
-      n3 <- 0
-      n4 <- 0
-      n5 <- 0
-      n6 <- 0
-      n7 <- 0
-      n8 <- 0
-      n9 <- 0
-      n10 <- 0
-      n11 <- 0
-      n12 <- 0
-      n13 <- 0
-      n14 <- 0
-      n15 <- 0
-      n16 <- 0
-      n17 <- 0
-      n18 <- 0
-      n19 <- 0
-      n20 <- 0
-    }else if(nrow(tmp_mult > 0)){
+    if(nrow(tmp_mult > 0)){
       n1 <- nrow(subset(tmp_mult, no.chrs.bearing.mut.ceiling == 1))
       n2 <- nrow(subset(tmp_mult, no.chrs.bearing.mut.ceiling == 2))
       n3 <- nrow(subset(tmp_mult, no.chrs.bearing.mut.ceiling == 3))
@@ -286,7 +316,7 @@ time_amplification <- function(cn_data, multiplicity_data,
         t_3 <- ((8*(n4 + n5 + n6))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6))
         t_4 <- ((8*(n3 + n4 + n5 + n6))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6))
         t_5 <- ((8*(n2 + n3 + n4 + n5))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6))
-        amplification_results$event_order <- "GGW"
+        amplification_results$event_order <- "WGGGG"
         amplification_results$t_1 <- t_1
         amplification_results$t_2 <- t_2
         amplification_results$t_3 <- t_3
@@ -397,10 +427,6 @@ time_amplification <- function(cn_data, multiplicity_data,
         amplification_results$event_order <- "Something went wrong"
       }
     }
-    
-  }else{
-    paste("No amplification to time")
-    amplification_results <- NA
   }
   return(amplification_results)
 }
