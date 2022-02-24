@@ -4,7 +4,7 @@
   [![R](https://github.com/mjakobs/AmplificationTimeR/actions/workflows/r.yml/badge.svg)](https://github.com/mjakobs/AmplificationTimeR/actions/workflows/r.yml)
   <!-- badges: end -->
 
-AmplificationTimeR is an R package for timing individual amplification and whole genome duplication events in regions that have been gained multiple times in a tumour genome.  
+`AmplificationTimeR` is an R package for timing individual amplification and whole genome duplication events affecting regions regions of the tumour genome that have been focally amplified.  `AmplificationTimeR` can be thought of as an extension to `gerstung-lab/MutationTimeR` with slightly different intentions and functionality.  
 
 To install AmplificationTimeR run:
 ```
