@@ -253,7 +253,6 @@ time_amplification_maths <- function(mult_data, max_amp, is_WGD, ordering_event)
       amplification_results$t_5 <- t_5
       amplification_results$t_6 <- t_6
       amplification_results$t_7 <- t_7
-      amplification_results$t_8 <- t_8
     }else if((n4 > 0) & (n6 == 0) & (n8 == 0) & order_event == "GGWGGG"){
       t_1 <- ((11*(n9)))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 7*n7 + 9*n9)
       t_2 <- ((11*(n7 + n9)))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 7*n7 + 9*n9)
@@ -268,8 +267,6 @@ time_amplification_maths <- function(mult_data, max_amp, is_WGD, ordering_event)
       amplification_results$t_4 <- t_4
       amplification_results$t_5 <- t_5
       amplification_results$t_6 <- t_6
-      amplification_results$t_7 <- t_7
-      amplification_results$t_8 <- t_8
     }else if((n4 == 0) & (n6 == 0) & (n8 == 0) & order_event == "GGGWG"){
       t_1 <- ((11*(n9)))/(n1 + 2*n2 + 3*n3 + 5*n5 + 7*n7 + 9*n9)
       t_2 <- ((11*(n7 + n9)))/(n1 + 2*n2 + 3*n3 + 5*n5 + 7*n7 + 9*n9)
@@ -282,9 +279,6 @@ time_amplification_maths <- function(mult_data, max_amp, is_WGD, ordering_event)
       amplification_results$t_3 <- t_3
       amplification_results$t_4 <- t_4
       amplification_results$t_5 <- t_5
-      amplification_results$t_6 <- t_6
-      amplification_results$t_7 <- t_7
-      amplification_results$t_8 <- t_8
     }
   }else if(max_amplification_split == c("10+2") & is_WGD == TRUE){
     # WGGGGGGGG  
