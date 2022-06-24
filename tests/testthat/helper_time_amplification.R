@@ -155,6 +155,23 @@ test_data_mult_6_2_GWGG <- test_data_mult
 test_data_mult_6_2_GWGG$no.chrs.bearing.mut[1:2] <- 3
 test_data_mult_6_2_GGW <- test_data_mult
 
+# 9+2
+test_data_cn_9_2 <- test_data_cn
+test_data_cn_9_2$nMaj1_A <- 9
+test_data_cn_9_2$nMin1_A <- 2
+test_data_mult_9_2_WGGGGGGG <- test_data_mult
+test_data_mult_9_2_WGGGGGGG$no.chrs.bearing.mut[1:2] <- 4
+test_data_mult_9_2_WGGGGGGG$no.chrs.bearing.mut[3:4] <- 6
+test_data_mult_9_2_WGGGGGGG$no.chrs.bearing.mut[5:6] <- 8
+test_data_mult_9_2_GWGGGGG <- test_data_mult
+test_data_mult_9_2_GWGGGGG$no.chrs.bearing.mut[1:2] <- 4
+test_data_mult_9_2_GWGGGGG$no.chrs.bearing.mut[3:4] <- 6
+test_data_mult_9_2_GGWGGG <- test_data_mult
+test_data_mult_9_2_GGWGGG$no.chrs.bearing.mut[1:2] <- 4
+test_data_mult_9_2_GGGWG <- test_data_mult
+
+
+
 # 10+2
 test_data_cn_10_2 <- test_data_cn
 test_data_cn_10_2$nMaj1_A <- 10
