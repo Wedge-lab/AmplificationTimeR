@@ -176,9 +176,9 @@ time_amplification_maths <- function(mult_data, max_amp, is_WGD, ordering_event)
       amplification_results$t_3 <- t_3
       amplification_results$t_4 <- t_4
     }else if((n3 == 0) & (n5 == 0) & order_event == "GGW"){# GGW
-      t_1 <- ((7*(n6))/(n1 + 2*n2 + 6*n4 + 6*n6))
-      t_2 <- ((7*(n4 + n6))/(n1 + 2*n2 + 6*n4 + 6*n6))
-      t_3 <- ((7*(n2 + 3*n4 + 3*n6))/(n1 + 2*n2 + 6*n4 + 6*n6))
+      t_1 <- ((7*(n6))/(n1 + 2*n2 + 4*n4 + 6*n6))
+      t_2 <- ((7*(n4 + n6))/(n1 + 2*n2 + 4*n4 + 6*n6))
+      t_3 <- ((7*(n2 + 2*n4 + 3*n6))/(n1 + 2*n2 + 4*n4 + 6*n6))
       amplification_results$event_order <- "GGW"
       amplification_results$t_1 <- t_1
       amplification_results$t_2 <- t_2
