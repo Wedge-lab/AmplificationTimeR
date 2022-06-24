@@ -512,6 +512,66 @@ test_that("AmplificationTimeR runs and produces 6+2 highest output and order", {
                                   is_WGD = TRUE)[,"event_order"],"GGW")
 })
 
+# 9+2
+test_that("AmplificationTimeR runs and produces 9+2 highest output and order", {
+  expect_equal(time_amplification(cn_data = test_data_cn_9_2,
+                                  multiplicity_data = test_data_mult_9_2_WGGGGGGG,
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE)[,"highest_copy_number"],"9+2")
+  expect_equal(time_amplification(cn_data = test_data_cn_9_2,
+                                  multiplicity_data = test_data_mult_9_2_WGGGGGGG,
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE)[,"event_order"],"WGGGGGGG")
+  expect_equal(time_amplification(cn_data = test_data_cn_9_2,
+                                  multiplicity_data = test_data_mult_9_2_GWGGGGG,
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE)[,"highest_copy_number"],"9+2")
+  expect_equal(time_amplification(cn_data = test_data_cn_9_2,
+                                  multiplicity_data = test_data_mult_9_2_GWGGGGG,
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE)[,"event_order"],"GWGGGGG")
+  expect_equal(time_amplification(cn_data = test_data_cn_9_2,
+                                  multiplicity_data = test_data_mult_9_2_GGWGGG,
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE)[,"highest_copy_number"],"9+2")
+  expect_equal(time_amplification(cn_data = test_data_cn_9_2,
+                                  multiplicity_data = test_data_mult_9_2_GGWGGG,
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE)[,"event_order"],"GGWGGG")
+  expect_equal(time_amplification(cn_data = test_data_cn_9_2,
+                                  multiplicity_data = test_data_mult_9_2_GGGWG,
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE)[,"highest_copy_number"],"9+2")
+  expect_equal(time_amplification(cn_data = test_data_cn_9_2,
+                                  multiplicity_data = test_data_mult_9_2_GGGWG,
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE)[,"event_order"],"GGGWG")
+})
+
 # 10+2
 test_that("AmplificationTimeR runs and produces 10+2 highest output and order", {
   expect_equal(time_amplification(cn_data = test_data_cn_10_2,
