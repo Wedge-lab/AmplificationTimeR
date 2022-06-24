@@ -627,13 +627,13 @@ time_amplification <- function(cn_data, multiplicity_data,
         event_ordering <- "GGW"
       }
     }else if(max_amplification_split == c("9+2") & is_WGD == TRUE){
-      if((n4 > 0) & (n6 > 0) & (n8 > 0) & order_event == "WGGGGGGG"){# WGGGGGGG
+      if((n4 > 0) & (n6 > 0) & (n8 > 0)){# WGGGGGGG
         event_ordering <- "WGGGGGGG"
-      }else if((n4 > 0) & (n6 > 0) & (n8 == 0) & order_event == "GWGGGGG"){# GWGGGGG
+      }else if((n4 > 0) & (n6 > 0) & (n8 == 0)){# GWGGGGG
         event_ordering <- "GWGGGGG"
-      }else if((n4 > 0) & (n6 == 0) & (n8 == 0) & order_event == "GGWGGG"){# GGWGGG
+      }else if((n4 > 0) & (n6 == 0) & (n8 == 0)){# GGWGGG
         event_ordering <- "GGWGGG"
-      }else if((n4 == 0) & (n6 == 0) & (n8 == 0) & order_event == "GGGWG"){# GGGWG
+      }else if((n4 == 0) & (n6 == 0) & (n8 == 0)){# GGGWG
         event_ordering <- "GGGWG"
       }    
       }else if(max_amplification_split == c("10+2") & is_WGD == TRUE){
