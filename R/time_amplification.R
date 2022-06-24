@@ -635,7 +635,7 @@ time_amplification <- function(cn_data, multiplicity_data,
         event_ordering <- "GGWGGG"
       }else if((n4 == 0) & (n6 == 0) & (n8 == 0) & order_event == "GGGWG"){# GGGWG
         event_ordering <- "GGGWG"
-        
+      }    
       }else if(max_amplification_split == c("10+2") & is_WGD == TRUE){
       # WGGGGGGGG  
       if((n3 > 0) & (n5 > 0) & (n7 > 0) & (n9 > 0)){
