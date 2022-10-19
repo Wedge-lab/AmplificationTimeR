@@ -1,9 +1,14 @@
 # Function for timing amplifications
 
+################################################################################
 #' Identify mutations that are C>T at CpG
 #' 
 #' @param mutation Data frame containing mutation information, including Ref and Alt alleles. Columns must be "chr","start","end","ref","alt"
 #' @param genome Reference genome used. Must be one of "hg19" or "hg38"
+#' @return A data frame with mutations that are C>T at CpG. 
+#' @keywords internal
+#' @export
+
 clocklike_muts <- function(mutation, genome){
   muts <- mutation
   genome_ref <- genome
@@ -14,10 +19,12 @@ clocklike_muts <- function(mutation, genome){
   if(!(genome_ref %in% c("hg19","hg38"))){
     stop("genome must be one of 'hg19' or 'hg38'")
   }
-  if(!(colnames(muts) %in% c("chr","start","end","ref","alt"))){
+  if(!all(colnames(muts) %in% c("chr","start","end","ref","alt"))){
     stop("Mutation file column names must be 'chr','start','end','ref','alt'")
   }
-  
+  if(nrow(muts) == 0){
+    stop("'mutation_data' has no content")
+  }
   # Make sure we're only considering SNVs
   nucleotides <- c("A","T","G","C")
   muts <- muts[muts$ref %in% nucleotides & muts$alt %in% nucleotides,]
@@ -53,6 +60,7 @@ clocklike_muts <- function(mutation, genome){
 
 }
 
+################################################################################
 #' Calculate maths for timing
 #' 
 #' Hidden function for calculating the maths used in AmplificationTimeR - not intended for use by end users.  Called by time_amplification
@@ -422,25 +430,53 @@ time_amplification_maths <- function(mult_data, max_amp, is_WGD, ordering_event)
   return(amplification_results)
 }
 
+################################################################################
 #' Amplification timing
 #'
 #' Wrapper function that times individual amplification events for a locus that has been gained multiple times.
-#' @param cn_data Data frame containing copy number information.
-#' @param multiplicity_data Data frame containing multiplicity information.
-#' @param sample_id ID name or label for sample. 
-#' @param amplification_chrom Chromosome of the amplified region.
-#' @param amplification_start Start position of the amplified region.
-#' @param amplification_stop End position of the amplified region.  
-#' @param is_WGD logical: TRUE indicates that the sample has been whole genome duplicated.
+#' @param cn_data 
+#' Data frame containing copy number information.
+#' 
+#' @param multiplicity_data 
+#' Data frame containing multiplicity information.
+#' 
+#' @param mutation_data 
+#' Data frame containing mutation data, including Ref and Alt alleles. Columns must be "chr","start","end","ref","alt". This file is required if muts_type = "All", as mutation context is required to identify clocklike mutations (C>T at CpG). Default is NA. 
+#' 
+#' @param muts_type
+#' Must be one of "SBS1 and SBS5" or "All". Default is set to "All".  If set to "All", the mutation_data field must be supplied, and the code will be restricted to analysis of clocklike mutations (C>T mutations at CpG sites). If set to "SBS1 and SBS5", the multiplicity_data data frame should have been filtered so as to contain only mutations that have been attributed to mutational signatures SBS1 and SBS5.
+#' 
+#' @param sample_id 
+#' ID name or label for sample. 
+#' 
+#' @param amplification_chrom 
+#' Chromosome of the amplified region.
+#' 
+#' @param amplification_start 
+#' Start position of the amplified region.
+#' 
+#' @param amplification_stop 
+#' End position of the amplified region.  
+#' 
+#' @param is_WGD 
+#' logical: TRUE indicates that the sample has been whole genome duplicated.
+#' 
+#' @param genome
+#' Reference genome used. Must be one of "hg19" or "hg38".
+#' 
 #' @return A data frame containing approximate timing of each amplification, and the most likely order of events. 
 #' @export
 
-time_amplification <- function(cn_data, multiplicity_data, 
+time_amplification <- function(cn_data, 
+                               multiplicity_data, 
+                               mutation_data,
+                               muts_type="All",
                                sample_id,
                                amplification_chrom, 
                                amplification_start, 
                                amplification_stop, 
-                               is_WGD){
+                               is_WGD,
+                               genome){
   
   ########
   # Check input
@@ -451,6 +487,9 @@ time_amplification <- function(cn_data, multiplicity_data,
   }
   if(class(multiplicity_data)[1] != "data.frame"){
     stop("'multiplicity_data' must be an object of class 'data.frame'")
+  }
+  if(!is.na(mutation_data) & class(mutation_data)[1] != "data.frame"){
+    stop("'mutation_data' must be an object of class 'data.frame'")
   }
   if(!is.character(sample_id)){
     stop("'sample_id' must be an object of type 'character'")
@@ -469,6 +508,18 @@ time_amplification <- function(cn_data, multiplicity_data,
   if(!is.logical(is_WGD)){
     stop("'is_WGD' must be either 'TRUE' or 'FALSE'")
   }
+  if(!(muts_type %in% c("All","SBS1 and SBS5"))){
+    stop("'muts_type' must be either 'All' or 'SBS1 and SBS5'")
+  }
+  if(!(genome %in% c("hg19","hg38"))){
+    stop("'muts_type' must be either 'hg19' or 'hg38'")
+  }
+  if(muts_type == "All" & is.na(mutation_data)){
+    stop("'mutation_data' must be supplied when 'muts_type' = 'All'.")
+  }
+  if(muts_type == "All" & is.na(genome)){
+    stop("'genome' must be supplied when 'muts_type' = 'All'.")
+  }
   
   # Input has right columns
   if(!all(c("chr","startpos","endpos","nMaj1_A","nMin1_A") %in% colnames(cn_data))){
@@ -477,6 +528,8 @@ time_amplification <- function(cn_data, multiplicity_data,
   if(!all(c("chr","end","no.chrs.bearing.mut") %in% colnames(multiplicity_data))){
     stop("Incorrect column names in 'multiplicity_data'")
   }
+  # mutation data input is checked in clocklike_muts function
+
   
   # Input has non-zero number of rows
   if(nrow(cn_data) == 0){
@@ -485,6 +538,8 @@ time_amplification <- function(cn_data, multiplicity_data,
   if(nrow(multiplicity_data) == 0){
     stop("'multiplicity_data' has no content")
   }
+  
+  # 
   
   ##############################################################################
   # subset copy number file for amplified region
@@ -514,6 +569,25 @@ time_amplification <- function(cn_data, multiplicity_data,
     stop("Cannot subset 'multiplicity_data' for this region.  Cannot run analysis if there are no mutations in this region.")
   }
   tmp_mult$no.chrs.bearing.mut.ceiling <- ceiling(tmp_mult$no.chrs.bearing.mut)
+  
+  ###
+  # if "All" mutations have been supplied, identify clock-like mutations
+  # then subset multiplicity file for those mutations only
+  if(muts_type == "All"){
+    
+    clocklike_mutations <- clocklike_muts(mutation = mutation_data, genome = genome)
+    
+    tmp_mult_clocklike <- merge(tmp_mult, clocklike_mutations[,c("seqnames","end")], 
+                                by.x = c("chr","end"),
+                                by.y = c("seqnames","end"))
+    
+    tmp_mult <- tmp_mult_clocklike
+    
+    if(nrow(tmp_mult) == 0){
+      stop("Cannot subset 'multiplicity_data' for this region.  There are no clock-like mutations in this region.")
+    }
+    
+  }
   
   ###
   # Assuming region is spanned by 1 copy number segment
