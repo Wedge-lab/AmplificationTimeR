@@ -1,5 +1,58 @@
 # Function for timing amplifications
 
+#' Identify mutations that are C>T at CpG
+#' 
+#' @param mutation Data frame containing mutation information, including Ref and Alt alleles. Columns must be "chr","start","end","ref","alt"
+#' @param genome Reference genome used. Must be one of "hg19" or "hg38"
+clocklike_muts <- function(mutation, genome){
+  muts <- mutation
+  genome_ref <- genome
+  
+  ###
+  # Check that input is okay
+  ###
+  if(!(genome_ref %in% c("hg19","hg38"))){
+    stop("genome must be one of 'hg19' or 'hg38'")
+  }
+  if(!(colnames(muts) %in% c("chr","start","end","ref","alt"))){
+    stop("Mutation file column names must be 'chr','start','end','ref','alt'")
+  }
+  
+  # Make sure we're only considering SNVs
+  nucleotides <- c("A","T","G","C")
+  muts <- muts[muts$ref %in% nucleotides & muts$alt %in% nucleotides,]
+  
+  # create a VRanges object with your mutations to check against the reference genome
+  if(dim(muts[grep("chr", muts$chr),]) == 0){
+    vr <- VariantAnnotation::VRanges(seqnames = paste0("chr",muts$chr),
+                  ranges = IRanges(muts$Start_position, muts$End_position),
+                  ref = muts$Reference_Allele, 
+                  alt = muts$Tumor_Seq_Allele2)
+  }else{
+    vr <- VariantAnnotation::VRanges(seqnames = muts$Chromosome,
+                  ranges = IRanges(muts$Start_position, muts$End_position),
+                  ref = muts$Reference_Allele, 
+                  alt = muts$Tumor_Seq_Allele2)
+  }
+  
+  # get mutation context using SomaticSignatures function
+  if(genome_ref == "hg19"){
+    context <- SomaticSignatures::mutationContext(vr, BSgenome.Hsapiens.UCSC.hg19, k=3, unify = TRUE)
+  }else if(genome_ref == "hg38"){
+    context <- SomaticSignatures::mutationContext(vr, BSgenome.Hsapiens.UCSC.hg38, k=3, unify = TRUE)
+  }
+  
+  # turn this into a data frame 
+  context_df <- as.data.frame(context)
+  
+  # extract rows with C>G at CpG
+  context_ct_cpg <- subset(context_df, alteration == "CT" &
+                             context.1 %in% c("A.G","T.G","C.G","G.G"))
+  
+  return(context_ct_cpg)
+
+}
+
 #' Calculate maths for timing
 #' 
 #' Hidden function for calculating the maths used in AmplificationTimeR - not intended for use by end users.  Called by time_amplification
