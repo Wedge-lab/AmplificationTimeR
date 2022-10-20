@@ -7,7 +7,7 @@
 #' @param genome Reference genome used. Must be one of "hg19" or "hg38"
 #' @return A data frame with mutations that are C>T at CpG. 
 #' @keywords internal
-#' @export
+#' @noRd
 
 clocklike_muts <- function(mutation, genome){
   muts <- mutation
@@ -70,7 +70,7 @@ clocklike_muts <- function(mutation, genome){
 #' @param ordering_event Order of events determined based on copy number and multiplicity of mutations
 #' @return A data frame containing approximate timing of each amplification, and the most likely order of events. 
 #' @keywords internal
-#' @export
+#' @noRd
 
 time_amplification_maths <- function(mult_data, max_amp, is_WGD, ordering_event){
   max_amplification_split <- max_amp
