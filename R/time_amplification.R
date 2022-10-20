@@ -30,16 +30,16 @@ clocklike_muts <- function(mutation, genome){
   muts <- muts[muts$ref %in% nucleotides & muts$alt %in% nucleotides,]
   
   # create a VRanges object with your mutations to check against the reference genome
-  if(dim(muts[grep("chr", muts$chr),]) == 0){
+  if(nrow(muts[grep("chr", muts$chr),]) == 0){
     vr <- VariantAnnotation::VRanges(seqnames = paste0("chr",muts$chr),
-                  ranges = IRanges(muts$Start_position, muts$End_position),
-                  ref = muts$Reference_Allele, 
-                  alt = muts$Tumor_Seq_Allele2)
+                  ranges = IRanges(muts$start, muts$end),
+                  ref = muts$ref, 
+                  alt = muts$alt)
   }else{
-    vr <- VariantAnnotation::VRanges(seqnames = muts$Chromosome,
-                  ranges = IRanges(muts$Start_position, muts$End_position),
-                  ref = muts$Reference_Allele, 
-                  alt = muts$Tumor_Seq_Allele2)
+    vr <- VariantAnnotation::VRanges(seqnames = muts$chr,
+                  ranges = IRanges(muts$start, muts$end),
+                  ref = muts$ref, 
+                  alt = muts$alt)
   }
   
   # get mutation context using SomaticSignatures function
@@ -54,7 +54,7 @@ clocklike_muts <- function(mutation, genome){
   
   # extract rows with C>G at CpG
   context_ct_cpg <- subset(context_df, alteration == "CT" &
-                             context.1 %in% c("A.G","T.G","C.G","G.G"))
+                             context %in% c("A.G","T.G","C.G","G.G"))
   
   return(context_ct_cpg)
 
@@ -488,8 +488,10 @@ time_amplification <- function(cn_data,
   if(class(multiplicity_data)[1] != "data.frame"){
     stop("'multiplicity_data' must be an object of class 'data.frame'")
   }
-  if(!is.na(mutation_data) & class(mutation_data)[1] != "data.frame"){
-    stop("'mutation_data' must be an object of class 'data.frame'")
+  if(!is.na(mutation_data))){
+    if(class(mutation_data)[1] != "data.frame"){
+          stop("'mutation_data' must be an object of class 'data.frame'")
+    }
   }
   if(!is.character(sample_id)){
     stop("'sample_id' must be an object of type 'character'")
@@ -514,11 +516,15 @@ time_amplification <- function(cn_data,
   if(!(genome %in% c("hg19","hg38"))){
     stop("'muts_type' must be either 'hg19' or 'hg38'")
   }
-  if(muts_type == "All" & is.na(mutation_data)){
-    stop("'mutation_data' must be supplied when 'muts_type' = 'All'.")
+  if(muts_type == "All"){
+    if(is.na(mutation_data)){
+          stop("'mutation_data' must be supplied when 'muts_type' = 'All'.")
+    }
   }
-  if(muts_type == "All" & is.na(genome)){
-    stop("'genome' must be supplied when 'muts_type' = 'All'.")
+  if(muts_type == "All"){
+    if(is.na(genome)){
+          stop("'genome' must be supplied when 'muts_type' = 'All'.")
+    }
   }
   
   # Input has right columns
@@ -567,6 +573,9 @@ time_amplification <- function(cn_data,
                        end <= tmp_cn$end )
   if(nrow(tmp_mult) == 0){
     stop("Cannot subset 'multiplicity_data' for this region.  Cannot run analysis if there are no mutations in this region.")
+  }
+  if(nrow(tmp_mult) < 3){
+    stop("Cannot subset 'multiplicity_data' for this region.  Cannot run analysis if there are fewer than 3 mutations in this region.")
   }
   tmp_mult$no.chrs.bearing.mut.ceiling <- ceiling(tmp_mult$no.chrs.bearing.mut)
   
