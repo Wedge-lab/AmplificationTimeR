@@ -663,7 +663,7 @@ time_amplification <- function(cn_data,
     amplification_results_ci$sample <- sample_id
     amplification_results_ci$region <- paste(amplification_chrom,":",amplification_start,"-",amplification_stop, sep = "")
     amplification_results_ci$highest_copy_number <- max_amplification_split
-    amplification_results_ci$num_mutations_used <- nrow(tmp_values)
+    amplification_results_ci$num_mutations_used <- length(tmp_values)
     
     ##############################################################################
     # Get event order
