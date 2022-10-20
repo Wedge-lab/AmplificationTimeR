@@ -488,7 +488,7 @@ time_amplification <- function(cn_data,
   if(class(multiplicity_data)[1] != "data.frame"){
     stop("'multiplicity_data' must be an object of class 'data.frame'")
   }
-  if(!is.na(mutation_data))){
+  if(!is.na(mutation_data)){
     if(class(mutation_data)[1] != "data.frame"){
           stop("'mutation_data' must be an object of class 'data.frame'")
     }
