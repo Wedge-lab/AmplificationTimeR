@@ -1,5 +1,66 @@
 # Function for timing amplifications
 
+################################################################################
+#' Identify mutations that are C>T at CpG
+#' 
+#' @param mutation Data frame containing mutation information, including Ref and Alt alleles. Columns must be "chr","start","end","ref","alt"
+#' @param genome Reference genome used. Must be one of "hg19" or "hg38"
+#' @return A data frame with mutations that are C>T at CpG. 
+#' @keywords internal
+#' @export
+
+clocklike_muts <- function(mutation, genome){
+  muts <- mutation
+  genome_ref <- genome
+  
+  ###
+  # Check that input is okay
+  ###
+  if(!(genome_ref %in% c("hg19","hg38"))){
+    stop("genome must be one of 'hg19' or 'hg38'")
+  }
+  if(!all(colnames(muts) %in% c("chr","start","end","ref","alt"))){
+    stop("Mutation file column names must be 'chr','start','end','ref','alt'")
+  }
+  if(nrow(muts) == 0){
+    stop("'mutation_data' has no content")
+  }
+  # Make sure we're only considering SNVs
+  nucleotides <- c("A","T","G","C")
+  muts <- muts[muts$ref %in% nucleotides & muts$alt %in% nucleotides,]
+  
+  # create a VRanges object with your mutations to check against the reference genome
+  if(nrow(muts[grep("chr", muts$chr),]) == 0){
+    vr <- VariantAnnotation::VRanges(seqnames = paste0("chr",muts$chr),
+                  ranges = IRanges(muts$start, muts$end),
+                  ref = muts$ref, 
+                  alt = muts$alt)
+  }else{
+    vr <- VariantAnnotation::VRanges(seqnames = muts$chr,
+                  ranges = IRanges(muts$start, muts$end),
+                  ref = muts$ref, 
+                  alt = muts$alt)
+  }
+  
+  # get mutation context using SomaticSignatures function
+  if(genome_ref == "hg19"){
+    context <- SomaticSignatures::mutationContext(vr, BSgenome.Hsapiens.UCSC.hg19, k=3, unify = TRUE)
+  }else if(genome_ref == "hg38"){
+    context <- SomaticSignatures::mutationContext(vr, BSgenome.Hsapiens.UCSC.hg38, k=3, unify = TRUE)
+  }
+  
+  # turn this into a data frame 
+  context_df <- as.data.frame(context)
+  
+  # extract rows with C>G at CpG
+  context_ct_cpg <- subset(context_df, alteration == "CT" &
+                             context %in% c("A.G","T.G","C.G","G.G"))
+  
+  return(context_ct_cpg)
+
+}
+
+################################################################################
 #' Calculate maths for timing
 #' 
 #' Hidden function for calculating the maths used in AmplificationTimeR - not intended for use by end users.  Called by time_amplification
@@ -369,25 +430,53 @@ time_amplification_maths <- function(mult_data, max_amp, is_WGD, ordering_event)
   return(amplification_results)
 }
 
+################################################################################
 #' Amplification timing
 #'
 #' Wrapper function that times individual amplification events for a locus that has been gained multiple times.
-#' @param cn_data Data frame containing copy number information.
-#' @param multiplicity_data Data frame containing multiplicity information.
-#' @param sample_id ID name or label for sample. 
-#' @param amplification_chrom Chromosome of the amplified region.
-#' @param amplification_start Start position of the amplified region.
-#' @param amplification_stop End position of the amplified region.  
-#' @param is_WGD logical: TRUE indicates that the sample has been whole genome duplicated.
+#' @param cn_data 
+#' Data frame containing copy number information.
+#' 
+#' @param multiplicity_data 
+#' Data frame containing multiplicity information.
+#' 
+#' @param mutation_data 
+#' Data frame containing mutation data, including Ref and Alt alleles. Columns must be "chr","start","end","ref","alt". This file is required if muts_type = "All", as mutation context is required to identify clocklike mutations (C>T at CpG). Default is NA. 
+#' 
+#' @param muts_type
+#' Must be one of "SBS1 and SBS5" or "All". Default is set to "All".  If set to "All", the mutation_data field must be supplied, and the code will be restricted to analysis of clocklike mutations (C>T mutations at CpG sites). If set to "SBS1 and SBS5", the multiplicity_data data frame should have been filtered so as to contain only mutations that have been attributed to mutational signatures SBS1 and SBS5.
+#' 
+#' @param sample_id 
+#' ID name or label for sample. 
+#' 
+#' @param amplification_chrom 
+#' Chromosome of the amplified region.
+#' 
+#' @param amplification_start 
+#' Start position of the amplified region.
+#' 
+#' @param amplification_stop 
+#' End position of the amplified region.  
+#' 
+#' @param is_WGD 
+#' logical: TRUE indicates that the sample has been whole genome duplicated.
+#' 
+#' @param genome
+#' Reference genome used. Must be one of "hg19" or "hg38".
+#' 
 #' @return A data frame containing approximate timing of each amplification, and the most likely order of events. 
 #' @export
 
-time_amplification <- function(cn_data, multiplicity_data, 
+time_amplification <- function(cn_data, 
+                               multiplicity_data, 
+                               mutation_data,
+                               muts_type="All",
                                sample_id,
                                amplification_chrom, 
                                amplification_start, 
                                amplification_stop, 
-                               is_WGD){
+                               is_WGD,
+                               genome){
   
   ########
   # Check input
@@ -398,6 +487,11 @@ time_amplification <- function(cn_data, multiplicity_data,
   }
   if(class(multiplicity_data)[1] != "data.frame"){
     stop("'multiplicity_data' must be an object of class 'data.frame'")
+  }
+  if(!is.na(mutation_data))){
+    if(class(mutation_data)[1] != "data.frame"){
+          stop("'mutation_data' must be an object of class 'data.frame'")
+    }
   }
   if(!is.character(sample_id)){
     stop("'sample_id' must be an object of type 'character'")
@@ -416,6 +510,22 @@ time_amplification <- function(cn_data, multiplicity_data,
   if(!is.logical(is_WGD)){
     stop("'is_WGD' must be either 'TRUE' or 'FALSE'")
   }
+  if(!(muts_type %in% c("All","SBS1 and SBS5"))){
+    stop("'muts_type' must be either 'All' or 'SBS1 and SBS5'")
+  }
+  if(!(genome %in% c("hg19","hg38"))){
+    stop("'muts_type' must be either 'hg19' or 'hg38'")
+  }
+  if(muts_type == "All"){
+    if(is.na(mutation_data)){
+          stop("'mutation_data' must be supplied when 'muts_type' = 'All'.")
+    }
+  }
+  if(muts_type == "All"){
+    if(is.na(genome)){
+          stop("'genome' must be supplied when 'muts_type' = 'All'.")
+    }
+  }
   
   # Input has right columns
   if(!all(c("chr","startpos","endpos","nMaj1_A","nMin1_A") %in% colnames(cn_data))){
@@ -424,6 +534,8 @@ time_amplification <- function(cn_data, multiplicity_data,
   if(!all(c("chr","end","no.chrs.bearing.mut") %in% colnames(multiplicity_data))){
     stop("Incorrect column names in 'multiplicity_data'")
   }
+  # mutation data input is checked in clocklike_muts function
+
   
   # Input has non-zero number of rows
   if(nrow(cn_data) == 0){
@@ -432,6 +544,8 @@ time_amplification <- function(cn_data, multiplicity_data,
   if(nrow(multiplicity_data) == 0){
     stop("'multiplicity_data' has no content")
   }
+  
+  # 
   
   ##############################################################################
   # subset copy number file for amplified region
@@ -453,14 +567,36 @@ time_amplification <- function(cn_data, multiplicity_data,
     tmp_cn$n2A_sum <- tmp_cn$nMaj2_A + tmp_cn$nMin2_A
   }
   
-  # subset multiplicity for amplified region
-  tmp_mult <- subset(multiplicity_data, chr == amplification_chrom & 
-                       end >= amplification_start & 
-                       end <= amplification_stop )
+  # subset multiplicity for amplified region based on CN data
+  tmp_mult <- subset(multiplicity_data, chr == tmp_cn$chr & 
+                       end >= tmp_cn$start & 
+                       end <= tmp_cn$end )
   if(nrow(tmp_mult) == 0){
     stop("Cannot subset 'multiplicity_data' for this region.  Cannot run analysis if there are no mutations in this region.")
   }
+  if(nrow(tmp_mult) < 3){
+    stop("Cannot subset 'multiplicity_data' for this region.  Cannot run analysis if there are fewer than 3 mutations in this region.")
+  }
   tmp_mult$no.chrs.bearing.mut.ceiling <- ceiling(tmp_mult$no.chrs.bearing.mut)
+  
+  ###
+  # if "All" mutations have been supplied, identify clock-like mutations
+  # then subset multiplicity file for those mutations only
+  if(muts_type == "All"){
+    
+    clocklike_mutations <- clocklike_muts(mutation = mutation_data, genome = genome)
+    
+    tmp_mult_clocklike <- merge(tmp_mult, clocklike_mutations[,c("seqnames","end")], 
+                                by.x = c("chr","end"),
+                                by.y = c("seqnames","end"))
+    
+    tmp_mult <- tmp_mult_clocklike
+    
+    if(nrow(tmp_mult) == 0){
+      stop("Cannot subset 'multiplicity_data' for this region.  There are no clock-like mutations in this region.")
+    }
+    
+  }
   
   ###
   # Assuming region is spanned by 1 copy number segment
@@ -511,22 +647,23 @@ time_amplification <- function(cn_data, multiplicity_data,
   tmp_values <- tmp_mult$no.chrs.bearing.mut.ceiling
   
   if(is_amplified == TRUE){
-    amplification_results_ci <- as.data.frame(matrix(nrow=1, ncol = 34))
-    colnames(amplification_results_ci) <- c("sample","region","highest_copy_number","event_order",
-                                            "t_1","t_1_lower_ci","t_1_upper_ci",
-                                            "t_2","t_2_lower_ci","t_2_upper_ci",
-                                            "t_3","t_3_lower_ci","t_3_upper_ci",
-                                            "t_4","t_4_lower_ci","t_4_upper_ci",
-                                            "t_5","t_5_lower_ci","t_5_upper_ci",
-                                            "t_6","t_6_lower_ci","t_6_upper_ci",
-                                            "t_7","t_7_lower_ci","t_7_upper_ci",
-                                            "t_8","t_8_lower_ci","t_8_upper_ci",
-                                            "t_9","t_9_lower_ci","t_9_upper_ci",
-                                            "t_10","t_10_lower_ci","t_10_upper_ci")
+    amplification_results_ci <- as.data.frame(matrix(nrow=1, ncol = 45))
+    colnames(amplification_results_ci) <- c("sample","region","highest_copy_number","event_order","num_mutations_used",
+                                            "t_1","t_1_mean_bootstrap","t_1_lower_ci","t_1_upper_ci",
+                                            "t_2","t_2_mean_bootstrap","t_2_lower_ci","t_2_upper_ci",
+                                            "t_3","t_3_mean_bootstrap","t_3_lower_ci","t_3_upper_ci",
+                                            "t_4","t_4_mean_bootstrap","t_4_lower_ci","t_4_upper_ci",
+                                            "t_5","t_5_mean_bootstrap","t_5_lower_ci","t_5_upper_ci",
+                                            "t_6","t_6_mean_bootstrap","t_6_lower_ci","t_6_upper_ci",
+                                            "t_7","t_7_mean_bootstrap","t_7_lower_ci","t_7_upper_ci",
+                                            "t_8","t_8_mean_bootstrap","t_8_lower_ci","t_8_upper_ci",
+                                            "t_9","t_9_mean_bootstrap","t_9_lower_ci","t_9_upper_ci",
+                                            "t_10","t_10_mean_bootstrap","t_10_lower_ci","t_10_upper_ci")
     
     amplification_results_ci$sample <- sample_id
     amplification_results_ci$region <- paste(amplification_chrom,":",amplification_start,"-",amplification_stop, sep = "")
     amplification_results_ci$highest_copy_number <- max_amplification_split
+    amplification_results_ci$num_mutations_used <- nrow(tmp_values)
     
     ##############################################################################
     # Get event order
@@ -672,7 +809,8 @@ time_amplification <- function(cn_data, multiplicity_data,
     
     
     if(!is.na(single_time$t_1)){
-      amplification_results_ci$t_1 <- mean(bootstrap_amplification$t_1, na.rm = TRUE)
+      amplification_results_ci$t_1 <- single_time$t_1
+      amplification_results_ci$t_1_mean_bootstrap <- mean(bootstrap_amplification$t_1, na.rm = TRUE)
       t_1_lower_ci <- confint(lm(t_1 ~ 1, bootstrap_amplification), level = 0.95)[1]
       t_1_lower_ci_adj <- ((length(tmp_values)*t_1_lower_ci)/(5 + length(tmp_values)))
       t_1_upper_ci <- confint(lm(t_1 ~ 1, bootstrap_amplification), level = 0.95)[2]
@@ -681,7 +819,8 @@ time_amplification <- function(cn_data, multiplicity_data,
       amplification_results_ci$t_1_upper_ci <- t_1_upper_ci_adj
     }
     if(!is.na(single_time$t_2)){
-      amplification_results_ci$t_2 <- mean(bootstrap_amplification$t_2, na.rm = TRUE)
+      amplification_results_ci$t_2 <- single_time$t_2
+      amplification_results_ci$t_2_mean_bootstrap <- mean(bootstrap_amplification$t_2, na.rm = TRUE)
       t_2_lower_ci <- confint(lm(t_2 ~ 1, bootstrap_amplification), level = 0.95)[1]
       t_2_lower_ci_adj <- ((length(tmp_values)*t_2_lower_ci)/(5 + length(tmp_values)))
       t_2_upper_ci <- confint(lm(t_2 ~ 1, bootstrap_amplification), level = 0.95)[2]
@@ -690,7 +829,8 @@ time_amplification <- function(cn_data, multiplicity_data,
       amplification_results_ci$t_2_upper_ci <- t_2_upper_ci_adj
     }
     if(!is.na(single_time$t_3)){
-      amplification_results_ci$t_3 <- mean(bootstrap_amplification$t_3, na.rm = TRUE)
+      amplification_results_ci$t_3 <- single_time$t_3
+      amplification_results_ci$t_3_mean_bootstrap <- mean(bootstrap_amplification$t_3, na.rm = TRUE)
       t_3_lower_ci <- confint(lm(t_3 ~ 1, bootstrap_amplification), level = 0.95)[1]
       t_3_lower_ci_adj <- ((length(tmp_values)*t_3_lower_ci)/(5 + length(tmp_values)))
       t_3_upper_ci <- confint(lm(t_3 ~ 1, bootstrap_amplification), level = 0.95)[2]
@@ -699,7 +839,8 @@ time_amplification <- function(cn_data, multiplicity_data,
       amplification_results_ci$t_3_upper_ci <- t_3_upper_ci_adj
     }
     if(!is.na(single_time$t_4)){
-      amplification_results_ci$t_4 <- mean(bootstrap_amplification$t_4, na.rm = TRUE)
+      amplification_results_ci$t_4 <- single_time$t_4
+      amplification_results_ci$t_4_mean_bootstrap <- mean(bootstrap_amplification$t_4, na.rm = TRUE)
       t_4_lower_ci <- confint(lm(t_4 ~ 1, bootstrap_amplification), level = 0.95)[1]
       t_4_lower_ci_adj <- ((length(tmp_values)*t_4_lower_ci)/(5 + length(tmp_values)))
       t_4_upper_ci <- confint(lm(t_4 ~ 1, bootstrap_amplification), level = 0.95)[2]
@@ -708,7 +849,8 @@ time_amplification <- function(cn_data, multiplicity_data,
       amplification_results_ci$t_4_upper_ci <- t_4_upper_ci_adj
     }
     if(!is.na(single_time$t_5)){
-      amplification_results_ci$t_5 <- mean(bootstrap_amplification$t_5, na.rm = TRUE)
+      amplification_results_ci$t_5 <- single_time$t_5
+      amplification_results_ci$t_5_mean_bootstrap <- mean(bootstrap_amplification$t_5, na.rm = TRUE)
       t_5_lower_ci <- confint(lm(t_5 ~ 1, bootstrap_amplification), level = 0.95)[1]
       t_5_lower_ci_adj <- ((length(tmp_values)*t_5_lower_ci)/(5 + length(tmp_values)))
       t_5_upper_ci <- confint(lm(t_5 ~ 1, bootstrap_amplification), level = 0.95)[2]
@@ -717,7 +859,8 @@ time_amplification <- function(cn_data, multiplicity_data,
       amplification_results_ci$t_5_upper_ci <- t_5_upper_ci_adj
     }
     if(!is.na(single_time$t_6)){
-      amplification_results_ci$t_6 <- mean(bootstrap_amplification$t_6, na.rm = TRUE)
+      amplification_results_ci$t_6 <- single_time$t_6
+      amplification_results_ci$t_6_mean_bootstrap <- mean(bootstrap_amplification$t_6, na.rm = TRUE)
       t_6_lower_ci <- confint(lm(t_6 ~ 1, bootstrap_amplification), level = 0.95)[1]
       t_6_lower_ci_adj <- ((length(tmp_values)*t_6_lower_ci)/(5 + length(tmp_values)))
       t_6_upper_ci <- confint(lm(t_6 ~ 1, bootstrap_amplification), level = 0.95)[2]
@@ -726,7 +869,8 @@ time_amplification <- function(cn_data, multiplicity_data,
       amplification_results_ci$t_6_upper_ci <- t_6_upper_ci_adj
     }
     if(!is.na(single_time$t_7)){
-      amplification_results_ci$t_7 <- mean(bootstrap_amplification$t_7, na.rm = TRUE)
+      amplification_results_ci$t_7 <- single_time$t_7
+      amplification_results_ci$t_7_mean_bootstrap <- mean(bootstrap_amplification$t_7, na.rm = TRUE)
       t_7_lower_ci <- confint(lm(t_7 ~ 1, bootstrap_amplification), level = 0.95)[1]
       t_7_lower_ci_adj <- ((length(tmp_values)*t_7_lower_ci)/(5 + length(tmp_values)))
       t_7_upper_ci <- confint(lm(t_7 ~ 1, bootstrap_amplification), level = 0.95)[2]
@@ -735,7 +879,8 @@ time_amplification <- function(cn_data, multiplicity_data,
       amplification_results_ci$t_7_upper_ci <- t_7_upper_ci_adj
     }
     if(!is.na(single_time$t_8)){
-      amplification_results_ci$t_8 <- mean(bootstrap_amplification$t_8, na.rm = TRUE)
+      amplification_results_ci$t_8 <- single_time$t_8
+      amplification_results_ci$t_8_mean_bootstrap <- mean(bootstrap_amplification$t_8, na.rm = TRUE)
       t_8_lower_ci <- confint(lm(t_8 ~ 1, bootstrap_amplification), level = 0.95)[1]
       t_8_lower_ci_adj <- ((length(tmp_values)*t_8_lower_ci)/(5 + length(tmp_values)))
       t_8_upper_ci <- confint(lm(t_8 ~ 1, bootstrap_amplification), level = 0.95)[2]
@@ -744,7 +889,8 @@ time_amplification <- function(cn_data, multiplicity_data,
       amplification_results_ci$t_8_upper_ci <- t_8_upper_ci_adj
     }
     if(!is.na(single_time$t_9)){
-      amplification_results_ci$t_9 <- mean(bootstrap_amplification$t_9, na.rm = TRUE)
+      amplification_results_ci$t_9 <- single_time$t_9
+      amplification_results_ci$t_9_mean_bootstrap <- mean(bootstrap_amplification$t_9, na.rm = TRUE)
       t_9_lower_ci <- confint(lm(t_9 ~ 1, bootstrap_amplification), level = 0.95)[1]
       t_9_lower_ci_adj <- ((length(tmp_values)*t_9_lower_ci)/(5 + length(tmp_values)))
       t_9_upper_ci <- confint(lm(t_9 ~ 1, bootstrap_amplification), level = 0.95)[2]
@@ -753,7 +899,8 @@ time_amplification <- function(cn_data, multiplicity_data,
       amplification_results_ci$t_9_upper_ci <- t_9_upper_ci_adj
     }
     if(!is.na(single_time$t_10)){
-      amplification_results_ci$t_10 <- mean(bootstrap_amplification$t_10, na.rm = TRUE)
+      amplification_results_ci$t_10 <- single_time$t_10
+      amplification_results_ci$t_10_mean_bootstrap <- mean(bootstrap_amplification$t_10, na.rm = TRUE)
       t_10_lower_ci <- confint(lm(t_10 ~ 1, bootstrap_amplification), level = 0.95)[1]
       t_10_lower_ci_adj <- ((length(tmp_values)*t_10_lower_ci)/(5 + length(tmp_values)))
       t_10_upper_ci <- confint(lm(t_10 ~ 1, bootstrap_amplification), level = 0.95)[2]
@@ -766,4 +913,5 @@ time_amplification <- function(cn_data, multiplicity_data,
   
   return(amplification_results_ci)
 }
+
 
