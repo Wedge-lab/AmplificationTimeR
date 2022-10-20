@@ -561,10 +561,10 @@ time_amplification <- function(cn_data,
     tmp_cn$n2A_sum <- tmp_cn$nMaj2_A + tmp_cn$nMin2_A
   }
   
-  # subset multiplicity for amplified region
-  tmp_mult <- subset(multiplicity_data, chr == amplification_chrom & 
-                       end >= amplification_start & 
-                       end <= amplification_stop )
+  # subset multiplicity for amplified region based on CN data
+  tmp_mult <- subset(multiplicity_data, chr == tmp_cn$chr & 
+                       end >= tmp_cn$start & 
+                       end <= tmp_cn$end )
   if(nrow(tmp_mult) == 0){
     stop("Cannot subset 'multiplicity_data' for this region.  Cannot run analysis if there are no mutations in this region.")
   }
@@ -893,4 +893,5 @@ time_amplification <- function(cn_data,
   
   return(amplification_results_ci)
 }
+
 
