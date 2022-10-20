@@ -7,7 +7,7 @@
 #' @param genome Reference genome used. Must be one of "hg19" or "hg38"
 #' @return A data frame with mutations that are C>T at CpG. 
 #' @keywords internal
-#' @export
+#' @noRd
 
 clocklike_muts <- function(mutation, genome){
   muts <- mutation
@@ -70,7 +70,7 @@ clocklike_muts <- function(mutation, genome){
 #' @param ordering_event Order of events determined based on copy number and multiplicity of mutations
 #' @return A data frame containing approximate timing of each amplification, and the most likely order of events. 
 #' @keywords internal
-#' @export
+#' @noRd
 
 time_amplification_maths <- function(mult_data, max_amp, is_WGD, ordering_event){
   max_amplification_split <- max_amp
@@ -488,7 +488,7 @@ time_amplification <- function(cn_data,
   if(class(multiplicity_data)[1] != "data.frame"){
     stop("'multiplicity_data' must be an object of class 'data.frame'")
   }
-  if(!is.na(mutation_data))){
+  if(!is.na(mutation_data)){
     if(class(mutation_data)[1] != "data.frame"){
           stop("'mutation_data' must be an object of class 'data.frame'")
     }
@@ -663,7 +663,7 @@ time_amplification <- function(cn_data,
     amplification_results_ci$sample <- sample_id
     amplification_results_ci$region <- paste(amplification_chrom,":",amplification_start,"-",amplification_stop, sep = "")
     amplification_results_ci$highest_copy_number <- max_amplification_split
-    amplification_results_ci$num_mutations_used <- nrow(tmp_values)
+    amplification_results_ci$num_mutations_used <- length(tmp_values)
     
     ##############################################################################
     # Get event order

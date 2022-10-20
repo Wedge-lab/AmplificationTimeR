@@ -7,17 +7,24 @@
 time_amplification(
   cn_data,
   multiplicity_data,
+  mutation_data,
+  muts_type = "All",
   sample_id,
   amplification_chrom,
   amplification_start,
   amplification_stop,
-  is_WGD
+  is_WGD,
+  genome
 )
 }
 \arguments{
 \item{cn_data}{Data frame containing copy number information.}
 
 \item{multiplicity_data}{Data frame containing multiplicity information.}
+
+\item{mutation_data}{Data frame containing mutation data, including Ref and Alt alleles. Columns must be "chr","start","end","ref","alt". This file is required if muts_type = "All", as mutation context is required to identify clocklike mutations (C>T at CpG). Default is NA.}
+
+\item{muts_type}{Must be one of "SBS1 and SBS5" or "All". Default is set to "All".  If set to "All", the mutation_data field must be supplied, and the code will be restricted to analysis of clocklike mutations (C>T mutations at CpG sites). If set to "SBS1 and SBS5", the multiplicity_data data frame should have been filtered so as to contain only mutations that have been attributed to mutational signatures SBS1 and SBS5.}
 
 \item{sample_id}{ID name or label for sample.}
 
@@ -28,10 +35,12 @@ time_amplification(
 \item{amplification_stop}{End position of the amplified region.}
 
 \item{is_WGD}{logical: TRUE indicates that the sample has been whole genome duplicated.}
+
+\item{genome}{Reference genome used. Must be one of "hg19" or "hg38".}
 }
 \value{
 A data frame containing approximate timing of each amplification, and the most likely order of events.
 }
 \description{
-Time individual amplification events for a locus that has been gained multiple times.
+Wrapper function that times individual amplification events for a locus that has been gained multiple times.
 }
