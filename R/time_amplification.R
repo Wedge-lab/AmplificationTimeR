@@ -584,10 +584,15 @@ get_order_events <- function(multiplicity_values, max_amplification_split, is_WG
 #' Data frame containing multiplicity information.
 #' 
 #' @param mutation_data 
-#' Data frame containing mutation data, including Ref and Alt alleles. Columns must be "chr","start","end","ref","alt". This file is required if muts_type = "All", as mutation context is required to identify clocklike mutations (C>T at CpG). Default is NA. 
+#' Data frame containing mutation data, including Ref and Alt alleles. Columns must be "chr","start","end","ref","alt". 
+#' This file is required if muts_type = "All", as mutation context is required to 
+#' identify clocklike mutations (C>T at CpG), and should contain all mutations. 
+#' If muts_type == "SBS1 and SBS5" this file should contain only mutations that 
+#' have been assigned to mutational signatures SBS1 or SBS5.
 #' 
 #' @param muts_type
-#' Must be one of "SBS1 and SBS5" or "All". Default is set to "All".  If set to "All", the mutation_data field must be supplied, and the code will be restricted to analysis of clocklike mutations (C>T mutations at CpG sites). If set to "SBS1 and SBS5", the multiplicity_data data frame should have been filtered so as to contain only mutations that have been attributed to mutational signatures SBS1 and SBS5.
+#' Must be one of "SBS1 and SBS5" or "All". Default is set to "All".  If set to "All", 
+#' the mutation_data field must be supplied, and the code will be restricted to analysis of clocklike mutations (C>T mutations at CpG sites). If set to "SBS1 and SBS5", the multiplicity_data data frame should have been filtered so as to contain only mutations that have been attributed to mutational signatures SBS1 and SBS5.
 #' 
 #' @param sample_id 
 #' ID name or label for sample. 
@@ -771,6 +776,7 @@ time_amplification <- function(cn_data,
   
   ##############################################################################
   # Infer order of events using all mutations
+  
   # Get all of the multiplicities to feed into time_amplification_maths
   tmp_values <- tmp_mult$no.chrs.bearing.mut.ceiling
   event_ordering <- get_order_events(multiplicity_values = tmp_values, 
@@ -788,7 +794,7 @@ time_amplification <- function(cn_data,
     
     tmp_mult_clocklike <- merge(tmp_mult, clocklike_mutations[,c("seqnames","end")], 
                                 by.x = c("chr","end"),
-                                by.y = c("seqnames","end"))
+                                by.y = c("chr","end"))
     
     tmp_mult <- tmp_mult_clocklike
     
@@ -803,11 +809,28 @@ time_amplification <- function(cn_data,
   # then subset multiplicity file for those mutations only
   # Overwrites tmp_mult object
   
-  ### TODO
+  if(muts_type == "SBS1 and SBS5"){
+    nucleotides <- c("A","T","G","C")
+    
+    muts <- mutation_data[mutation_data$ref %in% nucleotides & mutation_data$alt %in% nucleotides,]
+    
+    tmp_mult_clocklike <- merge(tmp_mult, muts,
+                                by.x = c("chr","end"),
+                                by.y = c("chr","end"))
+    
+    tmp_mult <- tmp_mult_clocklike
+    
+    if(nrow(tmp_mult) == 0){
+      stop("Cannot subset 'multiplicity_data' for this region.  There are no SBS1 and SBS5 mutations in this region.")
+    }
+  }
   
+  ##############################################################################
   # Get all of the multiplicities to feed into time_amplification_maths
   tmp_values <- tmp_mult$no.chrs.bearing.mut.ceiling
 
+  ##############################################################################
+  # Prepare output table
   
   if(is_amplified == TRUE){
     amplification_results_ci <- as.data.frame(matrix(nrow=1, ncol = 45))
