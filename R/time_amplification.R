@@ -791,10 +791,10 @@ time_amplification <- function(cn_data,
   if(muts_type == "All"){
     
     clocklike_mutations <- clocklike_muts(mutation = mutation_data, genome = genome)
-    
+    clocklike_mutations$seqnames <- gsub("chr","",clocklike_mutations$seqnames)
     tmp_mult_clocklike <- merge(tmp_mult, clocklike_mutations[,c("seqnames","end")], 
                                 by.x = c("chr","end"),
-                                by.y = c("chr","end"))
+                                by.y = c("seqnames","end"))
     
     tmp_mult <- tmp_mult_clocklike
     
@@ -847,7 +847,7 @@ time_amplification <- function(cn_data,
                                             "t_10","t_10_mean_bootstrap","t_10_lower_ci","t_10_upper_ci")
     
     amplification_results_ci$sample <- sample_id
-    amplification_results_ci$region <- paste(amplification_chrom,":",amplification_start,"-",amplification_stop, sep = "")
+    amplification_results_ci$region <- paste(tmp_cn$chr,":",tmp_cn$start,"-",tmp_cn$end, sep = "")
     amplification_results_ci$highest_copy_number <- max_amplification_split
     amplification_results_ci$num_mutations_used <- length(tmp_values)
     
@@ -879,7 +879,7 @@ time_amplification <- function(cn_data,
     
     ############################################################################
     # Calculate confidence intervals and mean timing from bootstrap results
-    # Include everything in the ouput results
+    # Include everything in the output results
     
     if(!is.na(single_time$t_1)){
       amplification_results_ci$t_1 <- single_time$t_1
