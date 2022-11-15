@@ -504,6 +504,44 @@ get_order_events <- function(multiplicity_values, max_amplification_split, is_WG
     
     event_ordering <- "W"
     
+  }else if(max_amplification_split == c("2+1") & is_WGD == TRUE){ 
+    
+    event_ordering <- "W"
+    
+  }else if(max_amplification_split == c("2+2") & is_WGD == TRUE){ 
+    
+    event_ordering <- "W"
+    
+  }else if(max_amplification_split == c("3+0") & is_WGD == TRUE){ 
+    
+    event_ordering <- "WG"
+    
+  }else if(max_amplification_split == c("3+1") & is_WGD == TRUE){ 
+    
+    event_ordering <- "WG"
+    
+  }else if(max_amplification_split == c("3+2") & is_WGD == TRUE){ 
+    
+    event_ordering <- "WG"
+    
+  }else if(max_amplification_split == c("4+0") & is_WGD == TRUE){ 
+    
+    # WGG
+    if(n3 > 0){
+      event_ordering <- "WGG"
+    }else if(n3 == 0){# GW
+      event_ordering <- "GW"
+    }
+    
+  }else if(max_amplification_split == c("4+1") & is_WGD == TRUE){ 
+    
+    # WGG
+    if(n3 > 0){
+      event_ordering <- "WGG"
+    }else if(n3 == 0){# GW
+      event_ordering <- "GW"
+    }
+    
   }else if(max_amplification_split == c("4+2") & is_WGD == TRUE){
     # WGG
     if(n3 > 0){
@@ -512,9 +550,13 @@ get_order_events <- function(multiplicity_values, max_amplification_split, is_WG
       event_ordering <- "GW"
     }
     
-  }else if(max_amplification_split == c("4+3") & is_WGD == TRUE){
-    
-  }else if(max_amplification_split == c("4+4") & is_WGD == TRUE){
+  }else if(max_amplification_split == c("5+0") & is_WGD == TRUE){
+    # WGGG
+    if(n4 > 0){
+      event_ordering <- "WGGG"
+    }else if(n4 == 0){# GWG
+      event_ordering <- "GWG"
+    }
     
   }else if(max_amplification_split == c("5+1") & is_WGD == TRUE){
     # WGGG
@@ -530,6 +572,16 @@ get_order_events <- function(multiplicity_values, max_amplification_split, is_WG
       event_ordering <- "WGGG"
     }else if(n4 == 0){# GWG
       event_ordering <- "GWG"
+    }
+    
+  }else if(max_amplification_split == c("6+0") & is_WGD == TRUE){
+    # WGGGG
+    if((n3 > 0) & (n5 > 0)){
+      event_ordering <- "WGGGG"
+    }else if((n3 > 0) & (n5 == 0)){# GWGG
+      event_ordering <- "GWGG"
+    }else if((n3 == 0) & (n5 == 0)){# GGW
+      event_ordering <- "GGW"
     }
     
   }else if(max_amplification_split == c("6+1") & is_WGD == TRUE){
@@ -551,6 +603,92 @@ get_order_events <- function(multiplicity_values, max_amplification_split, is_WG
     }else if((n3 == 0) & (n5 == 0)){# GGW
       event_ordering <- "GGW"
     }
+  }else if(max_amplification_split == c("7+0") & is_WGD == TRUE){
+    # WGGGGG
+    if((n4 > 0) & (n6 > 0)){
+      event_ordering <- "WGGGGG"
+    }else if((n4 > 0) & (n6 == 0)){# GWGGG
+      event_ordering <- "GWGGG"
+    }else if((n4 == 0) & (n6 == 0)){# GGWG
+      event_ordering <- "GGWG"
+    }
+    
+  }else if(max_amplification_split == c("7+1") & is_WGD == TRUE){
+    # WGGGGG
+    if((n4 > 0) & (n6 > 0)){
+      event_ordering <- "WGGGGG"
+    }else if((n4 > 0) & (n6 == 0)){# GWGGG
+      event_ordering <- "GWGGG"
+    }else if((n4 == 0) & (n6 == 0)){# GGWG
+      event_ordering <- "GGWG"
+    }
+    
+  }else if(max_amplification_split == c("7+2") & is_WGD == TRUE){
+    # WGGGGG
+    if((n4 > 0) & (n6 > 0)){
+      event_ordering <- "WGGGGG"
+    }else if((n4 > 0) & (n6 == 0)){# GWGGG
+      event_ordering <- "GWGGG"
+    }else if((n4 == 0) & (n6 == 0)){# GGWG
+      event_ordering <- "GGWG"
+    }
+    
+  }else if(max_amplification_split == c("8+0") & is_WGD == TRUE){
+    # WGGGGGG
+    if((n3 > 0) & (n5 > 0) & (n7 > 0)){
+      event_ordering <- "WGGGGGG"
+    }else if((n3 > 0) & (n5 > 0) & (n7 == 0)){# GWGGGG
+      event_ordering <- "GWGGGG"
+    }else if((n3 > 0) & (n5 == 0) & (n7 == 0)){# GGWGG
+      event_ordering <- "GGWGG"
+    }else if((n3 == 0) & (n5 == 0) & (n7 == 0)){# GGGW
+      event_ordering <- "GGGW"
+    }
+    
+  }else if(max_amplification_split == c("8+1") & is_WGD == TRUE){
+    # WGGGGGG
+    if((n3 > 0) & (n5 > 0) & (n7 > 0)){
+      event_ordering <- "WGGGGGG"
+    }else if((n3 > 0) & (n5 > 0) & (n7 == 0)){# GWGGGG
+      event_ordering <- "GWGGGG"
+    }else if((n3 > 0) & (n5 == 0) & (n7 == 0)){# GGWGG
+      event_ordering <- "GGWGG"
+    }else if((n3 == 0) & (n5 == 0) & (n7 == 0)){# GGGW
+      event_ordering <- "GGGW"
+    }
+    
+  }else if(max_amplification_split == c("8+2") & is_WGD == TRUE){
+    # WGGGGGG
+    if((n3 > 0) & (n5 > 0) & (n7 > 0)){
+      event_ordering <- "WGGGGGG"
+    }else if((n3 > 0) & (n5 > 0) & (n7 == 0)){# GWGGGG
+      event_ordering <- "GWGGGG"
+    }else if((n3 > 0) & (n5 == 0) & (n7 == 0)){# GGWGG
+      event_ordering <- "GGWGG"
+    }else if((n3 == 0) & (n5 == 0) & (n7 == 0)){# GGGW
+      event_ordering <- "GGGW"
+    }
+    
+  }else if(max_amplification_split == c("9+0") & is_WGD == TRUE){
+    if((n4 > 0) & (n6 > 0) & (n8 > 0)){# WGGGGGGG
+      event_ordering <- "WGGGGGGG"
+    }else if((n4 > 0) & (n6 > 0) & (n8 == 0)){# GWGGGGG
+      event_ordering <- "GWGGGGG"
+    }else if((n4 > 0) & (n6 == 0) & (n8 == 0)){# GGWGGG
+      event_ordering <- "GGWGGG"
+    }else if((n4 == 0) & (n6 == 0) & (n8 == 0)){# GGGWG
+      event_ordering <- "GGGWG"
+    }    
+  }else if(max_amplification_split == c("9+1") & is_WGD == TRUE){
+    if((n4 > 0) & (n6 > 0) & (n8 > 0)){# WGGGGGGG
+      event_ordering <- "WGGGGGGG"
+    }else if((n4 > 0) & (n6 > 0) & (n8 == 0)){# GWGGGGG
+      event_ordering <- "GWGGGGG"
+    }else if((n4 > 0) & (n6 == 0) & (n8 == 0)){# GGWGGG
+      event_ordering <- "GGWGGG"
+    }else if((n4 == 0) & (n6 == 0) & (n8 == 0)){# GGGWG
+      event_ordering <- "GGGWG"
+    }    
   }else if(max_amplification_split == c("9+2") & is_WGD == TRUE){
     if((n4 > 0) & (n6 > 0) & (n8 > 0)){# WGGGGGGG
       event_ordering <- "WGGGGGGG"
@@ -561,6 +699,36 @@ get_order_events <- function(multiplicity_values, max_amplification_split, is_WG
     }else if((n4 == 0) & (n6 == 0) & (n8 == 0)){# GGGWG
       event_ordering <- "GGGWG"
     }    
+  }else if(max_amplification_split == c("10+0") & is_WGD == TRUE){
+    # WGGGGGGGG  
+    if((n3 > 0) & (n5 > 0) & (n7 > 0) & (n9 > 0)){
+      event_ordering <- "WGGGGGGGG"
+    }else if((n3 > 0) & (n5 > 0) & (n7 > 0) & (n9 == 0)){# GWGGGGGG 
+      event_ordering <- "GWGGGGGG"
+    }else if((n3 > 0) & (n5 > 0) & (n7 == 0) & (n9 == 0)){# GGWGGGG
+      event_ordering <- "GGWGGGG"
+    }else if((n3 > 0) & (n5 == 0) & (n7 == 0) & (n9 == 0)){# GGGWGG
+      event_ordering <- "GGGWGG"
+    }else if((n3 == 0) & (n5 == 0) & (n7 == 0) & (n9 == 0)){# GGGGW
+      event_ordering <- "GGGGW"
+    }else{
+      event_ordering <- "Something went wrong"
+    }
+  }else if(max_amplification_split == c("10+1") & is_WGD == TRUE){
+    # WGGGGGGGG  
+    if((n3 > 0) & (n5 > 0) & (n7 > 0) & (n9 > 0)){
+      event_ordering <- "WGGGGGGGG"
+    }else if((n3 > 0) & (n5 > 0) & (n7 > 0) & (n9 == 0)){# GWGGGGGG 
+      event_ordering <- "GWGGGGGG"
+    }else if((n3 > 0) & (n5 > 0) & (n7 == 0) & (n9 == 0)){# GGWGGGG
+      event_ordering <- "GGWGGGG"
+    }else if((n3 > 0) & (n5 == 0) & (n7 == 0) & (n9 == 0)){# GGGWGG
+      event_ordering <- "GGGWGG"
+    }else if((n3 == 0) & (n5 == 0) & (n7 == 0) & (n9 == 0)){# GGGGW
+      event_ordering <- "GGGGW"
+    }else{
+      event_ordering <- "Something went wrong"
+    }
   }else if(max_amplification_split == c("10+2") & is_WGD == TRUE){
     # WGGGGGGGG  
     if((n3 > 0) & (n5 > 0) & (n7 > 0) & (n9 > 0)){
@@ -576,6 +744,8 @@ get_order_events <- function(multiplicity_values, max_amplification_split, is_WG
     }else{
       event_ordering <- "Something went wrong"
     }
+  }else{
+    event_ordering <- "Order not available"
   }
   
   return(event_ordering)
