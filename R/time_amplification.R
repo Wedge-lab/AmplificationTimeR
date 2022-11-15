@@ -365,6 +365,28 @@ time_amplification_maths <- function(mult_data, max_amp, is_WGD, ordering_event)
     
   }else if(max_amplification_split == c("4+4") & is_WGD == TRUE & order_event == "Cannot be timed"){
     
+  }else if(max_amplification_split == c("5+0") & is_WGD == TRUE){
+    # WGGG
+    if(n4 > 0 & order_event == "WGGG"){
+      t_1 <- (5*n5)/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5)
+      t_2 <- (5*(n4 + n5))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5)
+      t_3 <- (5*(n3 + n4 + n5))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5)
+      t_4 <- (5*(n2 + n3 + n4 + n5))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5)
+      amplification_results$event_order <- "WGGG"
+      amplification_results$t_1 <- t_1
+      amplification_results$t_2 <- t_2
+      amplification_results$t_3 <- t_3
+      amplification_results$t_4 <- t_4
+    }else if(n4 == 0 & order_event == "GWG"){# GWG
+      t_1 <- (5*n5)/(n1 + 2*n2 + n3 + 3*n5)
+      t_2 <- (5*(n3 + n5))/(n1 + 2*n2 + n3 + 3*n5)
+      t_3 <- (5*(n2 + n5))/(n1 + 2*n2 + n3 + 3*n5)
+      amplification_results$event_order <- "GWG"
+      amplification_results$t_1 <- t_1
+      amplification_results$t_2 <- t_2
+      amplification_results$t_3 <- t_3
+    }
+    
   }else if(max_amplification_split == c("5+1") & is_WGD == TRUE){
     # WGGG
     if(n4 > 0 & order_event == "WGGG"){
