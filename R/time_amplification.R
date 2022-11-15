@@ -431,6 +431,149 @@ time_amplification_maths <- function(mult_data, max_amp, is_WGD, ordering_event)
 }
 
 ################################################################################
+#' Event order
+#'
+#' A function to infer the order of events based on the highest copy number and 
+#' multiplicity of mutations in the region. The function is designed to use all
+#' available mutations. 
+#' 
+#' @param multiplicity_values
+#' The list of multiplicity values for each mutation in the region.
+#' 
+#' @param max_amplification_split
+#' The maximum copy number state in the region.
+#' 
+#' @param is_WGD
+#' Whole genome duplication status of the tumour.
+#' 
+#' @return A character value describing the inferred order of events to be used
+#' when calculating the timing of each event.
+#' @keywords internal
+#' @noRd
+
+get_order_events <- function(multiplicity_values, max_amplification_split, is_WGD){
+  multiplicity_values <- multiplicity_values
+  if(length(multiplicity_values > 0)){
+    n1 <- sum(multiplicity_values == 1) 
+    n2 <- sum(multiplicity_values == 2) 
+    n3 <- sum(multiplicity_values == 3) 
+    n4 <- sum(multiplicity_values == 4) 
+    n5 <- sum(multiplicity_values == 5) 
+    n6 <- sum(multiplicity_values == 6) 
+    n7 <- sum(multiplicity_values == 7) 
+    n8 <- sum(multiplicity_values == 8) 
+    n9 <- sum(multiplicity_values == 9) 
+    n10 <- sum(multiplicity_values == 10) 
+    n11 <- sum(multiplicity_values == 11) 
+    n12 <- sum(multiplicity_values == 12) 
+    n13 <- sum(multiplicity_values == 13) 
+    n14 <- sum(multiplicity_values == 14) 
+    n15 <- sum(multiplicity_values == 15) 
+    n16 <- sum(multiplicity_values == 16) 
+    n17 <- sum(multiplicity_values == 17) 
+    n18 <- sum(multiplicity_values == 18) 
+    n19 <- sum(multiplicity_values == 19) 
+    n20 <- sum(multiplicity_values == 20) 
+  }
+  event_ordering <- NA
+  if(max_amplification_split == c("2+1") & is_WGD == FALSE){ ######## start with non-WGD
+    
+    event_ordering <- "G"
+    
+  }else if(max_amplification_split == c("2+2") & is_WGD == FALSE){
+    
+    event_ordering <- "Cannot be timed"
+    
+  }else if(max_amplification_split == c("3+1") & is_WGD == FALSE){
+    
+    event_ordering <- "GG"
+    
+  }else if(max_amplification_split == c("3+2") & is_WGD == FALSE){
+    
+    event_ordering <- "Cannot be timed"
+    
+  }else if(max_amplification_split == c("4+1") & is_WGD == FALSE){
+    
+    event_ordering <- "GGG"
+    
+  }else if(max_amplification_split == c("4+2") & is_WGD == TRUE){ ####### WGD onwards, with further options
+    # WGG
+    if(n3 > 0){
+      event_ordering <- "WGG"
+    }else if(n3 == 0){# GW
+      event_ordering <- "GW"
+    }
+    
+  }else if(max_amplification_split == c("4+3") & is_WGD == TRUE){
+    
+  }else if(max_amplification_split == c("4+4") & is_WGD == TRUE){
+    
+  }else if(max_amplification_split == c("5+1") & is_WGD == TRUE){
+    # WGGG
+    if(n4 > 0){
+      event_ordering <- "WGGG"
+    }else if(n4 == 0){# GWG
+      event_ordering <- "GWG"
+    }
+    
+  }else if(max_amplification_split == c("5+2") & is_WGD == TRUE){
+    # WGGG
+    if(n4 > 0){
+      event_ordering <- "WGGG"
+    }else if(n4 == 0){# GWG
+      event_ordering <- "GWG"
+    }
+    
+  }else if(max_amplification_split == c("6+1") & is_WGD == TRUE){
+    # WGGGG
+    if((n3 > 0) & (n5 > 0)){
+      event_ordering <- "WGGGG"
+    }else if((n3 > 0) & (n5 == 0)){# GWGG
+      event_ordering <- "GWGG"
+    }else if((n3 == 0) & (n5 == 0)){# GGW
+      event_ordering <- "GGW"
+    }
+    
+  }else if(max_amplification_split == c("6+2") & is_WGD == TRUE){
+    # WGGGG
+    if((n3 > 0) & (n5 > 0)){
+      event_ordering <- "WGGGG"
+    }else if((n3 > 0) & (n5 == 0)){# GWGG
+      event_ordering <- "GWGG"
+    }else if((n3 == 0) & (n5 == 0)){# GGW
+      event_ordering <- "GGW"
+    }
+  }else if(max_amplification_split == c("9+2") & is_WGD == TRUE){
+    if((n4 > 0) & (n6 > 0) & (n8 > 0)){# WGGGGGGG
+      event_ordering <- "WGGGGGGG"
+    }else if((n4 > 0) & (n6 > 0) & (n8 == 0)){# GWGGGGG
+      event_ordering <- "GWGGGGG"
+    }else if((n4 > 0) & (n6 == 0) & (n8 == 0)){# GGWGGG
+      event_ordering <- "GGWGGG"
+    }else if((n4 == 0) & (n6 == 0) & (n8 == 0)){# GGGWG
+      event_ordering <- "GGGWG"
+    }    
+  }else if(max_amplification_split == c("10+2") & is_WGD == TRUE){
+    # WGGGGGGGG  
+    if((n3 > 0) & (n5 > 0) & (n7 > 0) & (n9 > 0)){
+      event_ordering <- "WGGGGGGGG"
+    }else if((n3 > 0) & (n5 > 0) & (n7 > 0) & (n9 == 0)){# GWGGGGGG 
+      event_ordering <- "GWGGGGGG"
+    }else if((n3 > 0) & (n5 > 0) & (n7 == 0) & (n9 == 0)){# GGWGGGG
+      event_ordering <- "GGWGGGG"
+    }else if((n3 > 0) & (n5 == 0) & (n7 == 0) & (n9 == 0)){# GGGWGG
+      event_ordering <- "GGGWGG"
+    }else if((n3 == 0) & (n5 == 0) & (n7 == 0) & (n9 == 0)){# GGGGW
+      event_ordering <- "GGGGW"
+    }else{
+      event_ordering <- "Something went wrong"
+    }
+  }
+  
+  return(event_ordering)
+}
+
+################################################################################
 #' Amplification timing
 #'
 #' Wrapper function that times individual amplification events for a locus that has been gained multiple times.
@@ -441,10 +584,15 @@ time_amplification_maths <- function(mult_data, max_amp, is_WGD, ordering_event)
 #' Data frame containing multiplicity information.
 #' 
 #' @param mutation_data 
-#' Data frame containing mutation data, including Ref and Alt alleles. Columns must be "chr","start","end","ref","alt". This file is required if muts_type = "All", as mutation context is required to identify clocklike mutations (C>T at CpG). Default is NA. 
+#' Data frame containing mutation data, including Ref and Alt alleles. Columns must be "chr","start","end","ref","alt". 
+#' This file is required if muts_type = "All", as mutation context is required to 
+#' identify clocklike mutations (C>T at CpG), and should contain all mutations. 
+#' If muts_type == "SBS1 and SBS5" this file should contain only mutations that 
+#' have been assigned to mutational signatures SBS1 or SBS5.
 #' 
 #' @param muts_type
-#' Must be one of "SBS1 and SBS5" or "All". Default is set to "All".  If set to "All", the mutation_data field must be supplied, and the code will be restricted to analysis of clocklike mutations (C>T mutations at CpG sites). If set to "SBS1 and SBS5", the multiplicity_data data frame should have been filtered so as to contain only mutations that have been attributed to mutational signatures SBS1 and SBS5.
+#' Must be one of "SBS1 and SBS5" or "All". Default is set to "All".  If set to "All", 
+#' the mutation_data field must be supplied, and the code will be restricted to analysis of clocklike mutations (C>T mutations at CpG sites). If set to "SBS1 and SBS5", the multiplicity_data data frame should have been filtered so as to contain only mutations that have been attributed to mutational signatures SBS1 and SBS5.
 #' 
 #' @param sample_id 
 #' ID name or label for sample. 
@@ -478,7 +626,7 @@ time_amplification <- function(cn_data,
                                is_WGD,
                                genome){
   
-  ########
+  ##############################################################################
   # Check input
   
   # Input is right type
@@ -567,6 +715,7 @@ time_amplification <- function(cn_data,
     tmp_cn$n2A_sum <- tmp_cn$nMaj2_A + tmp_cn$nMin2_A
   }
   
+  ##############################################################################
   # subset multiplicity for amplified region based on CN data
   tmp_mult <- subset(multiplicity_data, chr == tmp_cn$chr & 
                        end >= tmp_cn$start & 
@@ -580,31 +729,14 @@ time_amplification <- function(cn_data,
   tmp_mult$no.chrs.bearing.mut.ceiling <- ceiling(tmp_mult$no.chrs.bearing.mut)
   
   ###
-  # if "All" mutations have been supplied, identify clock-like mutations
-  # then subset multiplicity file for those mutations only
-  if(muts_type == "All"){
-    
-    clocklike_mutations <- clocklike_muts(mutation = mutation_data, genome = genome)
-    
-    tmp_mult_clocklike <- merge(tmp_mult, clocklike_mutations[,c("seqnames","end")], 
-                                by.x = c("chr","end"),
-                                by.y = c("seqnames","end"))
-    
-    tmp_mult <- tmp_mult_clocklike
-    
-    if(nrow(tmp_mult) == 0){
-      stop("Cannot subset 'multiplicity_data' for this region.  There are no clock-like mutations in this region.")
-    }
-    
-  }
-  
-  ###
   # Assuming region is spanned by 1 copy number segment
   # adjust later to account for partially gained regions
   ###
   
+  ##############################################################################
   # Check if region is amplified
   # Cannot run code if region is not amplified
+  
   is_amplified <- NA
   
   if(c("n2A_sum") %in% colnames(tmp_cn)){
@@ -642,9 +774,63 @@ time_amplification <- function(cn_data,
   }
   
   
+  ##############################################################################
+  # Infer order of events using all mutations
   
   # Get all of the multiplicities to feed into time_amplification_maths
   tmp_values <- tmp_mult$no.chrs.bearing.mut.ceiling
+  event_ordering <- get_order_events(multiplicity_values = tmp_values, 
+                                     max_amplification_split = max_amplification_split, 
+                                     is_WGD = is_WGD)
+  
+  ##############################################################################
+  # if "All" mutations have been supplied, identify clock-like mutations
+  # then subset multiplicity file for those mutations only
+  # Overwrites tmp_mult object
+  
+  if(muts_type == "All"){
+    
+    clocklike_mutations <- clocklike_muts(mutation = mutation_data, genome = genome)
+    clocklike_mutations$seqnames <- gsub("chr","",clocklike_mutations$seqnames)
+    tmp_mult_clocklike <- merge(tmp_mult, clocklike_mutations[,c("seqnames","end")], 
+                                by.x = c("chr","end"),
+                                by.y = c("seqnames","end"))
+    
+    tmp_mult <- tmp_mult_clocklike
+    
+    if(nrow(tmp_mult) == 0){
+      stop("Cannot subset 'multiplicity_data' for this region.  There are no clock-like mutations in this region.")
+    }
+    
+  }
+  
+  ##############################################################################
+  # if "SBS1 ans SBS5" mutations have been supplied, identify matching multiplicities
+  # then subset multiplicity file for those mutations only
+  # Overwrites tmp_mult object
+  
+  if(muts_type == "SBS1 and SBS5"){
+    nucleotides <- c("A","T","G","C")
+    
+    muts <- mutation_data[mutation_data$ref %in% nucleotides & mutation_data$alt %in% nucleotides,]
+    
+    tmp_mult_clocklike <- merge(tmp_mult, muts,
+                                by.x = c("chr","end"),
+                                by.y = c("chr","end"))
+    
+    tmp_mult <- tmp_mult_clocklike
+    
+    if(nrow(tmp_mult) == 0){
+      stop("Cannot subset 'multiplicity_data' for this region.  There are no SBS1 and SBS5 mutations in this region.")
+    }
+  }
+  
+  ##############################################################################
+  # Get all of the multiplicities to feed into time_amplification_maths
+  tmp_values <- tmp_mult$no.chrs.bearing.mut.ceiling
+
+  ##############################################################################
+  # Prepare output table
   
   if(is_amplified == TRUE){
     amplification_results_ci <- as.data.frame(matrix(nrow=1, ncol = 45))
@@ -661,129 +847,12 @@ time_amplification <- function(cn_data,
                                             "t_10","t_10_mean_bootstrap","t_10_lower_ci","t_10_upper_ci")
     
     amplification_results_ci$sample <- sample_id
-    amplification_results_ci$region <- paste(amplification_chrom,":",amplification_start,"-",amplification_stop, sep = "")
+    amplification_results_ci$region <- paste(tmp_cn$chr,":",tmp_cn$start,"-",tmp_cn$end, sep = "")
     amplification_results_ci$highest_copy_number <- max_amplification_split
     amplification_results_ci$num_mutations_used <- length(tmp_values)
     
-    ##############################################################################
-    # Get event order
-    if(length(tmp_values > 0)){
-      n1 <- sum(tmp_values == 1) 
-      n2 <- sum(tmp_values == 2) 
-      n3 <- sum(tmp_values == 3) 
-      n4 <- sum(tmp_values == 4) 
-      n5 <- sum(tmp_values == 5) 
-      n6 <- sum(tmp_values == 6) 
-      n7 <- sum(tmp_values == 7) 
-      n8 <- sum(tmp_values == 8) 
-      n9 <- sum(tmp_values == 9) 
-      n10 <- sum(tmp_values == 10) 
-      n11 <- sum(tmp_values == 11) 
-      n12 <- sum(tmp_values == 12) 
-      n13 <- sum(tmp_values == 13) 
-      n14 <- sum(tmp_values == 14) 
-      n15 <- sum(tmp_values == 15) 
-      n16 <- sum(tmp_values == 16) 
-      n17 <- sum(tmp_values == 17) 
-      n18 <- sum(tmp_values == 18) 
-      n19 <- sum(tmp_values == 19) 
-      n20 <- sum(tmp_values == 20) 
-    }
-    event_ordering <- NA
-    if(max_amplification_split == c("2+1") & is_WGD == FALSE){ ######## start with non-WGD
-      
-      event_ordering <- "G"
-      
-    }else if(max_amplification_split == c("2+2") & is_WGD == FALSE){
-      
-      event_ordering <- "Cannot be timed"
-      
-    }else if(max_amplification_split == c("3+1") & is_WGD == FALSE){
-      
-      event_ordering <- "GG"
-      
-    }else if(max_amplification_split == c("3+2") & is_WGD == FALSE){
-      
-      event_ordering <- "Cannot be timed"
-      
-    }else if(max_amplification_split == c("4+1") & is_WGD == FALSE){
-      
-      event_ordering <- "GGG"
-      
-    }else if(max_amplification_split == c("4+2") & is_WGD == TRUE){ ####### WGD onwards, with further options
-      # WGG
-      if(n3 > 0){
-        event_ordering <- "WGG"
-      }else if(n3 == 0){# GW
-        event_ordering <- "GW"
-      }
-      
-    }else if(max_amplification_split == c("4+3") & is_WGD == TRUE){
-      
-    }else if(max_amplification_split == c("4+4") & is_WGD == TRUE){
-      
-    }else if(max_amplification_split == c("5+1") & is_WGD == TRUE){
-      # WGGG
-      if(n4 > 0){
-        event_ordering <- "WGGG"
-      }else if(n4 == 0){# GWG
-        event_ordering <- "GWG"
-      }
-      
-    }else if(max_amplification_split == c("5+2") & is_WGD == TRUE){
-      # WGGG
-      if(n4 > 0){
-        event_ordering <- "WGGG"
-      }else if(n4 == 0){# GWG
-        event_ordering <- "GWG"
-      }
-      
-    }else if(max_amplification_split == c("6+1") & is_WGD == TRUE){
-      # WGGGG
-      if((n3 > 0) & (n5 > 0)){
-        event_ordering <- "WGGGG"
-      }else if((n3 > 0) & (n5 == 0)){# GWGG
-        event_ordering <- "GWGG"
-      }else if((n3 == 0) & (n5 == 0)){# GGW
-        event_ordering <- "GGW"
-      }
-      
-    }else if(max_amplification_split == c("6+2") & is_WGD == TRUE){
-      # WGGGG
-      if((n3 > 0) & (n5 > 0)){
-        event_ordering <- "WGGGG"
-      }else if((n3 > 0) & (n5 == 0)){# GWGG
-        event_ordering <- "GWGG"
-      }else if((n3 == 0) & (n5 == 0)){# GGW
-        event_ordering <- "GGW"
-      }
-    }else if(max_amplification_split == c("9+2") & is_WGD == TRUE){
-      if((n4 > 0) & (n6 > 0) & (n8 > 0)){# WGGGGGGG
-        event_ordering <- "WGGGGGGG"
-      }else if((n4 > 0) & (n6 > 0) & (n8 == 0)){# GWGGGGG
-        event_ordering <- "GWGGGGG"
-      }else if((n4 > 0) & (n6 == 0) & (n8 == 0)){# GGWGGG
-        event_ordering <- "GGWGGG"
-      }else if((n4 == 0) & (n6 == 0) & (n8 == 0)){# GGGWG
-        event_ordering <- "GGGWG"
-      }    
-      }else if(max_amplification_split == c("10+2") & is_WGD == TRUE){
-      # WGGGGGGGG  
-      if((n3 > 0) & (n5 > 0) & (n7 > 0) & (n9 > 0)){
-        event_ordering <- "WGGGGGGGG"
-      }else if((n3 > 0) & (n5 > 0) & (n7 > 0) & (n9 == 0)){# GWGGGGGG 
-        event_ordering <- "GWGGGGGG"
-      }else if((n3 > 0) & (n5 > 0) & (n7 == 0) & (n9 == 0)){# GGWGGGG
-        event_ordering <- "GGWGGGG"
-      }else if((n3 > 0) & (n5 == 0) & (n7 == 0) & (n9 == 0)){# GGGWGG
-        event_ordering <- "GGGWGG"
-      }else if((n3 == 0) & (n5 == 0) & (n7 == 0) & (n9 == 0)){# GGGGW
-        event_ordering <- "GGGGW"
-      }else{
-        event_ordering <- "Something went wrong"
-      }
-    }
-    ##############################################################################
+    ############################################################################
+    # Get timing estimate based on raw data (subsetted for clock-like or signature mutations)
     
     single_time <- time_amplification_maths(mult_data = tmp_values, 
                                             max_amp = max_amplification_split, 
@@ -791,6 +860,8 @@ time_amplification <- function(cn_data,
                                             ordering_event = event_ordering)
     amplification_results_ci$event_order <- single_time$event_order                                                                                         
     
+    ############################################################################
+    # Get a bootstrap estimate of amplification times
     
     bootstrap_amplification <- as.data.frame(matrix(nrow = 500, ncol = 12))
     colnames(bootstrap_amplification) <- c("highest_copy_number","event_order",
@@ -806,7 +877,9 @@ time_amplification <- function(cn_data,
                                                                   ordering_event = event_ordering)
     }
     
-    
+    ############################################################################
+    # Calculate confidence intervals and mean timing from bootstrap results
+    # Include everything in the output results
     
     if(!is.na(single_time$t_1)){
       amplification_results_ci$t_1 <- single_time$t_1
