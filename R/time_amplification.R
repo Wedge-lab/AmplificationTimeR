@@ -476,7 +476,11 @@ get_order_events <- function(multiplicity_values, max_amplification_split, is_WG
     n20 <- sum(multiplicity_values == 20) 
   }
   event_ordering <- NA
-  if(max_amplification_split == c("2+1") & is_WGD == FALSE){ ######## start with non-WGD
+  if(max_amplification_split == c("2+0") & is_WGD == FALSE){ ######## start with non-WGD
+    
+    event_ordering <- "G"
+    
+  }else if(max_amplification_split == c("2+1") & is_WGD == FALSE){ 
     
     event_ordering <- "G"
     
@@ -496,7 +500,11 @@ get_order_events <- function(multiplicity_values, max_amplification_split, is_WG
     
     event_ordering <- "GGG"
     
-  }else if(max_amplification_split == c("4+2") & is_WGD == TRUE){ ####### WGD onwards, with further options
+  }else if(max_amplification_split == c("2+0") & is_WGD == TRUE){ ####### WGD onwards, with further options
+    
+    event_ordering <- "W"
+    
+  }else if(max_amplification_split == c("4+2") & is_WGD == TRUE){
     # WGG
     if(n3 > 0){
       event_ordering <- "WGG"
