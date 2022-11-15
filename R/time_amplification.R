@@ -500,6 +500,30 @@ get_order_events <- function(multiplicity_values, max_amplification_split, is_WG
     
     event_ordering <- "GGG"
     
+  }else if(max_amplification_split == c("5+1") & is_WGD == FALSE){
+    
+    event_ordering <- "GGGG"
+    
+  }else if(max_amplification_split == c("6+1") & is_WGD == FALSE){
+    
+    event_ordering <- "GGGGG"
+    
+  }else if(max_amplification_split == c("7+1") & is_WGD == FALSE){
+    
+    event_ordering <- "GGGGGG"
+    
+  }else if(max_amplification_split == c("8+1") & is_WGD == FALSE){
+    
+    event_ordering <- "GGGGGGG"
+    
+  }else if(max_amplification_split == c("9+1") & is_WGD == FALSE){
+    
+    event_ordering <- "GGGGGGGG"
+    
+  }else if(max_amplification_split == c("10+1") & is_WGD == FALSE){
+    
+    event_ordering <- "GGGGGGGGG"
+    
   }else if(max_amplification_split == c("2+0") & is_WGD == TRUE){ ####### WGD onwards, with further options
     
     event_ordering <- "W"
