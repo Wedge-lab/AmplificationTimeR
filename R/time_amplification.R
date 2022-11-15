@@ -254,6 +254,26 @@ time_amplification_maths <- function(mult_data, max_amp, is_WGD, ordering_event)
     amplification_results$t_8 <- t_8
     amplification_results$t_9 <- t_9
     
+    ##################### WGD onwards, with further options ####################
+  }else if(max_amplification_split == c("2+0") & is_WGD == TRUE){
+    
+    t_1 <- (2*n2)/(n1 + 2*n2)
+    
+    amplification_results$event_order <- "G"
+    amplification_results$t_1 <- t_1
+    
+  }else if(max_amplification_split == c("2+1") & is_WGD == TRUE){
+    
+    t_1 <- (3*n2)/(n1+2*n2)
+    amplification_results$event_order <- "G"
+    amplification_results$t_1 <- t_1
+    
+  }else if(max_amplification_split == c("2+2") & is_WGD == TRUE){
+    
+    t_1 <- ()/()
+    amplification_results$event_order <- "G"
+    amplification_results$t_1 <- t_1
+    
   }else if(max_amplification_split == c("4+2") & is_WGD == TRUE){ ####### WGD onwards, with further options
     # WGG
     if(n3 > 0 & order_event == "WGG"){
