@@ -293,13 +293,13 @@ time_amplification_maths <- function(mult_data, max_amp, is_WGD, ordering_event)
   }else if(max_amplification_split == c("2+1") & is_WGD == TRUE){
     
     t_1 <- (3*n2)/(n1+2*n2)
-    amplification_results$event_order <- "G"
+    amplification_results$event_order <- "W"
     amplification_results$t_1 <- t_1
     
   }else if(max_amplification_split == c("2+2") & is_WGD == TRUE){
     
-    t_1 <- ()/()
-    amplification_results$event_order <- "G"
+    t_1 <- (2*n2)/(n1 + 2*n2)
+    amplification_results$event_order <- "W"
     amplification_results$t_1 <- t_1
     
   }else if(max_amplification_split == c("3+0") & is_WGD == TRUE){
