@@ -1815,8 +1815,10 @@ time_amplification <- function(cn_data,
     }else if(max_amplification == c("n2A_sum")){
       max_amplification_split <- tmp_cn$n2A
     }
+    clonality_status <- "subclonal"
   }else{
     max_amplification_split <- tmp_cn$n1A
+    clonality_status <- "clonal"
   }
   
   
@@ -1879,8 +1881,8 @@ time_amplification <- function(cn_data,
   # Prepare output table
   
   if(is_amplified == TRUE){
-    amplification_results_ci <- as.data.frame(matrix(nrow=1, ncol = 45))
-    colnames(amplification_results_ci) <- c("sample","region","highest_copy_number","event_order","num_mutations_used",
+    amplification_results_ci <- as.data.frame(matrix(nrow=1, ncol = 46))
+    colnames(amplification_results_ci) <- c("sample","region","highest_copy_number","event_order","num_mutations_used","clonality_status",
                                             "t_1","t_1_median_bootstrap","t_1_lower_ci","t_1_upper_ci",
                                             "t_2","t_2_median_bootstrap","t_2_lower_ci","t_2_upper_ci",
                                             "t_3","t_3_median_bootstrap","t_3_lower_ci","t_3_upper_ci",
@@ -1896,6 +1898,7 @@ time_amplification <- function(cn_data,
     amplification_results_ci$region <- paste(tmp_cn$chr,":",tmp_cn$start,"-",tmp_cn$end, sep = "")
     amplification_results_ci$highest_copy_number <- max_amplification_split
     amplification_results_ci$num_mutations_used <- length(tmp_values)
+    amplification_results_ci$clonality_status <- clonality_status
     
     ############################################################################
     # Get timing estimate based on raw data (subsetted for clock-like or signature mutations)
