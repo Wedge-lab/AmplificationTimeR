@@ -1327,17 +1327,9 @@ get_order_events <- function(multiplicity_values, max_amplification_split, is_WG
     
     event_ordering <- "G"
     
-  }else if(max_amplification_split == c("2+2") & is_WGD == FALSE){
-    
-    event_ordering <- "Cannot be timed"
-    
   }else if(max_amplification_split == c("3+1") & is_WGD == FALSE){
     
     event_ordering <- "GG"
-    
-  }else if(max_amplification_split == c("3+2") & is_WGD == FALSE){
-    
-    event_ordering <- "Cannot be timed"
     
   }else if(max_amplification_split == c("4+1") & is_WGD == FALSE){
     
@@ -1612,7 +1604,7 @@ get_order_events <- function(multiplicity_values, max_amplification_split, is_WG
       event_ordering <- "Something went wrong"
     }
   }else{
-    event_ordering <- "Order not available"
+    event_ordering <- "Cannot be timed"
   }
   
   return(event_ordering)
@@ -1786,7 +1778,7 @@ time_amplification <- function(cn_data,
   is_amplified <- NA
   
   if(c("n2A_sum") %in% colnames(tmp_cn)){
-    if(is_WGD == FALSE & tmp_cn$n1A_sum <= 2 & tmp_cn$n2A_sum <= 2){
+    if(is_WGD == FALSE & tmp_cn$n1A_sum <= 2 & tmp_cn$n2A_sum <= 2 & tmp_cn$nMin1_A > 0 & tmp_cn$nMin2_A > 0){
       stop("Region not amplified in sample")
       
     }else if(is_WGD == TRUE & tmp_cn$n1A_sum <= 4 & tmp_cn$n2A_sum <= 4){
@@ -1796,7 +1788,7 @@ time_amplification <- function(cn_data,
       is_amplified <- TRUE
     }
   }else{
-    if(is_WGD == FALSE & tmp_cn$n1A_sum <= 2){
+    if(is_WGD == FALSE & tmp_cn$n1A_sum <= 2 & tmp_cn$nMin1_A > 0){
       stop("Region not amplified in sample")
       
     }else if(is_WGD == TRUE & tmp_cn$n1A_sum <= 4){
