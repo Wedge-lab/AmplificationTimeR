@@ -327,7 +327,38 @@ test_that("AmplificationTimeR produces expected output when all input is correct
 # create tests for different copy numbers and test output
 ###
 
-#### 2+1 ####
+#### Not WGD ####
+#### Not WGD fails 
+# test that certain scenarios fail when sample is not WGD
+test_that("AmplificationTimeR fails when region is not timeable in diploid sample.", {
+  expect_equal(time_amplification(cn_data = test_data_cn_not_timeable,
+                                  multiplicity_data = test_data_mult,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = test_data_status,
+                                  genome = "hg19")[,"event_order"],"Cannot be timed")
+})
+#### 2+0 ####
+test_that("AmplificationTimeR runs and produces 2+0 highest output", {
+  expect_equal(time_amplification(cn_data = test_data_cn_2_0,
+                                  multiplicity_data = test_data_mult,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = test_data_status,
+                                  genome = "hg19")[,"highest_copy_number"],"2+0")
+})
+
+# 2+1 has been tested many times
+
+#### 2+2 ####
 test_that("AmplificationTimeR runs and produces 2+2 highest output", {
   expect_equal(time_amplification(cn_data = test_data_cn_2_2,
                                   multiplicity_data = test_data_mult,
@@ -385,6 +416,27 @@ test_that("AmplificationTimeR runs and produces 4+1 highest output", {
                                   genome = "hg19")[,"highest_copy_number"],"4+1")
 })
 
+#### 5+1 ####
+
+#### 6+1 ####
+
+#### 7+1 ####
+
+#### 8+1 ####
+
+#### 9+1 ####
+
+#### 10+1 ####
+
+#### WGD ####
+#### 2+0 ####
+#### 2+1 ####
+#### 2+2 ####
+#### 3+0 ####
+#### 3+1 ####
+#### 3+2 ####
+#### 4+0 ####
+#### 4+1 ####
 #### 4+2 ####
 test_that("AmplificationTimeR runs and produces 4+2 highest output and right order", {
   expect_equal(time_amplification(cn_data = test_data_cn_4_2,
@@ -457,7 +509,7 @@ test_that("AmplificationTimeR runs and produces 4+4 highest output", {
                                   is_WGD = test_data_status,
                                   genome = "hg19")[,"highest_copy_number"],"4+4")
 })
-
+#### 5+0 ####
 #### 5+1 ####
 test_that("AmplificationTimeR runs and produces 5+1 highest output and order", {
   expect_equal(time_amplification(cn_data = test_data_cn_5_1,
@@ -545,7 +597,7 @@ test_that("AmplificationTimeR runs and produces 5+2 highest output and order", {
                                   is_WGD = TRUE,
                                   genome = "hg19")[,"event_order"],"GWG")
 })
-
+#### 6+0 ####
 #### 6+1 ####
 test_that("AmplificationTimeR runs and produces 6+1 highest output and order", {
   expect_equal(time_amplification(cn_data = test_data_cn_6_1,
@@ -673,7 +725,14 @@ test_that("AmplificationTimeR runs and produces 6+2 highest output and order", {
                                   is_WGD = TRUE,
                                   genome = "hg19")[,"event_order"],"GGW")
 })
-
+#### 7+0 ####
+#### 7+1 ####
+#### 7+2 ####
+#### 8+0 ####
+#### 8+1 ####
+#### 8+2 ####
+#### 9+0 ####
+#### 9+1 ####
 #### 9+2 ####
 test_that("AmplificationTimeR runs and produces 9+2 highest output and order", {
   expect_equal(time_amplification(cn_data = test_data_cn_9_2,
@@ -757,7 +816,8 @@ test_that("AmplificationTimeR runs and produces 9+2 highest output and order", {
                                   is_WGD = TRUE,
                                   genome = "hg19")[,"event_order"],"GGGWG")
 })
-
+#### 10+0 ####
+#### 10+1 ####
 #### 10+2 ####
 test_that("AmplificationTimeR runs and produces 10+2 highest output and order", {
   expect_equal(time_amplification(cn_data = test_data_cn_10_2,
