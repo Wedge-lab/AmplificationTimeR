@@ -1681,11 +1681,11 @@ time_amplification <- function(cn_data,
   if(class(multiplicity_data)[1] != "data.frame"){
     stop("'multiplicity_data' must be an object of class 'data.frame'")
   }
-  if(!is.na(mutation_data)){
-    if(class(mutation_data)[1] != "data.frame"){
-      stop("'mutation_data' must be an object of class 'data.frame'")
-    }
+
+  if(class(mutation_data)[1] != "data.frame"){
+    stop("'mutation_data' must be an object of class 'data.frame'")
   }
+
   if(!is.character(sample_id)){
     stop("'sample_id' must be an object of type 'character'")
   }
@@ -1709,7 +1709,7 @@ time_amplification <- function(cn_data,
   if(!(genome %in% c("hg19","hg38"))){
     stop("'muts_type' must be either 'hg19' or 'hg38'")
   }
-  if(!all("chr","start","end","ref","alt") %in% colnames(mutation_data)){
+  if(!all(c("chr","start","end","ref","alt") %in% colnames(mutation_data))){
       stop("'mutation_data' must contain the following columns: 'chr','start','end','ref','alt'.")
   }
   if(muts_type == "All"){

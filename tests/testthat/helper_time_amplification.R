@@ -6,10 +6,16 @@ test_data_cn$startpos <- as.numeric(test_data_cn$startpos)
 test_data_cn$endpos <- as.numeric(test_data_cn$endpos)
 test_data_cn$nMaj1_A <- as.numeric(test_data_cn$nMaj1_A)
 test_data_cn$nMin1_A <- as.numeric(test_data_cn$nMin1_A)
+
 test_data_mult <- as.data.frame(matrix(nrow = 20, ncol = 3, data = c(rep("1",20),1:20,rep(2,5),rep(1,15))))
 colnames(test_data_mult) <- c("chr","end","no.chrs.bearing.mut")
 test_data_mult$end <- as.numeric(test_data_mult$end)
 test_data_mult$no.chrs.bearing.mut <- as.numeric(test_data_mult$no.chrs.bearing.mut)
+
+test_data_muts <- as.data.frame(matrix(nrow = 20, ncol = 5, data = c(rep("1",20),1:20,1:20,rep("C",15),rep("A",5),rep("T",15),rep("G",5))))
+colnames(test_data_muts) <- c("chr", "start", "end", "ref", "alt")
+test_data_muts$start <- as.numeric(test_data_muts$start)
+test_data_muts$end <- as.numeric(test_data_muts$end)
 
 test_data_id <- "test_data"
 test_data_chrom <- "1"
@@ -18,7 +24,7 @@ test_data_stop <- 20
 test_data_status <- FALSE
 
 test_output <- as.data.frame(matrix(nrow = 1, ncol = 45, data = c("test_data","1:1-20","2+1","G","20",
-                                                                  "0.4","0.398747736687946","0.310593012127826","0.527403366572887",
+                                                                  "0.6","0.6000000","0.4544354","0.67996774",
                                                                   NA,NA,NA,NA,
                                                                   NA,NA,NA,NA,
                                                                   NA,NA,NA,NA,
