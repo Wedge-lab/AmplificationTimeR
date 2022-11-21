@@ -120,7 +120,7 @@ time_amplification_maths <- function(mult_data, max_amp, is_WGD, ordering_event)
     amplification_results$event_order <- "G"
     amplification_results$t_1 <- t_1
     
-  }elseif(max_amplification_split == c("2+1") & is_WGD == FALSE & order_event == "G"){ ######## start with non-WGD
+  }else if(max_amplification_split == c("2+1") & is_WGD == FALSE & order_event == "G"){ ######## start with non-WGD
     
     t_1 <- (3*n2)/(n1+2*n2)
     amplification_results$event_order <- "G"
