@@ -2,7 +2,7 @@
 library(testthat)
 library(covr)
 
-# test input
+#### test input ####
 test_that("AmplificationTimeR runs and produces a data.frame when all input is correct", {
   expect_equal(class(time_amplification(cn_data = test_data_cn,
                                   multiplicity_data = test_data_mult,
@@ -182,6 +182,7 @@ test_that("AmplificationTimeR fails and produces an error message when sample_id
   
 })
 
+#### Test parameter choices ####
 # test that code deals with nMaj2_A AND nMin2_A in input
 
 test_that("AmplificationTimeR runs and produces a data.frame when nMaj2_A and nMin2_A are included", {
@@ -283,6 +284,7 @@ test_that("AmplificationTimeR runs and produces a data.frame when nMaj2_A and nM
                                   genome = "hg19")[,"highest_copy_number"],"2+1")
 })
 
+#### Check output ####
 # test output
 test_that("AmplificationTimeR runs and produces a data.frame with correct columns when all input is correct", {
                                            expect_equal(colnames(time_amplification(cn_data = test_data_cn,
@@ -294,7 +296,7 @@ test_that("AmplificationTimeR runs and produces a data.frame with correct column
                                                                                     amplification_start = test_data_start,
                                                                                     amplification_stop = test_data_stop,
                                                                                     is_WGD = test_data_status,
-                                                                                    genome = "hg19")),c("sample","region","highest_copy_number","event_order","num_mutations_used",
+                                                                                    genome = "hg19")),c("sample","region","highest_copy_number","event_order","num_mutations_used","clonality_status",
                                                                                                                   "t_1","t_1_median_bootstrap","t_1_lower_ci","t_1_upper_ci",
                                                                                                                   "t_2","t_2_median_bootstrap","t_2_lower_ci","t_2_upper_ci",
                                                                                                                   "t_3","t_3_median_bootstrap","t_3_lower_ci","t_3_upper_ci",
@@ -305,9 +307,9 @@ test_that("AmplificationTimeR runs and produces a data.frame with correct column
                                                                                                                   "t_8","t_8_median_bootstrap","t_8_lower_ci","t_8_upper_ci",
                                                                                                                   "t_9","t_9_median_bootstrap","t_9_lower_ci","t_9_upper_ci",
                                                                                                                   "t_10","t_10_median_bootstrap","t_10_lower_ci","t_10_upper_ci"))
-                                         })
+})
 
-# *** Issue with this test is that bootstrap isn't reproducible because of seed - fix in later versions ***
+# test that expected output is correct when input is correct
 test_that("AmplificationTimeR produces expected output when all input is correct", {
   expect_equal(time_amplification(cn_data = test_data_cn,
                                   multiplicity_data = test_data_mult,
@@ -321,10 +323,11 @@ test_that("AmplificationTimeR produces expected output when all input is correct
                                   genome = "hg19"), test_output)
 })
 
-########
+######## Different copy number outputs ####
 # create tests for different copy numbers and test output
 ###
-# 2+1
+
+#### 2+1 ####
 test_that("AmplificationTimeR runs and produces 2+2 highest output", {
   expect_equal(time_amplification(cn_data = test_data_cn_2_2,
                                   multiplicity_data = test_data_mult,
@@ -338,7 +341,7 @@ test_that("AmplificationTimeR runs and produces 2+2 highest output", {
                                   genome = "hg19")[,"highest_copy_number"],"2+2")
 })
 
-# 3+1
+#### 3+1 ####
 test_that("AmplificationTimeR runs and produces 3+1 highest output", {
   expect_equal(time_amplification(cn_data = test_data_cn_3_1,
                                   multiplicity_data = test_data_mult,
@@ -353,7 +356,7 @@ test_that("AmplificationTimeR runs and produces 3+1 highest output", {
 })
 
 
-# 3+2
+#### 3+2 ####
 test_that("AmplificationTimeR runs and produces 3+2 highest output", {
   expect_equal(time_amplification(cn_data = test_data_cn_3_2,
                                   multiplicity_data = test_data_mult,
@@ -368,7 +371,7 @@ test_that("AmplificationTimeR runs and produces 3+2 highest output", {
 })
 
 
-# 4+1
+#### 4+1 ####
 test_that("AmplificationTimeR runs and produces 4+1 highest output", {
   expect_equal(time_amplification(cn_data = test_data_cn_4_1,
                                   multiplicity_data = test_data_mult,
@@ -382,7 +385,7 @@ test_that("AmplificationTimeR runs and produces 4+1 highest output", {
                                   genome = "hg19")[,"highest_copy_number"],"4+1")
 })
 
-# 4+2
+#### 4+2 ####
 test_that("AmplificationTimeR runs and produces 4+2 highest output and right order", {
   expect_equal(time_amplification(cn_data = test_data_cn_4_2,
                                   multiplicity_data = test_data_mult_4_2_WGG,
@@ -427,7 +430,7 @@ test_that("AmplificationTimeR runs and produces 4+2 highest output and right ord
 })
 
 
-# 4+3
+#### 4+3 ####
 test_that("AmplificationTimeR runs and produces 4+3 highest output", {
   expect_equal(time_amplification(cn_data = test_data_cn_4_3,
                                   multiplicity_data = test_data_mult,
@@ -441,7 +444,7 @@ test_that("AmplificationTimeR runs and produces 4+3 highest output", {
                                   genome = "hg19")[,"highest_copy_number"],"4+3") # fix once added
 })
 
-# 4+4
+#### 4+4 ####
 test_that("AmplificationTimeR runs and produces 4+4 highest output", {
   expect_equal(time_amplification(cn_data = test_data_cn_4_4,
                                   multiplicity_data = test_data_mult,
@@ -455,7 +458,7 @@ test_that("AmplificationTimeR runs and produces 4+4 highest output", {
                                   genome = "hg19")[,"highest_copy_number"],"4+4")
 })
 
-# 5+1
+#### 5+1 ####
 test_that("AmplificationTimeR runs and produces 5+1 highest output and order", {
   expect_equal(time_amplification(cn_data = test_data_cn_5_1,
                                   multiplicity_data = test_data_mult_5_1_WGGG,
@@ -499,7 +502,7 @@ test_that("AmplificationTimeR runs and produces 5+1 highest output and order", {
                                   genome = "hg19")[,"event_order"],"GWG")
 })
 
-# 5+2
+#### 5+2 ####
 test_that("AmplificationTimeR runs and produces 5+2 highest output and order", {
   expect_equal(time_amplification(cn_data = test_data_cn_5_2,
                                   multiplicity_data = test_data_mult_5_2_WGGG,
@@ -543,7 +546,7 @@ test_that("AmplificationTimeR runs and produces 5+2 highest output and order", {
                                   genome = "hg19")[,"event_order"],"GWG")
 })
 
-# 6+1
+#### 6+1 ####
 test_that("AmplificationTimeR runs and produces 6+1 highest output and order", {
   expect_equal(time_amplification(cn_data = test_data_cn_6_1,
                                   multiplicity_data = test_data_mult_6_1_WGGGG,
@@ -607,7 +610,7 @@ test_that("AmplificationTimeR runs and produces 6+1 highest output and order", {
                                   genome = "hg19")[,"event_order"],"GGW")
 })
 
-# 6+2
+#### 6+2 ####
 test_that("AmplificationTimeR runs and produces 6+2 highest output and order", {
   expect_equal(time_amplification(cn_data = test_data_cn_6_2,
                                   multiplicity_data = test_data_mult_6_2_WGGGG,
@@ -671,7 +674,7 @@ test_that("AmplificationTimeR runs and produces 6+2 highest output and order", {
                                   genome = "hg19")[,"event_order"],"GGW")
 })
 
-# 9+2
+#### 9+2 ####
 test_that("AmplificationTimeR runs and produces 9+2 highest output and order", {
   expect_equal(time_amplification(cn_data = test_data_cn_9_2,
                                   multiplicity_data = test_data_mult_9_2_WGGGGGGG,
@@ -755,7 +758,7 @@ test_that("AmplificationTimeR runs and produces 9+2 highest output and order", {
                                   genome = "hg19")[,"event_order"],"GGGWG")
 })
 
-# 10+2
+#### 10+2 ####
 test_that("AmplificationTimeR runs and produces 10+2 highest output and order", {
   expect_equal(time_amplification(cn_data = test_data_cn_10_2,
                                   multiplicity_data = test_data_mult_10_2_WGGGGGGGG,

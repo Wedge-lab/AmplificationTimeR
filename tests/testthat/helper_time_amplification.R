@@ -23,8 +23,8 @@ test_data_start <- 1
 test_data_stop <- 20
 test_data_status <- FALSE
 
-test_output <- as.data.frame(matrix(nrow = 1, ncol = 45, data = c("test_data","1:1-20","2+1","G","20",
-                                                                  "0.6","0.6000000","0.4544354","0.67996774",
+test_output <- as.data.frame(matrix(nrow = 1, ncol = 46, data = c("test_data","1:1-20","2+1","G","20","clonal",
+                                                                  "0.6","0.6000000","0.4544354","0.679967736207671",
                                                                   NA,NA,NA,NA,
                                                                   NA,NA,NA,NA,
                                                                   NA,NA,NA,NA,
@@ -34,7 +34,7 @@ test_output <- as.data.frame(matrix(nrow = 1, ncol = 45, data = c("test_data","1
                                                                   NA,NA,NA,NA,
                                                                   NA,NA,NA,NA,
                                                                   NA,NA,NA,NA)))
-colnames(test_output) <- c("sample","region","highest_copy_number","event_order","num_mutations_used",
+colnames(test_output) <- c("sample","region","highest_copy_number","event_order","num_mutations_used","clonality_status",
                            "t_1","t_1_median_bootstrap","t_1_lower_ci","t_1_upper_ci",
                            "t_2","t_2_median_bootstrap","t_2_lower_ci","t_2_upper_ci",
                            "t_3","t_3_median_bootstrap","t_3_lower_ci","t_3_upper_ci",
@@ -50,7 +50,7 @@ test_output$t_1 <- as.numeric(test_output$t_1)
 test_output$t_1_median_bootstrap <- as.numeric(test_output$t_1_median_bootstrap)
 test_output$t_1_lower_ci <- as.numeric(test_output$t_1_lower_ci)
 test_output$t_1_upper_ci <- as.numeric(test_output$t_1_upper_ci)
-test_output[,10:45]<- as.logical(test_output[,10:45])
+test_output[,11:46]<- as.logical(test_output[,11:46])
 
 test_data_cn_incorrect <- test_data_cn
 colnames(test_data_cn_incorrect) <- c("chr","startpos","endpos","nMaj1_A","x")
