@@ -1709,10 +1709,8 @@ time_amplification <- function(cn_data,
   if(!(genome %in% c("hg19","hg38"))){
     stop("'muts_type' must be either 'hg19' or 'hg38'")
   }
-  if(muts_type == "All"){
-    if(is.na(mutation_data)){
-      stop("'mutation_data' must be supplied when 'muts_type' = 'All'.")
-    }
+  if(!all("chr","start","end","ref","alt") %in% colnames(mutation_data)){
+      stop("'mutation_data' must contain the following columns: 'chr','start','end','ref','alt'.")
   }
   if(muts_type == "All"){
     if(is.na(genome)){
@@ -1736,6 +1734,9 @@ time_amplification <- function(cn_data,
   }
   if(nrow(multiplicity_data) == 0){
     stop("'multiplicity_data' has no content")
+  }
+  if(nrow(mutation_data) == 0){
+    stop("'mutation_data' has no content")
   }
   
   # 
