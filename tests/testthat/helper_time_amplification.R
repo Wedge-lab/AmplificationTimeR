@@ -79,13 +79,13 @@ test_data_mult_no_muts_in_region$end <- test_data_mult_no_muts_in_region$end+40
 
 # test that code fails if region supplied is not amplified with n2A present in diploid sample
 test_data_cn_not_amp_n2A <- test_data_cn_not_amp
-test_data_cn_not_amp_n2A$nMaj2_A <- 2
+test_data_cn_not_amp_n2A$nMaj2_A <- 1
 test_data_cn_not_amp_n2A$nMin2_A <- 0
 
 # test that code fails if region supplied is not amplified - WGD
 test_data_cn_not_amp_wgd <- test_data_cn
-test_data_cn_not_amp_wgd$nMaj1_A <- 2
-test_data_cn_not_amp_wgd$nMin1_A <- 2
+test_data_cn_not_amp_wgd$nMaj1_A <- 1
+test_data_cn_not_amp_wgd$nMin1_A <- 1
 
 # test that code fails if region can't be timed - not WGD
 test_data_cn_not_timeable <- test_data_cn
@@ -94,7 +94,7 @@ test_data_cn_not_timeable$nMin1_A <- 2
 
 # test that code fails if region supplied is not amplified with n2A present in WGD sample
 test_data_cn_not_amp_wgd_n2A <- test_data_cn_not_amp_wgd
-test_data_cn_not_amp_wgd_n2A$nMaj2_A <- 2
+test_data_cn_not_amp_wgd_n2A$nMaj2_A <- 1
 test_data_cn_not_amp_wgd_n2A$nMin2_A <- 0
 
 
@@ -121,7 +121,17 @@ test_data_cn_2_2 <- test_data_cn
 test_data_cn_2_2$nMaj1_A <- 2
 test_data_cn_2_2$nMin1_A <- 2
 
-#### 3+1####
+#### 3+1 ####
+test_data_cn_3_1 <- test_data_cn
+test_data_cn_3_1$nMaj1_A <- 3
+test_data_cn_3_1$nMin1_A <- 1
+
+#### 3+0 ####
+test_data_cn_3_0 <- test_data_cn
+test_data_cn_3_0$nMaj1_A <- 3
+test_data_cn_3_0$nMin1_A <- 0
+
+#### 3+1 ####
 test_data_cn_3_1 <- test_data_cn
 test_data_cn_3_1$nMaj1_A <- 3
 test_data_cn_3_1$nMin1_A <- 1
@@ -130,6 +140,11 @@ test_data_cn_3_1$nMin1_A <- 1
 test_data_cn_3_2 <- test_data_cn
 test_data_cn_3_2$nMaj1_A <- 3
 test_data_cn_3_2$nMin1_A <- 2
+
+#### 4+0 ####
+test_data_cn_4_0 <- test_data_cn
+test_data_cn_4_0$nMaj1_A <- 4
+test_data_cn_4_0$nMin1_A <- 0
 
 #### 4+1 ####
 test_data_cn_4_1 <- test_data_cn
@@ -140,9 +155,9 @@ test_data_cn_4_1$nMin1_A <- 1
 test_data_cn_4_2 <- test_data_cn
 test_data_cn_4_2$nMaj1_A <- 4
 test_data_cn_4_2$nMin1_A <- 2
-test_data_mult_4_2_WGG <- test_data_mult
-test_data_mult_4_2_WGG$no.chrs.bearing.mut[1:2] <- 3
-test_data_mult_4_2_GW <- test_data_mult
+test_data_mult_4_x_WGG <- test_data_mult
+test_data_mult_4_x_WGG$no.chrs.bearing.mut[1:2] <- 3
+test_data_mult_4_x_GW <- test_data_mult
 
 #### 4+3 ####
 test_data_cn_4_3 <- test_data_cn
@@ -154,78 +169,147 @@ test_data_cn_4_4 <- test_data_cn
 test_data_cn_4_4$nMaj1_A <- 4
 test_data_cn_4_4$nMin1_A <- 4
 
+#### 5+0 ####
+test_data_cn_5_0 <- test_data_cn
+test_data_cn_5_0$nMaj1_A <- 5
+test_data_cn_5_0$nMin1_A <- 0
+
 #### 5+1 ####
 test_data_cn_5_1 <- test_data_cn
 test_data_cn_5_1$nMaj1_A <- 5
 test_data_cn_5_1$nMin1_A <- 1
-test_data_mult_5_1_WGGG <- test_data_mult
-test_data_mult_5_1_WGGG$no.chrs.bearing.mut[1:2] <- 4
-test_data_mult_5_1_GWG <- test_data_mult
+test_data_mult_5_x_WGGG <- test_data_mult
+test_data_mult_5_x_WGGG$no.chrs.bearing.mut[1:2] <- 4
+test_data_mult_5_x_GWG <- test_data_mult
 
 #### 5+2 ####
 test_data_cn_5_2 <- test_data_cn
 test_data_cn_5_2$nMaj1_A <- 5
 test_data_cn_5_2$nMin1_A <- 2
-test_data_mult_5_2_WGGG <- test_data_mult
-test_data_mult_5_2_WGGG$no.chrs.bearing.mut[1:2] <- 4
-test_data_mult_5_2_GWG <- test_data_mult
+
+#### 6+0 ####
+test_data_cn_6_0 <- test_data_cn
+test_data_cn_6_0$nMaj1_A <- 6
+test_data_cn_6_0$nMin1_A <- 0
 
 #### 6+1 ####
 test_data_cn_6_1 <- test_data_cn
 test_data_cn_6_1$nMaj1_A <- 6
 test_data_cn_6_1$nMin1_A <- 1
-test_data_mult_6_1_WGGGG <- test_data_mult
-test_data_mult_6_1_WGGGG$no.chrs.bearing.mut[1:2] <- 3
-test_data_mult_6_1_WGGGG$no.chrs.bearing.mut[3:4] <- 5
-test_data_mult_6_1_GWGG <- test_data_mult
-test_data_mult_6_1_GWGG$no.chrs.bearing.mut[1:2] <- 3
-test_data_mult_6_1_GGW <- test_data_mult
+test_data_mult_6_x_WGGGG <- test_data_mult
+test_data_mult_6_x_WGGGG$no.chrs.bearing.mut[1:2] <- 3
+test_data_mult_6_x_WGGGG$no.chrs.bearing.mut[3:4] <- 5
+test_data_mult_6_x_GWGG <- test_data_mult
+test_data_mult_6_x_GWGG$no.chrs.bearing.mut[1:2] <- 3
+test_data_mult_6_x_GGW <- test_data_mult
 
 #### 6+2 ####
 test_data_cn_6_2 <- test_data_cn
 test_data_cn_6_2$nMaj1_A <- 6
 test_data_cn_6_2$nMin1_A <- 2
-test_data_mult_6_2_WGGGG <- test_data_mult
-test_data_mult_6_2_WGGGG$no.chrs.bearing.mut[1:2] <- 3
-test_data_mult_6_2_WGGGG$no.chrs.bearing.mut[3:4] <- 5
-test_data_mult_6_2_GWGG <- test_data_mult
-test_data_mult_6_2_GWGG$no.chrs.bearing.mut[1:2] <- 3
-test_data_mult_6_2_GGW <- test_data_mult
+
+#### 7+0 ####
+test_data_cn_7_0 <- test_data_cn
+test_data_cn_7_0$nMaj1_A <- 7
+test_data_cn_7_0$nMin1_A <- 0
+
+#### 7+1 ####
+test_data_cn_7_1 <- test_data_cn
+test_data_cn_7_1$nMaj1_A <- 7
+test_data_cn_7_1$nMin1_A <- 1
+test_data_mult_7_x_WGGGGG <- test_data_mult
+test_data_mult_7_x_WGGGGG$no.chrs.bearing.mut[1:2] <- 4
+test_data_mult_7_x_WGGGGG$no.chrs.bearing.mut[3:4] <- 6
+test_data_mult_7_x_GWGGG <- test_data_mult
+test_data_mult_7_x_GWGGG$no.chrs.bearing.mut[1:2] <- 4
+test_data_mult_7_x_GGWG <- test_data_mult
+
+#### 7+2 ####
+test_data_cn_7_2 <- test_data_cn
+test_data_cn_7_2$nMaj1_A <- 7
+test_data_cn_7_2$nMin1_A <- 2
+
+#### 8+0 ####
+test_data_cn_8_0 <- test_data_cn
+test_data_cn_8_0$nMaj1_A <- 8
+test_data_cn_8_0$nMin1_A <- 0
+
+test_data_mult_8_x_WGGGGGG <- test_data_mult
+test_data_mult_8_x_WGGGGGG$no.chrs.bearing.mut[1:2] <- 3
+test_data_mult_8_x_WGGGGGG$no.chrs.bearing.mut[3:4] <- 5
+test_data_mult_8_x_WGGGGGG$no.chrs.bearing.mut[5:6] <- 7
+test_data_mult_8_x_GWGGGG <- test_data_mult
+test_data_mult_8_x_GWGGGG$no.chrs.bearing.mut[1:2] <- 3
+test_data_mult_8_x_GWGGGG$no.chrs.bearing.mut[3:4] <- 5
+test_data_mult_8_x_GGWGG <- test_data_mult
+test_data_mult_8_x_GGWGG$no.chrs.bearing.mut[1:2] <- 3
+test_data_mult_8_x_GGGW <- test_data_mult
+
+#### 8+1 ####
+test_data_cn_8_1 <- test_data_cn
+test_data_cn_8_1$nMaj1_A <- 8
+test_data_cn_8_1$nMin1_A <- 1
+
+#### 8+2 ####
+test_data_cn_8_2 <- test_data_cn
+test_data_cn_8_2$nMaj1_A <- 8
+test_data_cn_8_2$nMin1_A <- 2
+
+#### 9+0 ####
+test_data_cn_9_0 <- test_data_cn
+test_data_cn_9_0$nMaj1_A <- 9
+test_data_cn_9_0$nMin1_A <- 0
+
+test_data_mult_9_x_WGGGGGGG <- test_data_mult
+test_data_mult_9_x_WGGGGGGG$no.chrs.bearing.mut[1:2] <- 4
+test_data_mult_9_x_WGGGGGGG$no.chrs.bearing.mut[3:4] <- 6
+test_data_mult_9_x_WGGGGGGG$no.chrs.bearing.mut[5:6] <- 8
+test_data_mult_9_x_GWGGGGG <- test_data_mult
+test_data_mult_9_x_GWGGGGG$no.chrs.bearing.mut[1:2] <- 4
+test_data_mult_9_x_GWGGGGG$no.chrs.bearing.mut[3:4] <- 6
+test_data_mult_9_x_GGWGGG <- test_data_mult
+test_data_mult_9_x_GGWGGG$no.chrs.bearing.mut[1:2] <- 4
+test_data_mult_9_x_GGGWG <- test_data_mult
+
+
+#### 9+1 ####
+test_data_cn_9_1 <- test_data_cn
+test_data_cn_9_1$nMaj1_A <- 9
+test_data_cn_9_1$nMin1_A <- 1
 
 #### 9+2 ####
 test_data_cn_9_2 <- test_data_cn
 test_data_cn_9_2$nMaj1_A <- 9
 test_data_cn_9_2$nMin1_A <- 2
-test_data_mult_9_2_WGGGGGGG <- test_data_mult
-test_data_mult_9_2_WGGGGGGG$no.chrs.bearing.mut[1:2] <- 4
-test_data_mult_9_2_WGGGGGGG$no.chrs.bearing.mut[3:4] <- 6
-test_data_mult_9_2_WGGGGGGG$no.chrs.bearing.mut[5:6] <- 8
-test_data_mult_9_2_GWGGGGG <- test_data_mult
-test_data_mult_9_2_GWGGGGG$no.chrs.bearing.mut[1:2] <- 4
-test_data_mult_9_2_GWGGGGG$no.chrs.bearing.mut[3:4] <- 6
-test_data_mult_9_2_GGWGGG <- test_data_mult
-test_data_mult_9_2_GGWGGG$no.chrs.bearing.mut[1:2] <- 4
-test_data_mult_9_2_GGGWG <- test_data_mult
 
+#### 10+0 ####
+test_data_cn_10_0 <- test_data_cn
+test_data_cn_10_0$nMaj1_A <- 10
+test_data_cn_10_0$nMin1_A <- 0
 
+test_data_mult_10_x_WGGGGGGGG <- test_data_mult
+test_data_mult_10_x_WGGGGGGGG$no.chrs.bearing.mut[1:2] <- 3
+test_data_mult_10_x_WGGGGGGGG$no.chrs.bearing.mut[3:4] <- 5
+test_data_mult_10_x_WGGGGGGGG$no.chrs.bearing.mut[5:6] <- 7
+test_data_mult_10_x_WGGGGGGGG$no.chrs.bearing.mut[7:8] <- 9
+test_data_mult_10_x_GWGGGGGG <- test_data_mult
+test_data_mult_10_x_GWGGGGGG$no.chrs.bearing.mut[1:2] <- 3
+test_data_mult_10_x_GWGGGGGG$no.chrs.bearing.mut[3:4] <- 5
+test_data_mult_10_x_GWGGGGGG$no.chrs.bearing.mut[5:7] <- 7
+test_data_mult_10_x_GGWGGGG <- test_data_mult
+test_data_mult_10_x_GGWGGGG$no.chrs.bearing.mut[1:2] <- 3
+test_data_mult_10_x_GGWGGGG$no.chrs.bearing.mut[3:4] <- 5
+test_data_mult_10_x_GGGWGG <- test_data_mult
+test_data_mult_10_x_GGGWGG$no.chrs.bearing.mut[1:2] <- 3
+test_data_mult_10_x_GGGGW <- test_data_mult
+
+#### 10+1 ####
+test_data_cn_10_1 <- test_data_cn
+test_data_cn_10_1$nMaj1_A <- 10
+test_data_cn_10_1$nMin1_A <- 1
 
 #### 10+2 ####
 test_data_cn_10_2 <- test_data_cn
 test_data_cn_10_2$nMaj1_A <- 10
 test_data_cn_10_2$nMin1_A <- 2
-test_data_mult_10_2_WGGGGGGGG <- test_data_mult
-test_data_mult_10_2_WGGGGGGGG$no.chrs.bearing.mut[1:2] <- 3
-test_data_mult_10_2_WGGGGGGGG$no.chrs.bearing.mut[3:4] <- 5
-test_data_mult_10_2_WGGGGGGGG$no.chrs.bearing.mut[5:6] <- 7
-test_data_mult_10_2_WGGGGGGGG$no.chrs.bearing.mut[7:8] <- 9
-test_data_mult_10_2_GWGGGGGG <- test_data_mult
-test_data_mult_10_2_GWGGGGGG$no.chrs.bearing.mut[1:2] <- 3
-test_data_mult_10_2_GWGGGGGG$no.chrs.bearing.mut[3:4] <- 5
-test_data_mult_10_2_GWGGGGGG$no.chrs.bearing.mut[5:6] <- 7
-test_data_mult_10_2_GGWGGGG <- test_data_mult
-test_data_mult_10_2_GGWGGGG$no.chrs.bearing.mut[1:2] <- 3
-test_data_mult_10_2_GGWGGGG$no.chrs.bearing.mut[3:4] <- 5
-test_data_mult_10_2_GGGWGG <- test_data_mult
-test_data_mult_10_2_GGGWGG$no.chrs.bearing.mut[1:2] <- 3
-test_data_mult_10_2_GGGGW <- test_data_mult
 
