@@ -1781,9 +1781,11 @@ time_amplification <- function(cn_data,
     if(is_WGD == FALSE & tmp_cn$n1A_sum <= 2 & tmp_cn$n2A_sum <= 2 & tmp_cn$nMin1_A > 0 & tmp_cn$nMin2_A > 0){
       stop("Region not amplified in sample")
       
-    }else if(is_WGD == TRUE & tmp_cn$n1A_sum <= 4 & tmp_cn$n2A_sum <= 4){
+    }else if(is_WGD == TRUE & tmp_cn$n1A_sum <= 2 & tmp_cn$n2A_sum <= 2 & tmp_cn$nMin1_A > 0 & tmp_cn$nMin2_A > 0){
       stop("Region not amplified in sample")
       
+    }else if(tmp_cn$n1A == "1+1" & tmp_cn$n2A == "1+0"){
+      stop("Region not amplified in sample")
     }else{
       is_amplified <- TRUE
     }
@@ -1791,7 +1793,7 @@ time_amplification <- function(cn_data,
     if(is_WGD == FALSE & tmp_cn$n1A_sum <= 2 & tmp_cn$nMin1_A > 0){
       stop("Region not amplified in sample")
       
-    }else if(is_WGD == TRUE & tmp_cn$n1A_sum <= 4){
+    }else if(is_WGD == TRUE & tmp_cn$n1A_sum <= 2 & tmp_cn$nMin1_A > 0){
       stop("Region not amplified in sample")
       
     }else{
