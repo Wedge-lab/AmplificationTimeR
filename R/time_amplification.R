@@ -32,12 +32,12 @@ clocklike_muts <- function(mutation, genome){
   # create a VRanges object with your mutations to check against the reference genome
   if(nrow(muts[grep("chr", muts$chr),]) == 0){
     vr <- VariantAnnotation::VRanges(seqnames = paste0("chr",muts$chr),
-                                     ranges = IRanges(muts$start, muts$end),
+                                     ranges = IRanges::IRanges(muts$start, muts$end),
                                      ref = muts$ref, 
                                      alt = muts$alt)
   }else{
     vr <- VariantAnnotation::VRanges(seqnames = muts$chr,
-                                     ranges = IRanges(muts$start, muts$end),
+                                     ranges = IRanges::IRanges(muts$start, muts$end),
                                      ref = muts$ref, 
                                      alt = muts$alt)
   }
