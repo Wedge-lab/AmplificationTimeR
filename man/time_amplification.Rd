@@ -21,7 +21,7 @@ time_amplification(
 \item{cn_data}{Data frame containing copy number information derived from Battenberg.
 The data frame must contain the following column names: "chr","startpos","endpos","nMaj1_A","nMin1_A"}
 
-\item{multiplicity_data}{Data frame containing multiplicity information derived from DPClust.
+\item{multiplicity_data}{Data frame containing multiplicity information derived from DPClust3p.
 The data frame must contain the following column names: "chr","end","no.chrs.bearing.mut"}
 
 \item{mutation_data}{Data frame containing mutation data, including Ref and Alt alleles. Columns must be "chr","start","end","ref","alt". 
@@ -53,22 +53,7 @@ A data frame containing approximate timing of each amplification, and the most l
 Wrapper function that times individual amplification events for a locus that has been gained multiple times.
 }
 \examples{
-demo_cn <- as.data.frame(matrix(nrow = 1, ncol = 5, data = c(1,50000,1000000,2,1)))
-colnames(demo_cn) <- c("chr","startpos","endpos","nMaj1_A","nMin1_A")
-demo_cn$startpos <- as.numeric(demo_cn$startpos)
-demo_cn$endpos <- as.numeric(demo_cn$endpos)
-demo_cn$nMaj1_A <- as.numeric(demo_cn$nMaj1_A)
-demo_cn$nMin1_A <- as.numeric(demo_cn$nMin1_A)
-
-demo_mult <- as.data.frame(matrix(nrow = 20, ncol = 3, data = c(rep("1",20),57682:57701,rep(2,5),rep(1,15))))
-colnames(demo_mult) <- c("chr","end","no.chrs.bearing.mut")
-demo_mult$end <- as.numeric(demo_mult$end)
-demo_mult$no.chrs.bearing.mut <- as.numeric(demo_mult$no.chrs.bearing.mut)
-
-demo_muts <- as.data.frame(matrix(nrow = 20, ncol = 5, data = c(rep("1",20),57682:57701,57682:57701,rep("C",15),rep("A",5),rep("T",15),rep("G",5))))
-colnames(demo_muts) <- c("chr", "start", "end", "ref", "alt")
-demo_muts$start <- as.numeric(demo_muts$start)
-demo_muts$end <- as.numeric(demo_muts$end)
+data("AmplificationTimeRdata")
 
 time_amplification(
   cn_data = demo_cn,
