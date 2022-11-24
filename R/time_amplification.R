@@ -1619,7 +1619,7 @@ get_order_events <- function(multiplicity_values, max_amplification_split, is_WG
 #' The data frame must contain the following column names: "chr","startpos","endpos","nMaj1_A","nMin1_A"
 #' 
 #' @param multiplicity_data 
-#' Data frame containing multiplicity information derived from DPClust.
+#' Data frame containing multiplicity information derived from DPClust3p.
 #' The data frame must contain the following column names: "chr","end","no.chrs.bearing.mut"
 #' 
 #' @param mutation_data 
