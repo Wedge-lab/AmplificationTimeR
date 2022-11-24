@@ -313,3 +313,25 @@ test_data_cn_10_2 <- test_data_cn
 test_data_cn_10_2$nMaj1_A <- 10
 test_data_cn_10_2$nMin1_A <- 2
 
+#### Test data for C>T at CpG code ####
+# inspired by known sites from SomaticSignatures test
+test_data_cn_ctcpg <- test_data_cn
+test_data_cn_ctcpg$startpos <- 50000
+test_data_cn_ctcpg$endpos <- 1000000
+test_data_cn_ctcpg$startpos <- as.numeric(test_data_cn_ctcpg$startpos)
+test_data_cn_ctcpg$endpos <- as.numeric(test_data_cn_ctcpg$endpos)
+
+test_data_mult_ctcpg <- test_data_mult
+test_data_mult_ctcpg$start <- c(57682:57701)
+test_data_mult_ctcpg$end <- c(57682:57701)
+test_data_mult_ctcpg$start <- as.numeric(test_data_mult_ctcpg$start)
+test_data_mult_ctcpg$end <- as.numeric(test_data_mult_ctcpg$end)
+
+test_data_muts_ctcpg <- test_data_muts
+test_data_muts_ctcpg$start <- c(57682:57701)
+test_data_muts_ctcpg$end <- c(57682:57701)
+test_data_muts_ctcpg$start <- as.numeric(test_data_muts_ctcpg$start)
+test_data_muts_ctcpg$end <- as.numeric(test_data_muts_ctcpg$end)
+
+test_data_start_ctcpg <- 50100
+test_data_stop_ctcpg <- 1500000
