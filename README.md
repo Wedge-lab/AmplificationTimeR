@@ -139,3 +139,25 @@ segment_time <- time_amplification(
   is_WGD = TRUE,
   genome = "hg19")
 ```
+
+```r
+segment_time
+
+## Data frame with 1 row and 46 columns
+##        sample        region highest_copy_number event_order num_mutations_used
+## 1 test_sample 1:50000-1e+06                 2+1           W                  4
+##   clonality_status t_1 t_1_median_bootstrap t_1_lower_ci t_1_upper_ci t_2
+## 1           clonal   0                    0            0    0.5555556  NA
+##   t_2_median_bootstrap t_2_lower_ci t_2_upper_ci t_3 t_3_median_bootstrap
+## 1                   NA           NA           NA  NA                   NA
+##   t_3_lower_ci t_3_upper_ci t_4 t_4_median_bootstrap t_4_lower_ci t_4_upper_ci t_5
+## 1           NA           NA  NA                   NA           NA           NA  NA
+##   t_5_median_bootstrap t_5_lower_ci t_5_upper_ci t_6 t_6_median_bootstrap
+## 1                   NA           NA           NA  NA                   NA
+##   t_6_lower_ci t_6_upper_ci t_7 t_7_median_bootstrap t_7_lower_ci t_7_upper_ci t_8
+## 1           NA           NA  NA                   NA           NA           NA  NA
+##   t_8_median_bootstrap t_8_lower_ci t_8_upper_ci t_9 t_9_median_bootstrap
+## 1                   NA           NA           NA  NA                   NA
+##   t_9_lower_ci t_9_upper_ci t_10 t_10_median_bootstrap t_10_lower_ci t_10_upper_ci
+## 1           NA           NA   NA                    NA            NA            NA
+```
