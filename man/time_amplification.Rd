@@ -18,23 +18,31 @@ time_amplification(
 )
 }
 \arguments{
-\item{cn_data}{Data frame containing copy number information.}
+\item{cn_data}{Data frame containing copy number information derived from Battenberg.
+The data frame must contain the following column names: "chr","startpos","endpos","nMaj1_A","nMin1_A"}
 
-\item{multiplicity_data}{Data frame containing multiplicity information.}
+\item{multiplicity_data}{Data frame containing multiplicity information derived from DPClust.
+The data frame must contain the following column names: "chr","end","no.chrs.bearing.mut"}
 
-\item{mutation_data}{Data frame containing mutation data, including Ref and Alt alleles. Columns must be "chr","start","end","ref","alt". This file is required if muts_type = "All", as mutation context is required to identify clocklike mutations (C>T at CpG). Default is NA.}
+\item{mutation_data}{Data frame containing mutation data, including Ref and Alt alleles. Columns must be "chr","start","end","ref","alt". 
+This file is required if muts_type = "All", as mutation context is required to 
+identify clocklike mutations (C>T at CpG), and should contain all mutations. 
+If muts_type == "SBS1 and SBS5" this file should contain only mutations that 
+have been assigned to mutational signatures SBS1 or SBS5.}
 
-\item{muts_type}{Must be one of "SBS1 and SBS5" or "All". Default is set to "All".  If set to "All", the mutation_data field must be supplied, and the code will be restricted to analysis of clocklike mutations (C>T mutations at CpG sites). If set to "SBS1 and SBS5", the multiplicity_data data frame should have been filtered so as to contain only mutations that have been attributed to mutational signatures SBS1 and SBS5.}
+\item{muts_type}{Must be one of "SBS1 and SBS5" or "All". Default is set to "All".  If set to "All", 
+the mutation_data field must be supplied, and the code will be restricted to analysis of clock-like mutations (C>T mutations at CpG sites). If set to "SBS1 and SBS5", the multiplicity_data data frame should have been filtered so as to contain only mutations that have been attributed to mutational signatures SBS1 and SBS5.}
 
-\item{sample_id}{ID name or label for sample.}
+\item{sample_id}{ID name or label for sample. Character.}
 
-\item{amplification_chrom}{Chromosome of the amplified region.}
+\item{amplification_chrom}{Chromosome of the amplified region. Must not contain "chr" in the name.}
 
-\item{amplification_start}{Start position of the amplified region.}
+\item{amplification_start}{Start position of the amplified region. Numeric.}
 
-\item{amplification_stop}{End position of the amplified region.}
+\item{amplification_stop}{End position of the amplified region.  Numeric.m}
 
-\item{is_WGD}{logical: TRUE indicates that the sample has been whole genome duplicated.}
+\item{is_WGD}{logical: TRUE indicates that the sample has been whole genome duplicated.
+FALSE indicates that the sample has not been whole duplicated.}
 
 \item{genome}{Reference genome used. Must be one of "hg19" or "hg38".}
 }
