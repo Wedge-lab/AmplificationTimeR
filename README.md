@@ -133,7 +133,7 @@ segment_time <- time_amplification(
   mutation_data = demo_muts,
   muts_type = "All",
   sample_id = "test_sample",
-  amplification_chrom = amp_chr,
+  amplification_chrom = amp_chrom,
   amplification_start = amp_start,
   amplification_stop = amp_stop,
   is_WGD = TRUE,
