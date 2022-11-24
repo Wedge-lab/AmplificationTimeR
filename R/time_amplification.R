@@ -1653,6 +1653,7 @@ get_order_events <- function(multiplicity_values, max_amplification_split, is_WG
 #' Reference genome used. Must be one of "hg19" or "hg38".
 #' 
 #' @return A data frame containing approximate timing of each amplification, and the most likely order of events. 
+#' @example inst/example/example.R
 #' @export
 
 time_amplification <- function(cn_data, 
