@@ -44,7 +44,7 @@ demo_cn
 ```
 
 ### Multiplicity data
-Multiplicity data should be derived from [`dpclust3p`](https://github.com/Wedge-lab/dpclust3p). The multiplicity data frame must have the following columns at a minimum: `"chr"`, `"end"`, and `"no.chrs.bearing.mut"`
+Multiplicity data should be derived from [`dpclust3p`](https://github.com/Wedge-lab/dpclust3p). The multiplicity data frame must have the following columns at a minimum: `"chr"`, `"end"`, and `"no.chrs.bearing.mut"`. Other columns may be present. 
 
 ```r
 deom_mult
