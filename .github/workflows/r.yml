@@ -33,6 +33,7 @@ jobs:
           repos=c('http://cran.us.r-project.org','Bioconductor')           
           remotes::install_deps(dependencies = TRUE)           
           remotes::install_github("repo/package")
+          remotes::install_bioc(dependencies = TRUE)
         shell: Rscript {0}
       - name: Check
         run: rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "error")
