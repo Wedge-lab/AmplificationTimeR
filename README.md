@@ -1,7 +1,7 @@
 # AmplificationTimeR
 <!-- badges: start -->
   [![Codecov test coverage](https://codecov.io/gh/mjakobs/AmplificationTimeR/branch/main/graph/badge.svg)](https://app.codecov.io/gh/mjakobs/AmplificationTimeR?branch=main)
-  [![R](https://github.com/mjakobs/AmplificationTimeR/actions/workflows/r.yml/badge.svg)](https://github.com/mjakobs/AmplificationTimeR/actions/workflows/r.yml)
+  [![R-CMD-check](https://github.com/mjakobs/AmplificationTimeR/actions/workflows/check-standard.yml/badge.svg)](https://github.com/mjakobs/AmplificationTimeR/actions/workflows/check-standard.yml)
   <!-- badges: end -->
 
 ## Citation
