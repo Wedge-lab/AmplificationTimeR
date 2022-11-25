@@ -1,1 +1,0 @@
-# Function for preparing input for timing function
