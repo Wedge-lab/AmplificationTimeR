@@ -30,7 +30,9 @@ jobs:
       - name: Install dependencies
         run: |
           install.packages(c("remotes", "rcmdcheck","SomaticSignatures","IRanges","VariantAnnotation"))
-          remotes::install_deps(dependencies = TRUE)
+          repos=c('http://cran.us.r-project.org','Bioconductor')           
+          remotes::install_deps(dependencies = TRUE)           
+          remotes::install_github("repo/package")
         shell: Rscript {0}
       - name: Check
         run: rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "error")
