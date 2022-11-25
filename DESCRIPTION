@@ -2,13 +2,14 @@ Package: AmplificationTimeR
 Type: Package
 Title: Timing of Individual Amplicitation Events in Cancer
 Version: 0.0.1.0
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.2
 Encoding: UTF-8
-License: MIT
+License: GPL (>= 3)
 Author: Maria Jakobsdottir [aut, cre]
 Maintainer: Maria Jakobsdottir <maria.jakobsdottir@manchester.ac.uk>
 Description: A package containing functions used to time individual gains in 
     situations where the same region has been gained multiple times. 
+LazyData: true
 Suggests: 
     BSgenome.Hsapiens.UCSC.hg19,
     BSgenome.Hsapiens.UCSC.hg38,
@@ -17,4 +18,6 @@ Suggests:
 Config/testthat/edition: 3
 Imports:
   VariantAnnotation,
-  SomaticSignatures
+  SomaticSignatures,
+  IRanges,
+  stats

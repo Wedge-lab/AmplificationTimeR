@@ -32,14 +32,14 @@ clocklike_muts <- function(mutation, genome){
   # create a VRanges object with your mutations to check against the reference genome
   if(nrow(muts[grep("chr", muts$chr),]) == 0){
     vr <- VariantAnnotation::VRanges(seqnames = paste0("chr",muts$chr),
-                  ranges = IRanges(muts$start, muts$end),
-                  ref = muts$ref, 
-                  alt = muts$alt)
+                                     ranges = IRanges::IRanges(muts$start, muts$end),
+                                     ref = muts$ref, 
+                                     alt = muts$alt)
   }else{
     vr <- VariantAnnotation::VRanges(seqnames = muts$chr,
-                  ranges = IRanges(muts$start, muts$end),
-                  ref = muts$ref, 
-                  alt = muts$alt)
+                                     ranges = IRanges::IRanges(muts$start, muts$end),
+                                     ref = muts$ref, 
+                                     alt = muts$alt)
   }
   
   # get mutation context using SomaticSignatures function
@@ -57,7 +57,7 @@ clocklike_muts <- function(mutation, genome){
                              context %in% c("A.G","T.G","C.G","G.G"))
   
   return(context_ct_cpg)
-
+  
 }
 
 ################################################################################
@@ -114,9 +114,15 @@ time_amplification_maths <- function(mult_data, max_amp, is_WGD, ordering_event)
   ### start calculating timing
   ### 
   
-  if(max_amplification_split == c("2+1") & is_WGD == FALSE & order_event == "G"){ ######## start with non-WGD
+  if(max_amplification_split == c("2+0") & is_WGD == FALSE & order_event == "G"){ ######## start with non-WGD
     
     t_1 <- (2*n2)/(n1+2*n2)
+    amplification_results$event_order <- "G"
+    amplification_results$t_1 <- t_1
+    
+  }else if(max_amplification_split == c("2+1") & is_WGD == FALSE & order_event == "G"){ ######## start with non-WGD
+    
+    t_1 <- (3*n2)/(n1+2*n2)
     amplification_results$event_order <- "G"
     amplification_results$t_1 <- t_1
     
@@ -146,7 +152,226 @@ time_amplification_maths <- function(mult_data, max_amp, is_WGD, ordering_event)
     amplification_results$t_2 <- t_2
     amplification_results$t_3 <- t_3
     
-  }else if(max_amplification_split == c("4+2") & is_WGD == TRUE){ ####### WGD onwards, with further options
+    if((n1 == 0)|(n2 == 0)|(n3 == 0)|(n4 == 0)){
+      amplification_results$event_order <- "GGG - Unsure"
+    }
+    
+  }else if(max_amplification_split == c("5+1") & is_WGD == FALSE & order_event == "GGGG"){
+    t_1 <- (6*(n5))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5)
+    t_2 <- (6*(n4 + n5))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5)
+    t_3 <- (6*(n3 + n4 + n5))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5)
+    t_4 <- (6*(n2 + n3 + n4 + n5))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5)
+    
+    amplification_results$event_order <- "GGGG"
+    amplification_results$t_1 <- t_1
+    amplification_results$t_2 <- t_2
+    amplification_results$t_3 <- t_3
+    amplification_results$t_4 <- t_4
+    
+    if((n1 == 0)|(n2 == 0)|(n3 == 0)|(n4 == 0)|(n5 == 0)){
+      amplification_results$event_order <- "GGGG - Unsure"
+    }
+    
+  }else if(max_amplification_split == c("6+1") & is_WGD == FALSE & order_event == "GGGGG"){
+    t_1 <- (7*n6)/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6)
+    t_2 <- (7*(n5 + n6))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6)
+    t_3 <- (7*(n4 + n5 + n6))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6)
+    t_4 <- (7*(n3 + n4 + n5 + n6))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6)
+    t_5 <- (7*(n2 + n3 + n4 + n5 + n6))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6)
+    
+    amplification_results$event_order <- "GGGGG"
+    amplification_results$t_1 <- t_1
+    amplification_results$t_2 <- t_2
+    amplification_results$t_3 <- t_3
+    amplification_results$t_4 <- t_4
+    amplification_results$t_5 <- t_5
+    
+    if((n1 == 0)|(n2 == 0)|(n3 == 0)|(n4 == 0)|(n5 == 0)|(n6 == 0)){
+      amplification_results$event_order <- "GGGGG - Unsure"
+    }
+    
+  }else if(max_amplification_split == c("7+1") & is_WGD == FALSE & order_event == "GGGGGG"){
+    t_1 <- (8*n7)/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7)
+    t_2 <- (8*(n6 + n7))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7)
+    t_3 <- (8*(n5 + n6 + n7))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7)
+    t_4 <- (8*(n4 + n5 + n6 + n7))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7)
+    t_5 <- (8*(n3 + n4 + n5 + n6 + n7))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7)
+    t_6 <- (8*(n2 + n3 + n4 + n5 + n6 + n7))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7)
+    
+    amplification_results$event_order <- "GGGGGG"
+    amplification_results$t_1 <- t_1
+    amplification_results$t_2 <- t_2
+    amplification_results$t_3 <- t_3
+    amplification_results$t_4 <- t_4
+    amplification_results$t_5 <- t_5
+    amplification_results$t_6 <- t_6
+    
+    if((n1 == 0)|(n2 == 0)|(n3 == 0)|(n4 == 0)|(n5 == 0)|(n6 == 0)|(n7 == 0)){
+      amplification_results$event_order <- "GGGGGG - Unsure"
+    }
+    
+  }else if(max_amplification_split == c("8+1") & is_WGD == FALSE & order_event == "GGGGGGG"){
+    t_1 <- (9*n8)/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8)
+    t_2 <- (9*(n7 + n8))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8)
+    t_3 <- (9*(n6 + n7 + n8))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8)
+    t_4 <- (9*(n5 + n6 + n7 + n8))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8)
+    t_5 <- (9*(n4 + n5 + n6 + n7 + n8))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8)
+    t_6 <- (9*(n3 + n4 + n5 + n6 + n7 + n8))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8)
+    t_7 <- (9*(n2 + n3 + n4 + n5 + n6 + n7 + n8))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8)
+    
+    amplification_results$event_order <- "GGGGGGG"
+    amplification_results$t_1 <- t_1
+    amplification_results$t_2 <- t_2
+    amplification_results$t_3 <- t_3
+    amplification_results$t_4 <- t_4
+    amplification_results$t_5 <- t_5
+    amplification_results$t_6 <- t_6
+    amplification_results$t_7 <- t_7
+    
+    if((n1 == 0)|(n2 == 0)|(n3 == 0)|(n4 == 0)|(n5 == 0)|(n6 == 0)|(n7 == 0)|(n8 == 0)){
+      amplification_results$event_order <- "GGGGGGG - Unsure"
+    }
+    
+  }else if(max_amplification_split == c("9+1") & is_WGD == FALSE & order_event == "GGGGGGGG"){
+    t_1 <- (10*n9)/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 9*n9)
+    t_2 <- (10*(n8 + n9))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 9*n9)
+    t_3 <- (10*(n7 + n8 + n9))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 9*n9)
+    t_4 <- (10*(n6 + n7 + n8 + n9))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 9*n9)
+    t_5 <- (10*(n5 + n6 + n7 + n8 + n9))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 9*n9)
+    t_6 <- (10*(n4 + n5 + n6 + n7 + n8 + n9))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 9*n9)
+    t_7 <- (10*(n3 + n4 + n5 + n6 + n7 + n8 + n9))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 9*n9)
+    t_8 <- (10*(n2 + n3 + n4 + n5 + n6 + n7 + n8 + n9))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 9*n9)
+    
+    amplification_results$event_order <- "GGGGGGGG"
+    amplification_results$t_1 <- t_1
+    amplification_results$t_2 <- t_2
+    amplification_results$t_3 <- t_3
+    amplification_results$t_4 <- t_4
+    amplification_results$t_5 <- t_5
+    amplification_results$t_6 <- t_6
+    amplification_results$t_7 <- t_7
+    amplification_results$t_8 <- t_8
+    
+    if((n1 == 0)|(n2 == 0)|(n3 == 0)|(n4 == 0)|(n5 == 0)|(n6 == 0)|(n7 == 0)|(n8 == 0)|(n9 == 0)){
+      amplification_results$event_order <- "GGGGGGGG - Unsure"
+    }
+    
+  }else if(max_amplification_split == c("10+1") & is_WGD == FALSE & order_event == "GGGGGGGGG"){
+    t_1 <- (10*n10)/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 9*n9 + 10*n10)
+    t_2 <- (10*(n9 + n10))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 9*n9 + 10*n10)
+    t_3 <- (10*(n8 + n9 + n10))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 9*n9 + 10*n10)
+    t_4 <- (10*(n7 + n8 + n9 + n10))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 9*n9 + 10*n10)
+    t_5 <- (10*(n6 + n7 + n8 + n9 + n10))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 9*n9 + 10*n10)
+    t_6 <- (10*(n5 + n6 + n7 + n8 + n9 + n10))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 9*n9 + 10*n10)
+    t_7 <- (10*(n4 + n5 + n6 + n7 + n8 + n9 + n10))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 9*n9 + 10*n10)
+    t_8 <- (10*(n3 + n4 + n5 + n6 + n7 + n8 + n9 + n10))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 9*n9 + 10*n10)
+    t_9 <- (10*(n2 + n3 + n4 + n5 + n6 + n7 + n8 + n9 + n10))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 9*n9 + 10*n10)
+    
+    amplification_results$event_order <- "GGGGGGGGG"
+    amplification_results$t_1 <- t_1
+    amplification_results$t_2 <- t_2
+    amplification_results$t_3 <- t_3
+    amplification_results$t_4 <- t_4
+    amplification_results$t_5 <- t_5
+    amplification_results$t_6 <- t_6
+    amplification_results$t_7 <- t_7
+    amplification_results$t_8 <- t_8
+    amplification_results$t_9 <- t_9
+    
+    if((n1 == 0)|(n2 == 0)|(n3 == 0)|(n4 == 0)|(n5 == 0)|(n6 == 0)|(n7 == 0)|(n8 == 0)|(n9 == 0)|(n10 == 0)){
+      amplification_results$event_order <- "GGGGGGGGG - Unsure"
+    }
+    
+    ##################### WGD onwards, with further options ####################
+  }else if(max_amplification_split == c("2+0") & is_WGD == TRUE){
+    
+    t_1 <- (2*n2)/(n1 + 2*n2)
+    
+    amplification_results$event_order <- "G"
+    amplification_results$t_1 <- t_1
+    
+  }else if(max_amplification_split == c("2+1") & is_WGD == TRUE){
+    
+    t_1 <- (3*n2)/(n1+2*n2)
+    amplification_results$event_order <- "W"
+    amplification_results$t_1 <- t_1
+    
+  }else if(max_amplification_split == c("2+2") & is_WGD == TRUE){
+    
+    t_1 <- (2*n2)/(n1 + 2*n2)
+    amplification_results$event_order <- "W"
+    amplification_results$t_1 <- t_1
+    
+  }else if(max_amplification_split == c("3+0") & is_WGD == TRUE){
+    
+    t_1 <- (3*n3)/(2*n1 + n2 + 3*n3)
+    t_2 <- (3*(n1 + n3))/(2*n1 + n2 + 3*n3)
+    
+    amplification_results$event_order <- "WG"
+    amplification_results$t_1 <- t_1
+    amplification_results$t_2 <- t_2
+    
+  }else if(max_amplification_split == c("3+1") & is_WGD == TRUE){
+    
+    t_1 <- (4*n3)/(n1 + 2*n2 + 3*n3)
+    t_2 <- (4*(n2 + n3))/(n1 + 2*n2 + 3*n3)
+    
+    amplification_results$event_order <- "WG"
+    amplification_results$t_1 <- t_1
+    amplification_results$t_2 <- t_2
+    
+  }else if(max_amplification_split == c("3+2") & is_WGD == TRUE){
+    
+    t_1 <- (5*n3)/(n1 + 2*n2 + 3*n3)
+    t_2 <- (5*(n2))/(n1 + 2*n2 + 3*n3)
+    
+    amplification_results$event_order <- "WG"
+    amplification_results$t_1 <- t_1
+    amplification_results$t_2 <- t_2
+    
+  }else if(max_amplification_split == c("4+0") & is_WGD == TRUE){ 
+    # WGG
+    if(n3 > 0 & order_event == "WGG"){
+      t_1 <- (4*n4)/(3*n1 + 2*n2 + n3 + 4*n4)
+      t_2 <- (4*(n1 + n4))/(3*n1 + 2*n2 + n3 + 4*n4)
+      t_3 <- (4*(n1 + n2 + n4))/(3*n1 + 2*n2 + n3 + 4*n4)
+      
+      amplification_results$event_order <- "WGG"
+      amplification_results$t_1 <- t_1
+      amplification_results$t_2 <- t_2
+      amplification_results$t_3 <- t_3
+      
+    }else if(n3 == 0 & order_event == "GW"){# GW
+      t_1 <- (4*n4)/(n1 + 2*n2 + 4*n4)
+      t_2 <- (2*(n2 + 2*n4))/(n1 + 2*n2 + 4*n4)
+      
+      amplification_results$event_order <- "GW"
+      amplification_results$t_1 <- t_1
+      amplification_results$t_2 <- t_2
+    }
+    
+  }else if(max_amplification_split == c("4+1") & is_WGD == TRUE){ 
+    # WGG
+    if(n3 > 0 & order_event == "WGG"){
+      t_1 <- (5*n4)/(n1 + 2*n2 + 3*n3 + 4*n4)
+      t_2 <- (5*(n3 + n4))/(n1 + 2*n2 + 3*n3 + 4*n4)
+      t_3 <- (5*(n2 + n3 + n4))/(n1 + 2*n2 + 3*n3 + 4*n4)
+      
+      amplification_results$event_order <- "WGG"
+      amplification_results$t_1 <- t_1
+      amplification_results$t_2 <- t_2
+      amplification_results$t_3 <- t_3
+      
+    }else if(n3 == 0 & order_event == "GW"){# GW
+      t_1 <- (5*n4)/(n1 + 2*n2 + 4*n4)
+      t_2 <- (5*(n2 + 2*n4))/2*(n1 + 2*n2 + 4*n4)
+      
+      amplification_results$event_order <- "GW"
+      amplification_results$t_1 <- t_1
+      amplification_results$t_2 <- t_2
+    }
+    
+  }else if(max_amplification_split == c("4+2") & is_WGD == TRUE){ 
     # WGG
     if(n3 > 0 & order_event == "WGG"){
       t_1 <- ((6*(n4))/(n1 + 2*n2 + 3*n3 + 4*n4))
@@ -164,9 +389,27 @@ time_amplification_maths <- function(mult_data, max_amp, is_WGD, ordering_event)
       amplification_results$t_2 <- t_2
     }
     
-  }else if(max_amplification_split == c("4+3") & is_WGD == TRUE & order_event == "Cannot be timed"){
-    
-  }else if(max_amplification_split == c("4+4") & is_WGD == TRUE & order_event == "Cannot be timed"){
+  }else if(max_amplification_split == c("5+0") & is_WGD == TRUE){
+    # WGGG
+    if(n4 > 0 & order_event == "WGGG"){
+      t_1 <- (5*n5)/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5)
+      t_2 <- (5*(n4 + n5))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5)
+      t_3 <- (5*(n3 + n4 + n5))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5)
+      t_4 <- (5*(n2 + n3 + n4 + n5))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5)
+      amplification_results$event_order <- "WGGG"
+      amplification_results$t_1 <- t_1
+      amplification_results$t_2 <- t_2
+      amplification_results$t_3 <- t_3
+      amplification_results$t_4 <- t_4
+    }else if(n4 == 0 & order_event == "GWG"){# GWG
+      t_1 <- (5*n5)/(n1 + 2*n2 + n3 + 3*n5)
+      t_2 <- (5*(n3 + n5))/(n1 + 2*n2 + n3 + 3*n5)
+      t_3 <- (5*(n2 + n5))/(n1 + 2*n2 + n3 + 3*n5)
+      amplification_results$event_order <- "GWG"
+      amplification_results$t_1 <- t_1
+      amplification_results$t_2 <- t_2
+      amplification_results$t_3 <- t_3
+    }
     
   }else if(max_amplification_split == c("5+1") & is_WGD == TRUE){
     # WGGG
@@ -193,10 +436,10 @@ time_amplification_maths <- function(mult_data, max_amp, is_WGD, ordering_event)
   }else if(max_amplification_split == c("5+2") & is_WGD == TRUE){
     # WGGG
     if(n4 > 0 & order_event == "WGGG"){
-      t_1 <- ((7*(n5))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5))
-      t_2 <- ((7*(n4 + n5))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5))
-      t_3 <- ((7*(n3 + n4 + n5))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5))
-      t_4 <- ((7*(n2 + n3 + n4))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5))
+      t_1 <- ((7*(n5))/(n1 + 2*n2 + 3*n3 + 5*n4 + 6*n5))
+      t_2 <- ((7*(n4 + n5))/(n1 + 2*n2 + 3*n3 + 5*n4 + 6*n5))
+      t_3 <- ((7*(n3 + n4 + n5))/(n1 + 2*n2 + 3*n3 + 5*n4 + 6*n5))
+      t_4 <- ((7*(n2 + n3 + n4))/(n1 + 2*n2 + 3*n3 + 5*n4 + 6*n5))
       amplification_results$event_order <- "WGGG"
       amplification_results$t_1 <- t_1
       amplification_results$t_2 <- t_2
@@ -207,6 +450,40 @@ time_amplification_maths <- function(mult_data, max_amp, is_WGD, ordering_event)
       t_2 <- ((7*(n3 + n5))/(n1 + 2*n2 + 3*n3 + 5*n5))
       t_3 <- (((n2 - n3))/(n1 + 2*n2 + 3*n3 + 5*n5))
       amplification_results$event_order <- "GWG"
+      amplification_results$t_1 <- t_1
+      amplification_results$t_2 <- t_2
+      amplification_results$t_3 <- t_3
+    }
+    
+  }else if(max_amplification_split == c("6+0") & is_WGD == TRUE){
+    # WGGGG
+    if((n3 > 0) & (n5 > 0) & order_event == "WGGGG"){
+      t_1 <- (6*n6)/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6)
+      t_2 <- (6*(n5 + n6))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6)
+      t_3 <- (6*(n4 + n5 + n6))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6)
+      t_4 <- (6*(n3 + n4 + n5 + n6))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6)
+      t_5 <- (6*(n2 + n3 + n4 + n5 + n6))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6)
+      amplification_results$event_order <- "WGGGG"
+      amplification_results$t_1 <- t_1
+      amplification_results$t_2 <- t_2
+      amplification_results$t_3 <- t_3
+      amplification_results$t_4 <- t_4
+      amplification_results$t_5 <- t_5
+    }else if((n3 > 0) & (n5 == 0) & order_event == "GWGG"){# GWGG
+      t_1 <- (6*n6)/(n1 + 2*n2 + 3*n3 + 4*n4 + 6*n6)
+      t_2 <- (6*(n4 + n6))/(n1 + 2*n2 + 3*n3 + 4*n4 + 6*n6)
+      t_3 <- (6*(n3 + n4 + n6))/(n1 + 2*n2 + 3*n3 + 4*n4 + 6*n6)
+      t_4 <- (6*(n2 + n3 + n6))/(n1 + 2*n2 + 3*n3 + 4*n4 + 6*n6)
+      amplification_results$event_order <- "GWGG"
+      amplification_results$t_1 <- t_1
+      amplification_results$t_2 <- t_2
+      amplification_results$t_3 <- t_3
+      amplification_results$t_4 <- t_4
+    }else if((n3 == 0) & (n5 == 0) & order_event == "GGW"){# GGW
+      t_1 <- (6*n6)/(n1 + 2*n2 + 6*n4 + 6*n6)
+      t_2 <- (6*(n4 + n6))/(n1 + 2*n2 + 6*n4 + 6*n6)
+      t_3 <- (2*(n2 + 3*n4 + 3*n6))/(n1 + 2*n2 + 6*n4 + 6*n6)
+      amplification_results$event_order <- "GGW"
       amplification_results$t_1 <- t_1
       amplification_results$t_2 <- t_2
       amplification_results$t_3 <- t_3
@@ -239,7 +516,7 @@ time_amplification_maths <- function(mult_data, max_amp, is_WGD, ordering_event)
     }else if((n3 == 0) & (n5 == 0) & order_event == "GGW"){# GGW
       t_1 <- ((7*(n6))/(n1 + 2*n2 + 4*n4 + 6*n6))
       t_2 <- ((7*(n4 + n6))/(n1 + 2*n2 + 4*n4 + 6*n6))
-      t_3 <- ((7*(n2 + 2*n4 + 3*n6))/(n1 + 2*n2 + 4*n4 + 6*n6))
+      t_3 <- ((7*(n2 + 2*n4 + 3*n6))/3*(n1 + 2*n2 + 4*n4 + 6*n6))
       amplification_results$event_order <- "GGW"
       amplification_results$t_1 <- t_1
       amplification_results$t_2 <- t_2
@@ -278,6 +555,406 @@ time_amplification_maths <- function(mult_data, max_amp, is_WGD, ordering_event)
       amplification_results$t_1 <- t_1
       amplification_results$t_2 <- t_2
       amplification_results$t_3 <- t_3
+    }
+  }else if(max_amplification_split == c("7+0") & is_WGD == TRUE){
+    if((n4 > 0) & (n6 > 0) & (order_event == "WGGGGG")){
+      t_1 <- (7*n7)/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7)
+      t_2 <- (7*(n6 + n7))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7)
+      t_3 <- (7*(n5 + n6 + n7))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7)
+      t_4 <- (7*(n4 + n5 + n6 + n7))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7)
+      t_5 <- (7*(n3 + n4 + n5 + n6 + n7))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7)
+      t_6 <- (7*(n2 + n3 + n4 + n5 + n6 + n7))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7)
+      amplification_results$event_order <- "WGGGGG"
+      amplification_results$t_1 <- t_1
+      amplification_results$t_2 <- t_2
+      amplification_results$t_3 <- t_3
+      amplification_results$t_4 <- t_4
+      amplification_results$t_5 <- t_5
+      amplification_results$t_6 <- t_6
+    }else if((n4 > 0) & (n6 == 0) & (order_event == "GWGGG")){
+      t_1 <- (7*n7)/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 7*n7)
+      t_2 <- (7*(n5 + n7))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 7*n7)
+      t_3 <- (7*(n4 + n5 + n7))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 7*n7)
+      t_4 <- (7*(n3 + n4 + n5 + n7))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 7*n7)
+      t_5 <- (7*(n2 + n3 + n4 + n7))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 7*n7)
+      amplification_results$event_order <- "GWGGG"
+      amplification_results$t_1 <- t_1
+      amplification_results$t_2 <- t_2
+      amplification_results$t_3 <- t_3
+      amplification_results$t_4 <- t_4
+      amplification_results$t_5 <- t_5
+    }else if((n4 == 0) & (n6 == 0) & (order_event == "GGWG")){
+      t_1 <- (7*n7)/(n1 + 2*n2 - n3 + n5 + 3*n7)
+      t_2 <- (7*(n5 + n7))/(n1 + 2*n2 - n3 + n5 + 3*n7)
+      t_3 <- (7*(n3 + n5 + n7))/(n1 + 2*n2 - n3 + n5 + 3*n7)
+      t_4 <- (7*(n2 - n3 + n7))/(n1 + 2*n2 - n3 + n5 + 3*n7)
+      amplification_results$event_order <- "GGWG"
+      amplification_results$t_1 <- t_1
+      amplification_results$t_2 <- t_2
+      amplification_results$t_3 <- t_3
+      amplification_results$t_4 <- t_4
+    }
+  }else if(max_amplification_split == c("7+1") & is_WGD == TRUE){
+    if((n4 > 0) & (n6 > 0) & (order_event == "WGGGGG")){
+      t_1 <- (8*n7)/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7)
+      t_2 <- (8*(n6 + n7))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7)
+      t_3 <- (8*(n5 + n6 + n7))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7)
+      t_4 <- (8*(n4 + n5 + n6 + n7))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7)
+      t_5 <- (8*(n3 + n4 + n5 + n6 + n7))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7)
+      t_6 <- (8*(n2 + n3 + n4 + n5 + n6 + n7))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7)
+      amplification_results$event_order <- "WGGGGG"
+      amplification_results$t_1 <- t_1
+      amplification_results$t_2 <- t_2
+      amplification_results$t_3 <- t_3
+      amplification_results$t_4 <- t_4
+      amplification_results$t_5 <- t_5
+      amplification_results$t_6 <- t_6
+    }else if((n4 > 0) & (n6 == 0) & (order_event == "GWGGG")){
+      t_1 <- (8*n7)/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 7*n7)
+      t_2 <- (8*(n5 + n7))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 7*n7)
+      t_3 <- (8*(n4 + n5 + n7))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 7*n7)
+      t_4 <- (8*(n3 + n4 + n5 + n7))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 7*n7)
+      t_5 <- (8*(n2 + n3 + n4 + n7))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 7*n7)
+      amplification_results$event_order <- "GWGGG"
+      amplification_results$t_1 <- t_1
+      amplification_results$t_2 <- t_2
+      amplification_results$t_3 <- t_3
+      amplification_results$t_4 <- t_4
+      amplification_results$t_5 <- t_5
+    }else if((n4 == 0) & (n6 == 0) & (order_event == "GGWG")){
+      t_1 <- (8*n7)/(n1 + 2*n2 + 3*n3 + 5*n5 + 7*n7)
+      t_2 <- (8*(n5 + n7))/(n1 + 2*n2 + 3*n3 + 5*n5 + 7*n7)
+      t_3 <- (8*(n3 + n5 + n7))/(n1 + 2*n2 + 3*n3 + 5*n5 + 7*n7)
+      t_4 <- (8*(n2 - n3 + n7))/(n1 + 2*n2 + 3*n3 + 5*n5 + 7*n7)
+      amplification_results$event_order <- "GGWG"
+      amplification_results$t_1 <- t_1
+      amplification_results$t_2 <- t_2
+      amplification_results$t_3 <- t_3
+      amplification_results$t_4 <- t_4
+    }
+  }else if(max_amplification_split == c("7+2") & is_WGD == TRUE){
+    if((n4 > 0) & (n6 > 0) & (order_event == "WGGGGG")){
+      t_1 <- (9*n7)/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7)
+      t_2 <- (9*(n6 + n7))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7)
+      t_3 <- (9*(n5 + n6 + n7))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7)
+      t_4 <- (9*(n4 + n5 + n6 + n7))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7)
+      t_5 <- (9*(n3 + n4 + n5 + n6 + n7))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7)
+      t_6 <- (9*(n2 + n3 + n4 + n5 + n6))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7)
+      amplification_results$event_order <- "WGGGGG"
+      amplification_results$t_1 <- t_1
+      amplification_results$t_2 <- t_2
+      amplification_results$t_3 <- t_3
+      amplification_results$t_4 <- t_4
+      amplification_results$t_5 <- t_5
+      amplification_results$t_6 <- t_6
+    }else if((n4 > 0) & (n6 == 0) & (order_event == "GWGGG")){
+      t_1 <- (9*n7)/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 7*n7)
+      t_2 <- (9*(n5 + n7))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 7*n7)
+      t_3 <- (9*(n4 + n5 + n7))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 7*n7)
+      t_4 <- (9*(n3 + n3 + n5 + n7))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 7*n7)
+      t_5 <- (9*(n2 + n3 + n4 - n5))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 7*n7)
+      amplification_results$event_order <- "GWGGG"
+      amplification_results$t_1 <- t_1
+      amplification_results$t_2 <- t_2
+      amplification_results$t_3 <- t_3
+      amplification_results$t_4 <- t_4
+      amplification_results$t_5 <- t_5
+    }else if((n4 == 0) & (n6 == 0) & (order_event == "GGWG")){
+      t_1 <- (9*n7)/(n1 + 2*n2 + 3*n3 + 5*n5 + 7*n7)
+      t_2 <- (9*(n5 + n7))/(n1 + 2*n2 + 3*n3 + 5*n5 + 7*n7)
+      t_3 <- (9*(n3 + n5 + n7))/(n1 + 2*n2 + 3*n3 + 5*n5 + 7*n7)
+      t_4 <- (9*(n2 - 2*n3 - n5))/(n1 + 2*n2 + 3*n3 + 5*n5 + 7*n7)
+      amplification_results$event_order <- "GGWG"
+      amplification_results$t_1 <- t_1
+      amplification_results$t_2 <- t_2
+      amplification_results$t_3 <- t_3
+      amplification_results$t_4 <- t_4
+    }
+  }else if(max_amplification_split == c("8+0") & is_WGD == TRUE){
+    if((n3 > 0) & (n5 > 0) & (n7 > 0) & (order_event == "WGGGGGG")){
+      t_1 <- (8*n8)/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8)
+      t_2 <- (8*(n7 + n8))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8)
+      t_3 <- (8*(n6 + n7 + n8))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8)
+      t_4 <- (8*(n5 + n6 + n7 + n8))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8)
+      t_5 <- (8*(n4 + n5 + n6 + n7 + n8))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8)
+      t_6 <- (8*(n3 + n4 + n5 + n6 + n7 + n8))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8)
+      t_7 <- (8*(n2 + n3 + n4 + n5 + n6 + n7 + n8))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8)
+      amplification_results$event_order <- "WGGGGGG"
+      amplification_results$t_1 <- t_1
+      amplification_results$t_2 <- t_2
+      amplification_results$t_3 <- t_3
+      amplification_results$t_4 <- t_4
+      amplification_results$t_5 <- t_5
+      amplification_results$t_6 <- t_6
+      amplification_results$t_7 <- t_7
+    }else if((n3 > 0) & (n5 > 0) & (n7 == 0) & (order_event == "GWGGGG")){
+      t_1 <- (8*n8)/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 8*n8)
+      t_2 <- (8*(n6 + n8))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 8*n8)
+      t_3 <- (8*(n5 + n6 + n8))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 8*n8)
+      t_4 <- (8*(n4 + n5 + n6 + n8))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 8*n8)
+      t_5 <- (8*(n3 + n4 + n5 + n6 + n8))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 8*n8)
+      t_6 <- (8*(n2 + n3 + n4 + n5 + n8))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 8*n8)
+      amplification_results$event_order <- "GWGGGG"
+      amplification_results$t_1 <- t_1
+      amplification_results$t_2 <- t_2
+      amplification_results$t_3 <- t_3
+      amplification_results$t_4 <- t_4
+      amplification_results$t_5 <- t_5
+      amplification_results$t_6 <- t_6
+    }else if((n3 > 0) & (n5 == 0) & (n7 == 0) & (order_event == "GGWGG")){
+      t_1 <- (8*n8)/(n1 + 2*n2 + 3*n3 + 6*n4 + 8*n6 + 10*n8)
+      t_2 <- (8*(n6 + n8))/(n1 + 2*n2 + 3*n3 + 6*n4 + 8*n6 + 10*n8)
+      t_3 <- (8*(n4 + n6 + n8))/(n1 + 2*n2 + 3*n3 + 6*n4 + 8*n6 + 10*n8)
+      t_4 <- (8*(n3 + n4 + n6 + n8))/(n1 + 2*n2 + 3*n3 + 6*n4 + 8*n6 + 10*n8)
+      t_5 <- (8*(n2 + n3 + n6 + 2*n8))/(n1 + 2*n2 + 3*n3 + 6*n4 + 8*n6 + 10*n8)
+      amplification_results$event_order <- "GGWGG"
+      amplification_results$t_1 <- t_1
+      amplification_results$t_2 <- t_2
+      amplification_results$t_3 <- t_3
+      amplification_results$t_4 <- t_4
+      amplification_results$t_5 <- t_5
+    }else if((n3 == 0) & (n5 == 0) & (n7 == 0) & (order_event == "GGGW")){
+      t_1 <- (8*n8)/(n1 + 2*n2 + 4*n4 + 6*n6 + 8*n8)
+      t_2 <- (8*(n6 + n8))/(n1 + 2*n2 + 4*n4 + 6*n6 + 8*n8)
+      t_3 <- (8*(n4 + n6 + n8))/(n1 + 2*n2 + 4*n4 + 6*n6 + 8*n8)
+      t_4 <- (2*(n2 + 2*n4 + 3*n6 + 4*n8))/(n1 + 2*n2 + 4*n4 + 6*n6 + 8*n8)
+      amplification_results$event_order <- "GGGW"
+      amplification_results$t_1 <- t_1
+      amplification_results$t_2 <- t_2
+      amplification_results$t_3 <- t_3
+      amplification_results$t_4 <- t_4
+    }
+  }else if(max_amplification_split == c("8+1") & is_WGD == TRUE){
+    if((n3 > 0) & (n5 > 0) & (n7 > 0) & (order_event == "WGGGGGG")){
+      t_1 <- (9*n8)/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8)
+      t_2 <- (9*(n7 + n8))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8)
+      t_3 <- (9*(n6 + n7 + n8))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8)
+      t_4 <- (9*(n5 + n6 + n7 + n8))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8)
+      t_5 <- (9*(n4 + n5 + n6 + n7 + n8))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8)
+      t_6 <- (9*(n3 + n4 + n5 + n6 + n7 + n8))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8)
+      t_7 <- (9*(n2 + n3 + n4 + n5 + n6 + n7 + n8))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8)
+      amplification_results$event_order <- "WGGGGGG"
+      amplification_results$t_1 <- t_1
+      amplification_results$t_2 <- t_2
+      amplification_results$t_3 <- t_3
+      amplification_results$t_4 <- t_4
+      amplification_results$t_5 <- t_5
+      amplification_results$t_6 <- t_6
+      amplification_results$t_7 <- t_7
+    }else if((n3 > 0) & (n5 > 0) & (n7 == 0) & (order_event == "GWGGGG")){
+      t_1 <- (9*n8)/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 8*n8)
+      t_2 <- (9*(n6 + n8))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 8*n8)
+      t_3 <- (9*(n5 + n6 + n8))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 8*n8)
+      t_4 <- (9*(n4 + n5 + n6 + n8))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 8*n8)
+      t_5 <- (9*(n3 + n4 + n5 + n6 + n8))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 8*n8)
+      t_6 <- (9*(n2 + n3 + n4 + n5 + n8))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 8*n8)
+      amplification_results$event_order <- "GWGGGG"
+      amplification_results$t_1 <- t_1
+      amplification_results$t_2 <- t_2
+      amplification_results$t_3 <- t_3
+      amplification_results$t_4 <- t_4
+      amplification_results$t_5 <- t_5
+      amplification_results$t_6 <- t_6
+    }else if((n3 > 0) & (n5 == 0) & (n7 == 0) & (order_event == "GGWGG")){
+      t_1 <- (9*n8)/(n1 + 2*n2 + 3*n3 + 4*n4 + 6*n6 + 8*n8)
+      t_2 <- (9*(n6 + n8))/(n1 + 2*n2 + 3*n3 + 4*n4 + 6*n6 + 8*n8)
+      t_3 <- (9*(n4 + n6 + n8))/(n1 + 2*n2 + 3*n3 + 4*n4 + 6*n6 + 8*n8)
+      t_4 <- (9*(n3 + n4 + n6 + n8))/(n1 + 2*n2 + 3*n3 + 4*n4 + 6*n6 + 8*n8)
+      t_5 <- (9*(n2 + n3 - n4 + n8))/(n1 + 2*n2 + 3*n3 + 4*n4 + 6*n6 + 8*n8)
+      amplification_results$event_order <- "GGWGG"
+      amplification_results$t_1 <- t_1
+      amplification_results$t_2 <- t_2
+      amplification_results$t_3 <- t_3
+      amplification_results$t_4 <- t_4
+      amplification_results$t_5 <- t_5
+    }else if((n3 == 0) & (n5 == 0) & (n7 == 0) & (order_event == "GGGW")){
+      t_1 <- (9*n8)/(n1 + 2*n2 + 4*n4 + 6*n6 + 8*n8)
+      t_2 <- (9*(n6 + n8))/(n1 + 2*n2 + 4*n4 + 6*n6 + 8*n8)
+      t_3 <- (9*(n4 + n6 + n8))/(n1 + 2*n2 + 4*n4 + 6*n6 + 8*n8)
+      t_4 <- (9*(n2 + 2*n4 + 3*n6 + 4*n8))/4*(n1 + 2*n2 + 4*n4 + 6*n6 + 8*n8)
+      amplification_results$event_order <- "GGGW"
+      amplification_results$t_1 <- t_1
+      amplification_results$t_2 <- t_2
+      amplification_results$t_3 <- t_3
+      amplification_results$t_4 <- t_4
+    }
+  }else if(max_amplification_split == c("8+2") & is_WGD == TRUE){
+    if((n3 > 0) & (n5 > 0) & (n7 > 0) & (order_event == "WGGGGGG")){
+      t_1 <- (10*n8)/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8)
+      t_2 <- (10*(n7 + n8))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8)
+      t_3 <- (10*(n6 + n7 + n8))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8)
+      t_4 <- (10*(n5 + n6 + n7 + n8))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8)
+      t_5 <- (10*(n4 + n5 + n6 + n7 + n8))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8)
+      t_6 <- (10*(n3 + n4 + n5 + n6 + n7 + n8))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8)
+      t_7 <- (10*(n2 + n3 + n4 + n5 + n6 + n7))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8)
+      amplification_results$event_order <- "WGGGGGG"
+      amplification_results$t_1 <- t_1
+      amplification_results$t_2 <- t_2
+      amplification_results$t_3 <- t_3
+      amplification_results$t_4 <- t_4
+      amplification_results$t_5 <- t_5
+      amplification_results$t_6 <- t_6
+      amplification_results$t_7 <- t_7
+    }else if((n3 > 0) & (n5 > 0) & (n7 == 0) & (order_event == "GWGGGG")){
+      t_1 <- (10*n8)/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 8*n8)
+      t_2 <- (10*(n6 + n8))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 8*n8)
+      t_3 <- (10*(n5 + n6 + n8))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 8*n8)
+      t_4 <- (10*(n4 + n5 + n6 + n8))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 8*n8)
+      t_5 <- (10*(n3 + n4 + n5 + n6 + n8))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 8*n8)
+      t_6 <- (10*(n2 + n3 + n4 + n5 - n6))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 8*n8)
+      amplification_results$event_order <- "GWGGGG"
+      amplification_results$t_1 <- t_1
+      amplification_results$t_2 <- t_2
+      amplification_results$t_3 <- t_3
+      amplification_results$t_4 <- t_4
+      amplification_results$t_5 <- t_5
+      amplification_results$t_6 <- t_6
+    }else if((n3 > 0) & (n5 == 0) & (n7 == 0) & (order_event == "GGWGG")){
+      t_1 <- (10*n8)/(n1 + 2*n2 + 3*n3 + 4*n4 + 6*n6 + 8*n8)
+      t_2 <- (10*(n6 + n8))/(n1 + 2*n2 + 3*n3 + 4*n4 + 6*n6 + 8*n8)
+      t_3 <- (10*(n4 + n6 + n8))/(n1 + 2*n2 + 3*n3 + 4*n4 + 6*n6 + 8*n8)
+      t_4 <- (10*(n3 + n4 + n6 + n8))/(n1 + 2*n2 + 3*n3 + 4*n4 + 6*n6 + 8*n8)
+      t_5 <- (10*(n2 + n3 - 2*n4 - n6))/(n1 + 2*n2 + 3*n3 + 4*n4 + 6*n6 + 8*n8)
+      amplification_results$event_order <- "GGWGG"
+      amplification_results$t_1 <- t_1
+      amplification_results$t_2 <- t_2
+      amplification_results$t_3 <- t_3
+      amplification_results$t_4 <- t_4
+      amplification_results$t_5 <- t_5
+    }else if((n3 == 0) & (n5 == 0) & (n7 == 0) & (order_event == "GGGW")){
+      t_1 <- (10*n8)/(n1 + 2*n2 + 4*n4 + 6*n6 + 8*n8)
+      t_2 <- (10*(n6 + n8))/(n1 + 2*n2 + 4*n4 + 6*n6 + 8*n8)
+      t_3 <- (10*(n4 + n6 + n8))/(n1 + 2*n2 + 4*n4 + 6*n6 + 8*n8)
+      t_4 <- (2*(n2 + 2*n4 + 3*n6 + 4*n8))/(n1 + 2*n2 + 4*n4 + 6*n6 + 8*n8)
+      amplification_results$event_order <- "GGGW"
+      amplification_results$t_1 <- t_1
+      amplification_results$t_2 <- t_2
+      amplification_results$t_3 <- t_3
+      amplification_results$t_4 <- t_4
+    }
+  }else if(max_amplification_split == c("9+0") & is_WGD == TRUE){
+    if((n4 > 0) & (n6 > 0) & (n8 > 0) & order_event == "WGGGGGGG"){
+      t_1 <- (9*n9)/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 9*n9)
+      t_2 <- (9*(n8 + n9))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 9*n9)
+      t_3 <- (9*(n7 + n8 + n9))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 9*n9)
+      t_4 <- (9*(n6 + n7 + n8 + n9))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 9*n9)
+      t_5 <- (9*(n5 + n6 + n7 + n8 + n9))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 9*n9)
+      t_6 <- (9*(n4 + n5 + n6 + n7 + n8 + n9))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 9*n9)
+      t_7 <- (9*(n3 + n4 + n5 + n6 + n7 + n8 + n9))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 9*n9)
+      t_8 <- (9*(n2 + n3 + n4 + n5 + n6 + n7 + n8 + n9))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 9*n9)
+      amplification_results$event_order <- "WGGGGGGG"
+      amplification_results$t_1 <- t_1
+      amplification_results$t_2 <- t_2
+      amplification_results$t_3 <- t_3
+      amplification_results$t_4 <- t_4
+      amplification_results$t_5 <- t_5
+      amplification_results$t_6 <- t_6
+      amplification_results$t_7 <- t_7
+      amplification_results$t_8 <- t_8
+    }else if((n4 > 0) & (n6 > 0) & (n8 == 0) & order_event == "GWGGGGG"){
+      t_1 <- (9*n9)/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 9*n9)
+      t_2 <- (9*(n7 + n9))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 9*n9)
+      t_3 <- (9*(n6 + n7 + n9))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 9*n9)
+      t_4 <- (9*(n5 + n6 + n7 + n9))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 9*n9)
+      t_5 <- (9*(n4 + n5 + n6 + n7 + n9))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 9*n9)
+      t_6 <- (9*(n3 + n4 + n5 + n6 + n7 + n9))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 9*n9)
+      t_7 <- (9*(n2 + n3 + n4 + n5 + n6 + n9))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 9*n9)
+      amplification_results$event_order <- "GWGGGGG"
+      amplification_results$t_1 <- t_1
+      amplification_results$t_2 <- t_2
+      amplification_results$t_3 <- t_3
+      amplification_results$t_4 <- t_4
+      amplification_results$t_5 <- t_5
+      amplification_results$t_6 <- t_6
+      amplification_results$t_7 <- t_7
+    }else if((n4 > 0) & (n6 == 0) & (n8 == 0) & order_event == "GGWGGG"){
+      t_1 <- (9*n9)/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 7*n7 + 9*n9)
+      t_2 <- (9*(n7 + n9))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 7*n7 + 9*n9)
+      t_3 <- (9*(n5 + n7 + n9))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 7*n7 + 9*n9)
+      t_4 <- (9*(n4 + n5 + n7 + n9))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 7*n7 + 9*n9)
+      t_5 <- (9*(n3 + n4 + n5 + n7 + n9))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 7*n7 + 9*n9)
+      t_6 <- (9*(n2 + n3 + n4 - n5 + n9))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 7*n7 + 9*n9)
+      amplification_results$event_order <- "GGWGGG"
+      amplification_results$t_1 <- t_1
+      amplification_results$t_2 <- t_2
+      amplification_results$t_3 <- t_3
+      amplification_results$t_4 <- t_4
+      amplification_results$t_5 <- t_5
+      amplification_results$t_6 <- t_6
+    }else if((n4 == 0) & (n6 == 0) & (n8 == 0) & order_event == "GGGWG"){
+      t_1 <- (9*n9)/(n1 + 2*n2 + 3*n3 + 5*n5 + 7*n7 + 9*n9)
+      t_2 <- (9*(n7 + n9))/(n1 + 2*n2 + 3*n3 + 5*n5 + 7*n7 + 9*n9)
+      t_3 <- (9*(n5 + n7 + n9))/(n1 + 2*n2 + 3*n3 + 5*n5 + 7*n7 + 9*n9)
+      t_4 <- (9*(n3 + n5 + n7 + n9))/(n1 + 2*n2 + 3*n3 + 5*n5 + 7*n7 + 9*n9)
+      t_5 <- (9*(n2 - 2*n3 - n5 + n9))/(n1 + 2*n2 + 3*n3 + 5*n5 + 7*n7 + 9*n9)
+      amplification_results$event_order <- "GGGWG"
+      amplification_results$t_1 <- t_1
+      amplification_results$t_2 <- t_2
+      amplification_results$t_3 <- t_3
+      amplification_results$t_4 <- t_4
+      amplification_results$t_5 <- t_5
+    }
+  }else if(max_amplification_split == c("9+1") & is_WGD == TRUE){
+    if((n4 > 0) & (n6 > 0) & (n8 > 0) & order_event == "WGGGGGGG"){
+      t_1 <- (10*n9)/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 9*n9)
+      t_2 <- (10*(n8 + n9))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 9*n9)
+      t_3 <- (10*(n7 + n8 + n9))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 9*n9)
+      t_4 <- (10*(n6 + n7 + n8 + n9))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 9*n9)
+      t_5 <- (10*(n5 + n6 + n7 + n8 + n9))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 9*n9)
+      t_6 <- (10*(n4 + n5 + n6 + n7 + n8 + n9))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 9*n9)
+      t_7 <- (10*(n3 + n4 + n5 + n6 + n7 + n8 + n9))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 9*n9)
+      t_8 <- (10*(n2 + n3 + n4 + n5 + n6 + n7 + n8 + n9))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 9*n9)
+      amplification_results$event_order <- "WGGGGGGG"
+      amplification_results$t_1 <- t_1
+      amplification_results$t_2 <- t_2
+      amplification_results$t_3 <- t_3
+      amplification_results$t_4 <- t_4
+      amplification_results$t_5 <- t_5
+      amplification_results$t_6 <- t_6
+      amplification_results$t_7 <- t_7
+      amplification_results$t_8 <- t_8
+    }else if((n4 > 0) & (n6 > 0) & (n8 == 0) & order_event == "GWGGGGG"){
+      t_1 <- (10*n9)/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 9*n9)
+      t_2 <- (10*(n7 + n9))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 9*n9)
+      t_3 <- (10*(n6 + n7 + n9))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 9*n9)
+      t_4 <- (10*(n5 + n6 + n7 + n9))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 9*n9)
+      t_5 <- (10*(n4 + n5 + n6 + n7 + n9))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 9*n9)
+      t_6 <- (10*(n3 + n4 + n5 + n6 + n7 + n9))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 9*n9)
+      t_7 <- (10*(n2 + n3 + n4 + n5 + n6 + n9))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 9*n9)
+      amplification_results$event_order <- "GWGGGGG"
+      amplification_results$t_1 <- t_1
+      amplification_results$t_2 <- t_2
+      amplification_results$t_3 <- t_3
+      amplification_results$t_4 <- t_4
+      amplification_results$t_5 <- t_5
+      amplification_results$t_6 <- t_6
+      amplification_results$t_7 <- t_7
+    }else if((n4 > 0) & (n6 == 0) & (n8 == 0) & order_event == "GGWGGG"){
+      t_1 <- (10*n9)/(n1 + 2*n2 + 3*n3 + 4*n4 + 7*n5 + 7*n7 + 9*n9)
+      t_2 <- (10*(n7 + n9))/(n1 + 2*n2 + 3*n3 + 4*n4 + 7*n5 + 7*n7 + 9*n9)
+      t_3 <- (10*(n5 + n7 + n9))/(n1 + 2*n2 + 3*n3 + 4*n4 + 7*n5 + 7*n7 + 9*n9)
+      t_4 <- (10*(n4 + n5 + n7 + n9))/(n1 + 2*n2 + 3*n3 + 4*n4 + 7*n5 + 7*n7 + 9*n9)
+      t_5 <- (10*(n3 + n4 + n5 + n7 + n9))/(n1 + 2*n2 + 3*n3 + 4*n4 + 7*n5 + 7*n7 + 9*n9)
+      t_6 <- (10*(n2 + n3 + n4 + n9))/(n1 + 2*n2 + 3*n3 + 4*n4 + 7*n5 + 7*n7 + 9*n9)
+      amplification_results$event_order <- "GGWGGG"
+      amplification_results$t_1 <- t_1
+      amplification_results$t_2 <- t_2
+      amplification_results$t_3 <- t_3
+      amplification_results$t_4 <- t_4
+      amplification_results$t_5 <- t_5
+      amplification_results$t_6 <- t_6
+    }else if((n4 == 0) & (n6 == 0) & (n8 == 0) & order_event == "GGGWG"){
+      t_1 <- (10*n9)/(n1 + 2*n2 + 3*n3 + 5*n5 + 7*n7 + 9*n9)
+      t_2 <- (10*(n7 + n9))/(n1 + 2*n2 + 3*n3 + 5*n5 + 7*n7 + 9*n9)
+      t_3 <- (10*(n5 + n7 + n9))/(n1 + 2*n2 + 3*n3 + 5*n5 + 7*n7 + 9*n9)
+      t_4 <- (10*(n3 + n5 + n7 + n9))/(n1 + 2*n2 + 3*n3 + 5*n5 + 7*n7 + 9*n9)
+      t_5 <- (10*(n2 - 2*n3 - n5 + n9))/(n1 + 2*n2 + 3*n3 + 5*n5 + 7*n7 + 9*n9)
+      amplification_results$event_order <- "GGGWG"
+      amplification_results$t_1 <- t_1
+      amplification_results$t_2 <- t_2
+      amplification_results$t_3 <- t_3
+      amplification_results$t_4 <- t_4
+      amplification_results$t_5 <- t_5
     }
   }else if(max_amplification_split == c("9+2") & is_WGD == TRUE){
     if((n4 > 0) & (n6 > 0) & (n8 > 0) & order_event == "WGGGGGGG"){
@@ -335,6 +1012,172 @@ time_amplification_maths <- function(mult_data, max_amp, is_WGD, ordering_event)
       t_4 <- ((11*(n3 + n5 + n7 + n9)))/(n1 + 2*n2 + 3*n3 + 5*n5 + 7*n7 + 9*n9)
       t_5 <- ((11*(n2 - 3*n3 - 2*n5 - n7)))/(n1 + 2*n2 + 3*n3 + 5*n5 + 7*n7 + 9*n9)
       amplification_results$event_order <- "GGGWG"
+      amplification_results$t_1 <- t_1
+      amplification_results$t_2 <- t_2
+      amplification_results$t_3 <- t_3
+      amplification_results$t_4 <- t_4
+      amplification_results$t_5 <- t_5
+    }
+  }else if(max_amplification_split == c("10+0") & is_WGD == TRUE){
+    # WGGGGGGGG  
+    if((n3 > 0) & (n5 > 0) & (n7 > 0) & (n9 > 0) & order_event == "WGGGGGGGG"){
+      t_1 <- (10*n10)/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 9*n9 + 10*n10)
+      t_2 <- (10*(n9 + n10))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 9*n9 + 10*n10)
+      t_3 <- (10*(n8 + n9 + n10))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 9*n9 + 10*n10)
+      t_4 <- (10*(n7 + n8 + n9 + n10))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 9*n9 + 10*n10)
+      t_5 <- (10*(n6 + n7 + n8 + n9 + n10))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 9*n9 + 10*n10)
+      t_6 <- (10*(n5 + n6 + n7 + n8 + n9 + n10))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 9*n9 + 10*n10)
+      t_7 <- (10*(n4 + n5 + n6 + n7 + n8 + n9 + n10))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 9*n9 + 10*n10)
+      t_8 <- (10*(n3 + n4 + n5 + n6 + n7 + n8 + n9 + n10))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 9*n9 + 10*n10)
+      t_9 <- (10*(n2 + n3 + n4 + n5 + n6 + n7 + n8 + n9 + n10))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 9*n9 + 10*n10)
+      amplification_results$event_order <- "WGGGGGGGG"
+      amplification_results$t_1 <- t_1
+      amplification_results$t_2 <- t_2
+      amplification_results$t_3 <- t_3
+      amplification_results$t_4 <- t_4
+      amplification_results$t_5 <- t_5
+      amplification_results$t_6 <- t_6
+      amplification_results$t_7 <- t_7
+      amplification_results$t_8 <- t_8
+      amplification_results$t_9 <- t_9
+    }else if((n3 > 0) & (n5 > 0) & (n7 > 0) & (n9 == 0) & order_event == "GWGGGGGG"){# GWGGGGGG 
+      t_1 <- (10*n10)/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 10*n10)
+      t_2 <- (10*(n8 + n10))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 10*n10)
+      t_3 <- (10*(n7 + n8 + n10))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 10*n10)
+      t_4 <- (10*(n6 + n7 + n8 + n10))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 10*n10)
+      t_5 <- (10*(n5 + n6 + n7 + n8 + n10))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 10*n10)
+      t_6 <- (10*(n4 + n5 + n6 + n7 + n8 + n10))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 10*n10)
+      t_7 <- (10*(n3 + n4 + n5 + n6 + n7 + n8 + n10))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 10*n10)
+      t_8 <- (10*(n2 + n3 + n4 + n5 + n6 + n7 + n10))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 10*n10)
+      amplification_results$event_order <- "GWGGGGGG"
+      amplification_results$t_1 <- t_1
+      amplification_results$t_2 <- t_2
+      amplification_results$t_3 <- t_3
+      amplification_results$t_4 <- t_4
+      amplification_results$t_5 <- t_5
+      amplification_results$t_6 <- t_6
+      amplification_results$t_7 <- t_7
+      amplification_results$t_8 <- t_8
+    }else if((n3 > 0) & (n5 > 0) & (n7 == 0) & (n9 == 0) & order_event == "GGWGGGG"){# GGWGGGG
+      t_1 <- (10*n10)/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 8*n8 + 10*n10)
+      t_2 <- (10*(n8 + n10))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 8*n8 + 10*n10)
+      t_3 <- (10*(n6 + n8 + n10))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 8*n8 + 10*n10)
+      t_4 <- (10*(n5 + n6 + n8 + n10))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 8*n8 + 10*n10)
+      t_5 <- (10*(n4 + n5 + n6 + n8 + n10))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 8*n8 + 10*n10)
+      t_6 <- (10*(n3 + n4 + n5 + n6 + n8 + n10))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 8*n8 + 10*n10)
+      t_7 <- (10*(n2 + n3 + n4 + n5 - n6 + n10))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 8*n8 + 10*n10)
+      amplification_results$event_order <- "GGWGGGG"
+      amplification_results$t_1 <- t_1
+      amplification_results$t_2 <- t_2
+      amplification_results$t_3 <- t_3
+      amplification_results$t_4 <- t_4
+      amplification_results$t_5 <- t_5
+      amplification_results$t_6 <- t_6
+      amplification_results$t_7 <- t_7
+    }else if((n3 > 0) & (n5 == 0) & (n7 == 0) & (n9 == 0) & order_event == "GGGWGG"){# GGGWGG
+      t_1 <- (10*n10)/(n1 + 2*n2 + 3*n3 + 4*n4 + 6*n6 + 8*n8 + 10*n10)
+      t_2 <- (10*(n8 + n10))/(n1 + 2*n2 + 3*n3 + 4*n4 + 6*n6 + 8*n8 + 10*n10)
+      t_3 <- (10*(n6 + n8 + n10))/(n1 + 2*n2 + 3*n3 + 4*n4 + 6*n6 + 8*n8 + 10*n10)
+      t_4 <- (10*(n4 + n6 + n8 + n10))/(n1 + 2*n2 + 3*n3 + 4*n4 + 6*n6 + 8*n8 + 10*n10)
+      t_5 <- (10*(n3 + n4 + n6 + n8 + n10))/(n1 + 2*n2 + 3*n3 + 4*n4 + 6*n6 + 8*n8 + 10*n10)
+      t_6 <- (10*(n2 + n3 - 2*n4 - n6 + n10))/(n1 + 2*n2 + 3*n3 + 4*n4 + 6*n6 + 8*n8 + 10*n10)
+      amplification_results$event_order <- "GGGWGG"
+      amplification_results$t_1 <- t_1
+      amplification_results$t_2 <- t_2
+      amplification_results$t_3 <- t_3
+      amplification_results$t_4 <- t_4
+      amplification_results$t_5 <- t_5
+      amplification_results$t_6 <- t_6
+    }else if((n3 == 0) & (n5 == 0) & (n7 == 0) & (n9 == 0) & order_event == "GGGGW"){# GGGGW
+      t_1 <- (10*n10)/(n1 + 2*n2 + 4*n4 + 6*n6 + 8*n8 + 10*n10)
+      t_2 <- (10*(n8 + n10))/(n1 + 2*n2 + 4*n4 + 6*n6 + 8*n8 + 10*n10)
+      t_3 <- (10*(n6 + n8 + n10))/(n1 + 2*n2 + 4*n4 + 6*n6 + 8*n8 + 10*n10)
+      t_4 <- (10*(n4 + n6 + n8 + n10))/(n1 + 2*n2 + 4*n4 + 6*n6 + 8*n8 + 10*n10)
+      t_5 <- (2*(n2 + 2*n4 + 3*n6 + 4*n8 + 5*n10))/(n1 + 2*n2 + 4*n4 + 6*n6 + 8*n8 + 10*n10)
+      amplification_results$event_order <- "GGGGW"
+      amplification_results$t_1 <- t_1
+      amplification_results$t_2 <- t_2
+      amplification_results$t_3 <- t_3
+      amplification_results$t_4 <- t_4
+      amplification_results$t_5 <- t_5
+    }
+  }else if(max_amplification_split == c("10+1") & is_WGD == TRUE){
+    # WGGGGGGGG  
+    if((n3 > 0) & (n5 > 0) & (n7 > 0) & (n9 > 0) & order_event == "WGGGGGGGG"){
+      t_1 <- (11*n10)/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 9*n9 + 10*n10)
+      t_2 <- (11*(n9 + n10))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 9*n9 + 10*n10)
+      t_3 <- (11*(n8 + n9 + n10))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 9*n9 + 10*n10)
+      t_4 <- (11*(n7 + n8 + n9 + n10))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 9*n9 + 10*n10)
+      t_5 <- (11*(n6 + n7 + n8 + n9 + n10))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 9*n9 + 10*n10)
+      t_6 <- (11*(n5 + n6 + n7 + n8 + n9 + n10))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 9*n9 + 10*n10)
+      t_7 <- (11*(n4 + n5 + n6 + n7 + n8 + n9 + n10))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 9*n9 + 10*n10)
+      t_8 <- (11*(n3 + n4 + n5 + n6 + n7 + n8 + n9 + n10))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 9*n9 + 10*n10)
+      t_9 <- (11*(n2 + n3 + n4 + n5 + n6 + n7 + n8 + n9 + n10))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 9*n9 + 10*n10)
+      amplification_results$event_order <- "WGGGGGGGG"
+      amplification_results$t_1 <- t_1
+      amplification_results$t_2 <- t_2
+      amplification_results$t_3 <- t_3
+      amplification_results$t_4 <- t_4
+      amplification_results$t_5 <- t_5
+      amplification_results$t_6 <- t_6
+      amplification_results$t_7 <- t_7
+      amplification_results$t_8 <- t_8
+      amplification_results$t_9 <- t_9
+    }else if((n3 > 0) & (n5 > 0) & (n7 > 0) & (n9 == 0) & order_event == "GWGGGGGG"){# GWGGGGGG 
+      t_1 <- (11*n10)/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 10*n10)
+      t_2 <- (11*(n8 + n10))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 10*n10)
+      t_3 <- (11*(n7 + n8 + n10))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 10*n10)
+      t_4 <- (11*(n6 + n7 + n8 + n10))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 10*n10)
+      t_5 <- (11*(n5 + n6 + n7 + n8 + n10))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 10*n10)
+      t_6 <- (11*(n4 + n5 + n6 + n7 + n8 + n10))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 10*n10)
+      t_7 <- (11*(n3 + n4 + n5 + n6 + n7 + n8 + n10))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 10*n10)
+      t_8 <- (11*(n2 + n3 + n4 + n5 + n6 + n7 + n10))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 10*n10)
+      amplification_results$event_order <- "GWGGGGGG"
+      amplification_results$t_1 <- t_1
+      amplification_results$t_2 <- t_2
+      amplification_results$t_3 <- t_3
+      amplification_results$t_4 <- t_4
+      amplification_results$t_5 <- t_5
+      amplification_results$t_6 <- t_6
+      amplification_results$t_7 <- t_7
+      amplification_results$t_8 <- t_8
+    }else if((n3 > 0) & (n5 > 0) & (n7 == 0) & (n9 == 0) & order_event == "GGWGGGG"){# GGWGGGG
+      t_1 <- (11*n10)/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 8*n8 + 10*n10)
+      t_2 <- (11*(n8 + n10))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 8*n8 + 10*n10)
+      t_3 <- (11*(n6 + n8 + n10))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 8*n8 + 10*n10)
+      t_4 <- (11*(n5 + n6 + n8 + n10))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 8*n8 + 10*n10)
+      t_5 <- (11*(n4 + n5 + n6 + n8 + n10))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 8*n8 + 10*n10)
+      t_6 <- (11*(n3 + n4 + n5 + n6 + n8 + n10))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 8*n8 + 10*n10)
+      t_7 <- (11*(n2 + n3 + n4 + n5 - n6 + n10))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 8*n8 + 10*n10)
+      amplification_results$event_order <- "GGWGGGG"
+      amplification_results$t_1 <- t_1
+      amplification_results$t_2 <- t_2
+      amplification_results$t_3 <- t_3
+      amplification_results$t_4 <- t_4
+      amplification_results$t_5 <- t_5
+      amplification_results$t_6 <- t_6
+      amplification_results$t_7 <- t_7
+    }else if((n3 > 0) & (n5 == 0) & (n7 == 0) & (n9 == 0) & order_event == "GGGWGG"){# GGGWGG
+      t_1 <- (11*n10)/(n1 + 2*n2 + 3*n3 + 4*n4 + 6*n6 + 8*n8 + 10*n10)
+      t_2 <- (11*(n8 + n10))/(n1 + 2*n2 + 3*n3 + 4*n4 + 6*n6 + 8*n8 + 10*n10)
+      t_3 <- (11*(n6 + n8 + n10))/(n1 + 2*n2 + 3*n3 + 4*n4 + 6*n6 + 8*n8 + 10*n10)
+      t_4 <- (11*(n4 + n6 + n8 + n10))/(n1 + 2*n2 + 3*n3 + 4*n4 + 6*n6 + 8*n8 + 10*n10)
+      t_5 <- (11*(n3 + n4 + n6 + n8 + n10))/(n1 + 2*n2 + 3*n3 + 4*n4 + 6*n6 + 8*n8 + 10*n10)
+      t_6 <- (11*(n2 + n3 - 2*n4 - n6 + n8))/(n1 + 2*n2 + 3*n3 + 4*n4 + 6*n6 + 8*n8 + 10*n10)
+      amplification_results$event_order <- "GGGWGG"
+      amplification_results$t_1 <- t_1
+      amplification_results$t_2 <- t_2
+      amplification_results$t_3 <- t_3
+      amplification_results$t_4 <- t_4
+      amplification_results$t_5 <- t_5
+      amplification_results$t_6 <- t_6
+    }else if((n3 == 0) & (n5 == 0) & (n7 == 0) & (n9 == 0) & order_event == "GGGGW"){# GGGGW
+      t_1 <- (11*n10)/(n1 + 2*n2 + 4*n4 + 6*n6 + 8*n8 + 10*n10)
+      t_2 <- (11*(n8 + n10))/(n1 + 2*n2 + 4*n4 + 6*n6 + 8*n8 + 10*n10)
+      t_3 <- (11*(n6 + n8 + n10))/(n1 + 2*n2 + 4*n4 + 6*n6 + 8*n8 + 10*n10)
+      t_4 <- (11*(n4 + n6 + n8 + n10))/(n1 + 2*n2 + 4*n4 + 6*n6 + 8*n8 + 10*n10)
+      t_5 <- (11*(n2 + 2*n4 + 3*n6 + 4*n8 + 5*n10))/(5*(n1 + 2*n2 + 4*n4 + 6*n6 + 8*n8 + 10*n10))
+      amplification_results$event_order <- "GGGGW"
       amplification_results$t_1 <- t_1
       amplification_results$t_2 <- t_2
       amplification_results$t_3 <- t_3
@@ -476,27 +1319,72 @@ get_order_events <- function(multiplicity_values, max_amplification_split, is_WG
     n20 <- sum(multiplicity_values == 20) 
   }
   event_ordering <- NA
-  if(max_amplification_split == c("2+1") & is_WGD == FALSE){ ######## start with non-WGD
+  if(max_amplification_split == c("2+0") & is_WGD == FALSE){ ######## start with non-WGD
     
     event_ordering <- "G"
     
-  }else if(max_amplification_split == c("2+2") & is_WGD == FALSE){
+  }else if(max_amplification_split == c("2+1") & is_WGD == FALSE){ 
     
-    event_ordering <- "Cannot be timed"
+    event_ordering <- "G"
     
   }else if(max_amplification_split == c("3+1") & is_WGD == FALSE){
     
     event_ordering <- "GG"
     
-  }else if(max_amplification_split == c("3+2") & is_WGD == FALSE){
-    
-    event_ordering <- "Cannot be timed"
-    
   }else if(max_amplification_split == c("4+1") & is_WGD == FALSE){
     
     event_ordering <- "GGG"
     
-  }else if(max_amplification_split == c("4+2") & is_WGD == TRUE){ ####### WGD onwards, with further options
+  }else if(max_amplification_split == c("5+1") & is_WGD == FALSE){
+    
+    event_ordering <- "GGGG"
+    
+  }else if(max_amplification_split == c("6+1") & is_WGD == FALSE){
+    
+    event_ordering <- "GGGGG"
+    
+  }else if(max_amplification_split == c("7+1") & is_WGD == FALSE){
+    
+    event_ordering <- "GGGGGG"
+    
+  }else if(max_amplification_split == c("8+1") & is_WGD == FALSE){
+    
+    event_ordering <- "GGGGGGG"
+    
+  }else if(max_amplification_split == c("9+1") & is_WGD == FALSE){
+    
+    event_ordering <- "GGGGGGGG"
+    
+  }else if(max_amplification_split == c("10+1") & is_WGD == FALSE){
+    
+    event_ordering <- "GGGGGGGGG"
+    
+  }else if(max_amplification_split == c("2+0") & is_WGD == TRUE){ ####### WGD onwards, with further options
+    
+    event_ordering <- "W"
+    
+  }else if(max_amplification_split == c("2+1") & is_WGD == TRUE){ 
+    
+    event_ordering <- "W"
+    
+  }else if(max_amplification_split == c("2+2") & is_WGD == TRUE){ 
+    
+    event_ordering <- "W"
+    
+  }else if(max_amplification_split == c("3+0") & is_WGD == TRUE){ 
+    
+    event_ordering <- "WG"
+    
+  }else if(max_amplification_split == c("3+1") & is_WGD == TRUE){ 
+    
+    event_ordering <- "WG"
+    
+  }else if(max_amplification_split == c("3+2") & is_WGD == TRUE){ 
+    
+    event_ordering <- "WG"
+    
+  }else if(max_amplification_split == c("4+0") & is_WGD == TRUE){ 
+    
     # WGG
     if(n3 > 0){
       event_ordering <- "WGG"
@@ -504,9 +1392,30 @@ get_order_events <- function(multiplicity_values, max_amplification_split, is_WG
       event_ordering <- "GW"
     }
     
-  }else if(max_amplification_split == c("4+3") & is_WGD == TRUE){
+  }else if(max_amplification_split == c("4+1") & is_WGD == TRUE){ 
     
-  }else if(max_amplification_split == c("4+4") & is_WGD == TRUE){
+    # WGG
+    if(n3 > 0){
+      event_ordering <- "WGG"
+    }else if(n3 == 0){# GW
+      event_ordering <- "GW"
+    }
+    
+  }else if(max_amplification_split == c("4+2") & is_WGD == TRUE){
+    # WGG
+    if(n3 > 0){
+      event_ordering <- "WGG"
+    }else if(n3 == 0){# GW
+      event_ordering <- "GW"
+    }
+    
+  }else if(max_amplification_split == c("5+0") & is_WGD == TRUE){
+    # WGGG
+    if(n4 > 0){
+      event_ordering <- "WGGG"
+    }else if(n4 == 0){# GWG
+      event_ordering <- "GWG"
+    }
     
   }else if(max_amplification_split == c("5+1") & is_WGD == TRUE){
     # WGGG
@@ -522,6 +1431,16 @@ get_order_events <- function(multiplicity_values, max_amplification_split, is_WG
       event_ordering <- "WGGG"
     }else if(n4 == 0){# GWG
       event_ordering <- "GWG"
+    }
+    
+  }else if(max_amplification_split == c("6+0") & is_WGD == TRUE){
+    # WGGGG
+    if((n3 > 0) & (n5 > 0)){
+      event_ordering <- "WGGGG"
+    }else if((n3 > 0) & (n5 == 0)){# GWGG
+      event_ordering <- "GWGG"
+    }else if((n3 == 0) & (n5 == 0)){# GGW
+      event_ordering <- "GGW"
     }
     
   }else if(max_amplification_split == c("6+1") & is_WGD == TRUE){
@@ -543,6 +1462,92 @@ get_order_events <- function(multiplicity_values, max_amplification_split, is_WG
     }else if((n3 == 0) & (n5 == 0)){# GGW
       event_ordering <- "GGW"
     }
+  }else if(max_amplification_split == c("7+0") & is_WGD == TRUE){
+    # WGGGGG
+    if((n4 > 0) & (n6 > 0)){
+      event_ordering <- "WGGGGG"
+    }else if((n4 > 0) & (n6 == 0)){# GWGGG
+      event_ordering <- "GWGGG"
+    }else if((n4 == 0) & (n6 == 0)){# GGWG
+      event_ordering <- "GGWG"
+    }
+    
+  }else if(max_amplification_split == c("7+1") & is_WGD == TRUE){
+    # WGGGGG
+    if((n4 > 0) & (n6 > 0)){
+      event_ordering <- "WGGGGG"
+    }else if((n4 > 0) & (n6 == 0)){# GWGGG
+      event_ordering <- "GWGGG"
+    }else if((n4 == 0) & (n6 == 0)){# GGWG
+      event_ordering <- "GGWG"
+    }
+    
+  }else if(max_amplification_split == c("7+2") & is_WGD == TRUE){
+    # WGGGGG
+    if((n4 > 0) & (n6 > 0)){
+      event_ordering <- "WGGGGG"
+    }else if((n4 > 0) & (n6 == 0)){# GWGGG
+      event_ordering <- "GWGGG"
+    }else if((n4 == 0) & (n6 == 0)){# GGWG
+      event_ordering <- "GGWG"
+    }
+    
+  }else if(max_amplification_split == c("8+0") & is_WGD == TRUE){
+    # WGGGGGG
+    if((n3 > 0) & (n5 > 0) & (n7 > 0)){
+      event_ordering <- "WGGGGGG"
+    }else if((n3 > 0) & (n5 > 0) & (n7 == 0)){# GWGGGG
+      event_ordering <- "GWGGGG"
+    }else if((n3 > 0) & (n5 == 0) & (n7 == 0)){# GGWGG
+      event_ordering <- "GGWGG"
+    }else if((n3 == 0) & (n5 == 0) & (n7 == 0)){# GGGW
+      event_ordering <- "GGGW"
+    }
+    
+  }else if(max_amplification_split == c("8+1") & is_WGD == TRUE){
+    # WGGGGGG
+    if((n3 > 0) & (n5 > 0) & (n7 > 0)){
+      event_ordering <- "WGGGGGG"
+    }else if((n3 > 0) & (n5 > 0) & (n7 == 0)){# GWGGGG
+      event_ordering <- "GWGGGG"
+    }else if((n3 > 0) & (n5 == 0) & (n7 == 0)){# GGWGG
+      event_ordering <- "GGWGG"
+    }else if((n3 == 0) & (n5 == 0) & (n7 == 0)){# GGGW
+      event_ordering <- "GGGW"
+    }
+    
+  }else if(max_amplification_split == c("8+2") & is_WGD == TRUE){
+    # WGGGGGG
+    if((n3 > 0) & (n5 > 0) & (n7 > 0)){
+      event_ordering <- "WGGGGGG"
+    }else if((n3 > 0) & (n5 > 0) & (n7 == 0)){# GWGGGG
+      event_ordering <- "GWGGGG"
+    }else if((n3 > 0) & (n5 == 0) & (n7 == 0)){# GGWGG
+      event_ordering <- "GGWGG"
+    }else if((n3 == 0) & (n5 == 0) & (n7 == 0)){# GGGW
+      event_ordering <- "GGGW"
+    }
+    
+  }else if(max_amplification_split == c("9+0") & is_WGD == TRUE){
+    if((n4 > 0) & (n6 > 0) & (n8 > 0)){# WGGGGGGG
+      event_ordering <- "WGGGGGGG"
+    }else if((n4 > 0) & (n6 > 0) & (n8 == 0)){# GWGGGGG
+      event_ordering <- "GWGGGGG"
+    }else if((n4 > 0) & (n6 == 0) & (n8 == 0)){# GGWGGG
+      event_ordering <- "GGWGGG"
+    }else if((n4 == 0) & (n6 == 0) & (n8 == 0)){# GGGWG
+      event_ordering <- "GGGWG"
+    }    
+  }else if(max_amplification_split == c("9+1") & is_WGD == TRUE){
+    if((n4 > 0) & (n6 > 0) & (n8 > 0)){# WGGGGGGG
+      event_ordering <- "WGGGGGGG"
+    }else if((n4 > 0) & (n6 > 0) & (n8 == 0)){# GWGGGGG
+      event_ordering <- "GWGGGGG"
+    }else if((n4 > 0) & (n6 == 0) & (n8 == 0)){# GGWGGG
+      event_ordering <- "GGWGGG"
+    }else if((n4 == 0) & (n6 == 0) & (n8 == 0)){# GGGWG
+      event_ordering <- "GGGWG"
+    }    
   }else if(max_amplification_split == c("9+2") & is_WGD == TRUE){
     if((n4 > 0) & (n6 > 0) & (n8 > 0)){# WGGGGGGG
       event_ordering <- "WGGGGGGG"
@@ -553,6 +1558,36 @@ get_order_events <- function(multiplicity_values, max_amplification_split, is_WG
     }else if((n4 == 0) & (n6 == 0) & (n8 == 0)){# GGGWG
       event_ordering <- "GGGWG"
     }    
+  }else if(max_amplification_split == c("10+0") & is_WGD == TRUE){
+    # WGGGGGGGG  
+    if((n3 > 0) & (n5 > 0) & (n7 > 0) & (n9 > 0)){
+      event_ordering <- "WGGGGGGGG"
+    }else if((n3 > 0) & (n5 > 0) & (n7 > 0) & (n9 == 0)){# GWGGGGGG 
+      event_ordering <- "GWGGGGGG"
+    }else if((n3 > 0) & (n5 > 0) & (n7 == 0) & (n9 == 0)){# GGWGGGG
+      event_ordering <- "GGWGGGG"
+    }else if((n3 > 0) & (n5 == 0) & (n7 == 0) & (n9 == 0)){# GGGWGG
+      event_ordering <- "GGGWGG"
+    }else if((n3 == 0) & (n5 == 0) & (n7 == 0) & (n9 == 0)){# GGGGW
+      event_ordering <- "GGGGW"
+    }else{
+      event_ordering <- "Something went wrong"
+    }
+  }else if(max_amplification_split == c("10+1") & is_WGD == TRUE){
+    # WGGGGGGGG  
+    if((n3 > 0) & (n5 > 0) & (n7 > 0) & (n9 > 0)){
+      event_ordering <- "WGGGGGGGG"
+    }else if((n3 > 0) & (n5 > 0) & (n7 > 0) & (n9 == 0)){# GWGGGGGG 
+      event_ordering <- "GWGGGGGG"
+    }else if((n3 > 0) & (n5 > 0) & (n7 == 0) & (n9 == 0)){# GGWGGGG
+      event_ordering <- "GGWGGGG"
+    }else if((n3 > 0) & (n5 == 0) & (n7 == 0) & (n9 == 0)){# GGGWGG
+      event_ordering <- "GGGWGG"
+    }else if((n3 == 0) & (n5 == 0) & (n7 == 0) & (n9 == 0)){# GGGGW
+      event_ordering <- "GGGGW"
+    }else{
+      event_ordering <- "Something went wrong"
+    }
   }else if(max_amplification_split == c("10+2") & is_WGD == TRUE){
     # WGGGGGGGG  
     if((n3 > 0) & (n5 > 0) & (n7 > 0) & (n9 > 0)){
@@ -568,6 +1603,8 @@ get_order_events <- function(multiplicity_values, max_amplification_split, is_WG
     }else{
       event_ordering <- "Something went wrong"
     }
+  }else{
+    event_ordering <- "Cannot be timed"
   }
   
   return(event_ordering)
@@ -578,41 +1615,45 @@ get_order_events <- function(multiplicity_values, max_amplification_split, is_WG
 #'
 #' Wrapper function that times individual amplification events for a locus that has been gained multiple times.
 #' @param cn_data 
-#' Data frame containing copy number information.
+#' Data frame containing copy number information derived from Battenberg.
+#' The data frame must contain the following column names: "chr","startpos","endpos","nMaj1_A","nMin1_A"
 #' 
 #' @param multiplicity_data 
-#' Data frame containing multiplicity information.
+#' Data frame containing multiplicity information derived from DPClust3p.
+#' The data frame must contain the following column names: "chr","end","no.chrs.bearing.mut"
 #' 
 #' @param mutation_data 
 #' Data frame containing mutation data, including Ref and Alt alleles. Columns must be "chr","start","end","ref","alt". 
 #' This file is required if muts_type = "All", as mutation context is required to 
 #' identify clocklike mutations (C>T at CpG), and should contain all mutations. 
 #' If muts_type == "SBS1 and SBS5" this file should contain only mutations that 
-#' have been assigned to mutational signatures SBS1 or SBS5.
+#' have been assigned to mutational signatures SBS1 or SBS5. 
 #' 
 #' @param muts_type
 #' Must be one of "SBS1 and SBS5" or "All". Default is set to "All".  If set to "All", 
-#' the mutation_data field must be supplied, and the code will be restricted to analysis of clocklike mutations (C>T mutations at CpG sites). If set to "SBS1 and SBS5", the multiplicity_data data frame should have been filtered so as to contain only mutations that have been attributed to mutational signatures SBS1 and SBS5.
+#' the mutation_data field must be supplied, and the code will be restricted to analysis of clock-like mutations (C>T mutations at CpG sites). If set to "SBS1 and SBS5", the multiplicity_data data frame should have been filtered so as to contain only mutations that have been attributed to mutational signatures SBS1 and SBS5.
 #' 
 #' @param sample_id 
-#' ID name or label for sample. 
+#' ID name or label for sample. Character.
 #' 
 #' @param amplification_chrom 
-#' Chromosome of the amplified region.
+#' Chromosome of the amplified region. Must not contain "chr" in the name. 
 #' 
 #' @param amplification_start 
-#' Start position of the amplified region.
+#' Start position of the amplified region. Numeric.
 #' 
 #' @param amplification_stop 
-#' End position of the amplified region.  
+#' End position of the amplified region.  Numeric.
 #' 
 #' @param is_WGD 
 #' logical: TRUE indicates that the sample has been whole genome duplicated.
+#' FALSE indicates that the sample has not been whole duplicated.
 #' 
 #' @param genome
 #' Reference genome used. Must be one of "hg19" or "hg38".
 #' 
 #' @return A data frame containing approximate timing of each amplification, and the most likely order of events. 
+#' @example inst/example/example.R
 #' @export
 
 time_amplification <- function(cn_data, 
@@ -636,11 +1677,11 @@ time_amplification <- function(cn_data,
   if(class(multiplicity_data)[1] != "data.frame"){
     stop("'multiplicity_data' must be an object of class 'data.frame'")
   }
-  if(!is.na(mutation_data)){
-    if(class(mutation_data)[1] != "data.frame"){
-          stop("'mutation_data' must be an object of class 'data.frame'")
-    }
+
+  if(class(mutation_data)[1] != "data.frame"){
+    stop("'mutation_data' must be an object of class 'data.frame'")
   }
+
   if(!is.character(sample_id)){
     stop("'sample_id' must be an object of type 'character'")
   }
@@ -664,14 +1705,12 @@ time_amplification <- function(cn_data,
   if(!(genome %in% c("hg19","hg38"))){
     stop("'muts_type' must be either 'hg19' or 'hg38'")
   }
-  if(muts_type == "All"){
-    if(is.na(mutation_data)){
-          stop("'mutation_data' must be supplied when 'muts_type' = 'All'.")
-    }
+  if(!all(c("chr","start","end","ref","alt") %in% colnames(mutation_data))){
+      stop("'mutation_data' must contain the following columns: 'chr','start','end','ref','alt'.")
   }
   if(muts_type == "All"){
     if(is.na(genome)){
-          stop("'genome' must be supplied when 'muts_type' = 'All'.")
+      stop("'genome' must be supplied when 'muts_type' = 'All'.")
     }
   }
   
@@ -683,7 +1722,7 @@ time_amplification <- function(cn_data,
     stop("Incorrect column names in 'multiplicity_data'")
   }
   # mutation data input is checked in clocklike_muts function
-
+  
   
   # Input has non-zero number of rows
   if(nrow(cn_data) == 0){
@@ -691,6 +1730,9 @@ time_amplification <- function(cn_data,
   }
   if(nrow(multiplicity_data) == 0){
     stop("'multiplicity_data' has no content")
+  }
+  if(nrow(mutation_data) == 0){
+    stop("'mutation_data' has no content")
   }
   
   # 
@@ -740,20 +1782,22 @@ time_amplification <- function(cn_data,
   is_amplified <- NA
   
   if(c("n2A_sum") %in% colnames(tmp_cn)){
-    if(is_WGD == FALSE & tmp_cn$n1A_sum <= 2 & tmp_cn$n2A_sum <= 2){
+    if(is_WGD == FALSE & tmp_cn$n1A_sum <= 2 & tmp_cn$n2A_sum <= 2 & tmp_cn$nMin1_A > 0 & tmp_cn$nMin2_A > 0){
       stop("Region not amplified in sample")
       
-    }else if(is_WGD == TRUE & tmp_cn$n1A_sum <= 4 & tmp_cn$n2A_sum <= 4){
+    }else if(is_WGD == TRUE & tmp_cn$n1A_sum <= 2 & tmp_cn$n2A_sum <= 2 & tmp_cn$nMin1_A > 0 & tmp_cn$nMin2_A > 0){
       stop("Region not amplified in sample")
       
+    }else if(tmp_cn$n1A == "1+1" & tmp_cn$n2A == "1+0"){
+      stop("Region not amplified in sample")
     }else{
       is_amplified <- TRUE
     }
   }else{
-    if(is_WGD == FALSE & tmp_cn$n1A_sum <= 2){
+    if(is_WGD == FALSE & tmp_cn$n1A_sum <= 2 & tmp_cn$nMin1_A > 0){
       stop("Region not amplified in sample")
       
-    }else if(is_WGD == TRUE & tmp_cn$n1A_sum <= 4){
+    }else if(is_WGD == TRUE & tmp_cn$n1A_sum <= 2 & tmp_cn$nMin1_A > 0){
       stop("Region not amplified in sample")
       
     }else{
@@ -769,8 +1813,10 @@ time_amplification <- function(cn_data,
     }else if(max_amplification == c("n2A_sum")){
       max_amplification_split <- tmp_cn$n2A
     }
+    clonality_status <- "subclonal"
   }else{
     max_amplification_split <- tmp_cn$n1A
+    clonality_status <- "clonal"
   }
   
   
@@ -828,28 +1874,29 @@ time_amplification <- function(cn_data,
   ##############################################################################
   # Get all of the multiplicities to feed into time_amplification_maths
   tmp_values <- tmp_mult$no.chrs.bearing.mut.ceiling
-
+  
   ##############################################################################
   # Prepare output table
   
   if(is_amplified == TRUE){
-    amplification_results_ci <- as.data.frame(matrix(nrow=1, ncol = 45))
-    colnames(amplification_results_ci) <- c("sample","region","highest_copy_number","event_order","num_mutations_used",
-                                            "t_1","t_1_mean_bootstrap","t_1_lower_ci","t_1_upper_ci",
-                                            "t_2","t_2_mean_bootstrap","t_2_lower_ci","t_2_upper_ci",
-                                            "t_3","t_3_mean_bootstrap","t_3_lower_ci","t_3_upper_ci",
-                                            "t_4","t_4_mean_bootstrap","t_4_lower_ci","t_4_upper_ci",
-                                            "t_5","t_5_mean_bootstrap","t_5_lower_ci","t_5_upper_ci",
-                                            "t_6","t_6_mean_bootstrap","t_6_lower_ci","t_6_upper_ci",
-                                            "t_7","t_7_mean_bootstrap","t_7_lower_ci","t_7_upper_ci",
-                                            "t_8","t_8_mean_bootstrap","t_8_lower_ci","t_8_upper_ci",
-                                            "t_9","t_9_mean_bootstrap","t_9_lower_ci","t_9_upper_ci",
-                                            "t_10","t_10_mean_bootstrap","t_10_lower_ci","t_10_upper_ci")
+    amplification_results_ci <- as.data.frame(matrix(nrow=1, ncol = 46))
+    colnames(amplification_results_ci) <- c("sample","region","highest_copy_number","event_order","num_mutations_used","clonality_status",
+                                            "t_1","t_1_median_bootstrap","t_1_lower_ci","t_1_upper_ci",
+                                            "t_2","t_2_median_bootstrap","t_2_lower_ci","t_2_upper_ci",
+                                            "t_3","t_3_median_bootstrap","t_3_lower_ci","t_3_upper_ci",
+                                            "t_4","t_4_median_bootstrap","t_4_lower_ci","t_4_upper_ci",
+                                            "t_5","t_5_median_bootstrap","t_5_lower_ci","t_5_upper_ci",
+                                            "t_6","t_6_median_bootstrap","t_6_lower_ci","t_6_upper_ci",
+                                            "t_7","t_7_median_bootstrap","t_7_lower_ci","t_7_upper_ci",
+                                            "t_8","t_8_median_bootstrap","t_8_lower_ci","t_8_upper_ci",
+                                            "t_9","t_9_median_bootstrap","t_9_lower_ci","t_9_upper_ci",
+                                            "t_10","t_10_median_bootstrap","t_10_lower_ci","t_10_upper_ci")
     
     amplification_results_ci$sample <- sample_id
     amplification_results_ci$region <- paste(tmp_cn$chr,":",tmp_cn$start,"-",tmp_cn$end, sep = "")
     amplification_results_ci$highest_copy_number <- max_amplification_split
     amplification_results_ci$num_mutations_used <- length(tmp_values)
+    amplification_results_ci$clonality_status <- clonality_status
     
     ############################################################################
     # Get timing estimate based on raw data (subsetted for clock-like or signature mutations)
@@ -878,12 +1925,12 @@ time_amplification <- function(cn_data,
     }
     
     ############################################################################
-    # Calculate confidence intervals and mean timing from bootstrap results
+    # Calculate confidence intervals and median timing from bootstrap results
     # Include everything in the output results
     
     if(!is.na(single_time$t_1)){
       amplification_results_ci$t_1 <- single_time$t_1
-      amplification_results_ci$t_1_mean_bootstrap <- mean(bootstrap_amplification$t_1, na.rm = TRUE)
+      amplification_results_ci$t_1_median_bootstrap <- median(bootstrap_amplification$t_1, na.rm = TRUE)
       t_1_lower_ci <- confint(lm(t_1 ~ 1, bootstrap_amplification), level = 0.95)[1]
       t_1_lower_ci_adj <- ((length(tmp_values)*t_1_lower_ci)/(5 + length(tmp_values)))
       t_1_upper_ci <- confint(lm(t_1 ~ 1, bootstrap_amplification), level = 0.95)[2]
@@ -893,7 +1940,7 @@ time_amplification <- function(cn_data,
     }
     if(!is.na(single_time$t_2)){
       amplification_results_ci$t_2 <- single_time$t_2
-      amplification_results_ci$t_2_mean_bootstrap <- mean(bootstrap_amplification$t_2, na.rm = TRUE)
+      amplification_results_ci$t_2_median_bootstrap <- median(bootstrap_amplification$t_2, na.rm = TRUE)
       t_2_lower_ci <- confint(lm(t_2 ~ 1, bootstrap_amplification), level = 0.95)[1]
       t_2_lower_ci_adj <- ((length(tmp_values)*t_2_lower_ci)/(5 + length(tmp_values)))
       t_2_upper_ci <- confint(lm(t_2 ~ 1, bootstrap_amplification), level = 0.95)[2]
@@ -903,7 +1950,7 @@ time_amplification <- function(cn_data,
     }
     if(!is.na(single_time$t_3)){
       amplification_results_ci$t_3 <- single_time$t_3
-      amplification_results_ci$t_3_mean_bootstrap <- mean(bootstrap_amplification$t_3, na.rm = TRUE)
+      amplification_results_ci$t_3_median_bootstrap <- median(bootstrap_amplification$t_3, na.rm = TRUE)
       t_3_lower_ci <- confint(lm(t_3 ~ 1, bootstrap_amplification), level = 0.95)[1]
       t_3_lower_ci_adj <- ((length(tmp_values)*t_3_lower_ci)/(5 + length(tmp_values)))
       t_3_upper_ci <- confint(lm(t_3 ~ 1, bootstrap_amplification), level = 0.95)[2]
@@ -913,7 +1960,7 @@ time_amplification <- function(cn_data,
     }
     if(!is.na(single_time$t_4)){
       amplification_results_ci$t_4 <- single_time$t_4
-      amplification_results_ci$t_4_mean_bootstrap <- mean(bootstrap_amplification$t_4, na.rm = TRUE)
+      amplification_results_ci$t_4_median_bootstrap <- median(bootstrap_amplification$t_4, na.rm = TRUE)
       t_4_lower_ci <- confint(lm(t_4 ~ 1, bootstrap_amplification), level = 0.95)[1]
       t_4_lower_ci_adj <- ((length(tmp_values)*t_4_lower_ci)/(5 + length(tmp_values)))
       t_4_upper_ci <- confint(lm(t_4 ~ 1, bootstrap_amplification), level = 0.95)[2]
@@ -923,7 +1970,7 @@ time_amplification <- function(cn_data,
     }
     if(!is.na(single_time$t_5)){
       amplification_results_ci$t_5 <- single_time$t_5
-      amplification_results_ci$t_5_mean_bootstrap <- mean(bootstrap_amplification$t_5, na.rm = TRUE)
+      amplification_results_ci$t_5_median_bootstrap <- median(bootstrap_amplification$t_5, na.rm = TRUE)
       t_5_lower_ci <- confint(lm(t_5 ~ 1, bootstrap_amplification), level = 0.95)[1]
       t_5_lower_ci_adj <- ((length(tmp_values)*t_5_lower_ci)/(5 + length(tmp_values)))
       t_5_upper_ci <- confint(lm(t_5 ~ 1, bootstrap_amplification), level = 0.95)[2]
@@ -933,7 +1980,7 @@ time_amplification <- function(cn_data,
     }
     if(!is.na(single_time$t_6)){
       amplification_results_ci$t_6 <- single_time$t_6
-      amplification_results_ci$t_6_mean_bootstrap <- mean(bootstrap_amplification$t_6, na.rm = TRUE)
+      amplification_results_ci$t_6_median_bootstrap <- median(bootstrap_amplification$t_6, na.rm = TRUE)
       t_6_lower_ci <- confint(lm(t_6 ~ 1, bootstrap_amplification), level = 0.95)[1]
       t_6_lower_ci_adj <- ((length(tmp_values)*t_6_lower_ci)/(5 + length(tmp_values)))
       t_6_upper_ci <- confint(lm(t_6 ~ 1, bootstrap_amplification), level = 0.95)[2]
@@ -943,7 +1990,7 @@ time_amplification <- function(cn_data,
     }
     if(!is.na(single_time$t_7)){
       amplification_results_ci$t_7 <- single_time$t_7
-      amplification_results_ci$t_7_mean_bootstrap <- mean(bootstrap_amplification$t_7, na.rm = TRUE)
+      amplification_results_ci$t_7_median_bootstrap <- median(bootstrap_amplification$t_7, na.rm = TRUE)
       t_7_lower_ci <- confint(lm(t_7 ~ 1, bootstrap_amplification), level = 0.95)[1]
       t_7_lower_ci_adj <- ((length(tmp_values)*t_7_lower_ci)/(5 + length(tmp_values)))
       t_7_upper_ci <- confint(lm(t_7 ~ 1, bootstrap_amplification), level = 0.95)[2]
@@ -953,7 +2000,7 @@ time_amplification <- function(cn_data,
     }
     if(!is.na(single_time$t_8)){
       amplification_results_ci$t_8 <- single_time$t_8
-      amplification_results_ci$t_8_mean_bootstrap <- mean(bootstrap_amplification$t_8, na.rm = TRUE)
+      amplification_results_ci$t_8_median_bootstrap <- median(bootstrap_amplification$t_8, na.rm = TRUE)
       t_8_lower_ci <- confint(lm(t_8 ~ 1, bootstrap_amplification), level = 0.95)[1]
       t_8_lower_ci_adj <- ((length(tmp_values)*t_8_lower_ci)/(5 + length(tmp_values)))
       t_8_upper_ci <- confint(lm(t_8 ~ 1, bootstrap_amplification), level = 0.95)[2]
@@ -963,7 +2010,7 @@ time_amplification <- function(cn_data,
     }
     if(!is.na(single_time$t_9)){
       amplification_results_ci$t_9 <- single_time$t_9
-      amplification_results_ci$t_9_mean_bootstrap <- mean(bootstrap_amplification$t_9, na.rm = TRUE)
+      amplification_results_ci$t_9_median_bootstrap <- median(bootstrap_amplification$t_9, na.rm = TRUE)
       t_9_lower_ci <- confint(lm(t_9 ~ 1, bootstrap_amplification), level = 0.95)[1]
       t_9_lower_ci_adj <- ((length(tmp_values)*t_9_lower_ci)/(5 + length(tmp_values)))
       t_9_upper_ci <- confint(lm(t_9 ~ 1, bootstrap_amplification), level = 0.95)[2]
@@ -973,7 +2020,7 @@ time_amplification <- function(cn_data,
     }
     if(!is.na(single_time$t_10)){
       amplification_results_ci$t_10 <- single_time$t_10
-      amplification_results_ci$t_10_mean_bootstrap <- mean(bootstrap_amplification$t_10, na.rm = TRUE)
+      amplification_results_ci$t_10_median_bootstrap <- median(bootstrap_amplification$t_10, na.rm = TRUE)
       t_10_lower_ci <- confint(lm(t_10 ~ 1, bootstrap_amplification), level = 0.95)[1]
       t_10_lower_ci_adj <- ((length(tmp_values)*t_10_lower_ci)/(5 + length(tmp_values)))
       t_10_upper_ci <- confint(lm(t_10 ~ 1, bootstrap_amplification), level = 0.95)[2]

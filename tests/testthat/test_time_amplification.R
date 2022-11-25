@@ -2,25 +2,25 @@
 library(testthat)
 library(covr)
 
-# test input
+#### test input ####
 test_that("AmplificationTimeR runs and produces a data.frame when all input is correct", {
   expect_equal(class(time_amplification(cn_data = test_data_cn,
-                                  multiplicity_data = test_data_mult,
-                                  mutation_data = NA,
-                                  muts_type = "SBS1 and SBS5",
-                                  sample_id = test_data_id,
-                                  amplification_chrom = test_data_chrom,
-                                  amplification_start = test_data_start,
-                                  amplification_stop = test_data_stop,
-                                  is_WGD = test_data_status,
-                                  genome = "hg19")),"data.frame")
+                                        multiplicity_data = test_data_mult,
+                                        mutation_data = test_data_muts,
+                                        muts_type = "SBS1 and SBS5",
+                                        sample_id = test_data_id,
+                                        amplification_chrom = test_data_chrom,
+                                        amplification_start = test_data_start,
+                                        amplification_stop = test_data_stop,
+                                        is_WGD = test_data_status,
+                                        genome = "hg19")),"data.frame")
 })
 
 # test copy number input
 test_that("AmplificationTimeR fails and produces an error message when copy number input is incorrect class.", {
   expect_error(time_amplification(cn_data = as.matrix(test_data_cn),
                                   multiplicity_data = test_data_mult,
-                                  mutation_data = NA,
+                                  mutation_data = test_data_muts,
                                   muts_type = "SBS1 and SBS5",
                                   sample_id = test_data_id,
                                   amplification_chrom = test_data_chrom,
@@ -33,7 +33,7 @@ test_that("AmplificationTimeR fails and produces an error message when copy numb
 test_that("AmplificationTimeR fails and produces an error message when copy number input has incorrect columns.", {
   expect_error(time_amplification(cn_data = test_data_cn_incorrect,
                                   multiplicity_data = test_data_mult,
-                                  mutation_data = NA,
+                                  mutation_data = test_data_muts,
                                   muts_type = "SBS1 and SBS5",
                                   sample_id = test_data_id,
                                   amplification_chrom = test_data_chrom,
@@ -45,7 +45,7 @@ test_that("AmplificationTimeR fails and produces an error message when copy numb
 test_that("AmplificationTimeR fails and produces an error message when copy number input is empty.", {
   expect_error(time_amplification(cn_data = test_data_cn_empty,
                                   multiplicity_data = test_data_mult,
-                                  mutation_data = NA,
+                                  mutation_data = test_data_muts,
                                   muts_type = "SBS1 and SBS5",
                                   sample_id = test_data_id,
                                   amplification_chrom = test_data_chrom,
@@ -58,7 +58,7 @@ test_that("AmplificationTimeR fails and produces an error message when copy numb
 test_that("AmplificationTimeR fails and produces an error message when multiplicity input is incorrect class.", {
   expect_error(time_amplification(cn_data = test_data_cn,
                                   multiplicity_data = as.matrix(test_data_mult),
-                                  mutation_data = NA,
+                                  mutation_data = test_data_muts,
                                   muts_type = "SBS1 and SBS5",
                                   sample_id = test_data_id,
                                   amplification_chrom = test_data_chrom,
@@ -71,7 +71,7 @@ test_that("AmplificationTimeR fails and produces an error message when multiplic
 test_that("AmplificationTimeR fails and produces an error message when multiplicity input has incorrect columns.", {
   expect_error(time_amplification(cn_data = test_data_cn,
                                   multiplicity_data = test_data_mult_incorrect,
-                                  mutation_data = NA,
+                                  mutation_data = test_data_muts,
                                   muts_type = "SBS1 and SBS5",
                                   sample_id = test_data_id,
                                   amplification_chrom = test_data_chrom,
@@ -83,7 +83,7 @@ test_that("AmplificationTimeR fails and produces an error message when multiplic
 test_that("AmplificationTimeR fails and produces an error message when multiplicity input is empty.", {
   expect_error(time_amplification(cn_data = test_data_cn,
                                   multiplicity_data = test_data_mult_empty,
-                                  mutation_data = NA,
+                                  mutation_data = test_data_muts,
                                   muts_type = "SBS1 and SBS5",
                                   sample_id = test_data_id,
                                   amplification_chrom = test_data_chrom,
@@ -96,7 +96,7 @@ test_that("AmplificationTimeR fails and produces an error message when multiplic
 test_that("AmplificationTimeR fails and produces an error message when chromosome input is incorrect.", {
   expect_error(time_amplification(cn_data = test_data_cn,
                                   multiplicity_data = test_data_mult,
-                                  mutation_data = NA,
+                                  mutation_data = test_data_muts,
                                   muts_type = "SBS1 and SBS5",
                                   sample_id = test_data_id,
                                   amplification_chrom = 30,
@@ -109,7 +109,7 @@ test_that("AmplificationTimeR fails and produces an error message when chromosom
 test_that("AmplificationTimeR fails and produces an error message when start input is incorrect or not found in file.", {
   expect_error(time_amplification(cn_data = test_data_cn,
                                   multiplicity_data = test_data_mult,
-                                  mutation_data = NA,
+                                  mutation_data = test_data_muts,
                                   muts_type = "SBS1 and SBS5",
                                   sample_id = test_data_id,
                                   amplification_chrom = test_data_chrom,
@@ -120,7 +120,7 @@ test_that("AmplificationTimeR fails and produces an error message when start inp
   
   expect_error(time_amplification(cn_data = test_data_cn,
                                   multiplicity_data = test_data_mult,
-                                  mutation_data = NA,
+                                  mutation_data = test_data_muts,
                                   muts_type = "SBS1 and SBS5",
                                   sample_id = test_data_id,
                                   amplification_chrom = test_data_chrom,
@@ -133,7 +133,7 @@ test_that("AmplificationTimeR fails and produces an error message when start inp
 test_that("AmplificationTimeR fails and produces an error message when stop input is incorrect.", {
   expect_error(time_amplification(cn_data = test_data_cn,
                                   multiplicity_data = test_data_mult,
-                                  mutation_data = NA,
+                                  mutation_data = test_data_muts,
                                   muts_type = "SBS1 and SBS5",
                                   sample_id = test_data_id,
                                   amplification_chrom = test_data_chrom,
@@ -146,7 +146,7 @@ test_that("AmplificationTimeR fails and produces an error message when stop inpu
 test_that("AmplificationTimeR fails and produces an error message when is_WGD input is incorrect.", {
   expect_error(time_amplification(cn_data = test_data_cn,
                                   multiplicity_data = test_data_mult,
-                                  mutation_data = NA,
+                                  mutation_data = test_data_muts,
                                   muts_type = "SBS1 and SBS5",
                                   sample_id = test_data_id,
                                   amplification_chrom = test_data_chrom,
@@ -156,7 +156,7 @@ test_that("AmplificationTimeR fails and produces an error message when is_WGD in
                                   genome = "hg19"))
   expect_error(time_amplification(cn_data = test_data_cn,
                                   multiplicity_data = test_data_mult,
-                                  mutation_data = NA,
+                                  mutation_data = test_data_muts,
                                   muts_type = "SBS1 and SBS5",
                                   sample_id = test_data_id,
                                   amplification_chrom = test_data_chrom,
@@ -170,7 +170,7 @@ test_that("AmplificationTimeR fails and produces an error message when is_WGD in
 test_that("AmplificationTimeR fails and produces an error message when sample_id input is incorrect.", {
   expect_error(time_amplification(cn_data = test_data_cn,
                                   multiplicity_data = test_data_mult,
-                                  mutation_data = NA,
+                                  mutation_data = test_data_muts,
                                   muts_type = "SBS1 and SBS5",
                                   sample_id = 1,
                                   amplification_chrom = test_data_chrom,
@@ -182,12 +182,13 @@ test_that("AmplificationTimeR fails and produces an error message when sample_id
   
 })
 
+#### Test parameter choices ####
 # test that code deals with nMaj2_A AND nMin2_A in input
 
 test_that("AmplificationTimeR runs and produces a data.frame when nMaj2_A and nMin2_A are included", {
   expect_equal(class(time_amplification(cn_data = test_data_cn_n2,
                                         multiplicity_data = test_data_mult,
-                                        mutation_data = NA,
+                                        mutation_data = test_data_muts,
                                         muts_type = "SBS1 and SBS5",
                                         sample_id = test_data_id,
                                         amplification_chrom = test_data_chrom,
@@ -202,7 +203,7 @@ test_that("AmplificationTimeR runs and produces a data.frame when nMaj2_A and nM
 test_that("AmplificationTimeR fails when region is not amplified in diploid sample.", {
   expect_error(time_amplification(cn_data = test_data_cn_not_amp,
                                   multiplicity_data = test_data_mult,
-                                  mutation_data = NA,
+                                  mutation_data = test_data_muts,
                                   muts_type = "SBS1 and SBS5",
                                   sample_id = test_data_id,
                                   amplification_chrom = test_data_chrom,
@@ -217,7 +218,7 @@ test_that("AmplificationTimeR fails when region is not amplified in diploid samp
 test_that("AmplificationTimeR fails when there are no mutations in the amplified region", {
   expect_error(time_amplification(cn_data = test_data_cn,
                                   multiplicity_data = test_data_mult_no_muts_in_region,
-                                  mutation_data = NA,
+                                  mutation_data = test_data_muts,
                                   muts_type = "SBS1 and SBS5",
                                   sample_id = test_data_id,
                                   amplification_chrom = test_data_chrom,
@@ -231,7 +232,7 @@ test_that("AmplificationTimeR fails when there are no mutations in the amplified
 test_that("AmplificationTimeR fails when region is not amplified in diploid sample with n2A.", {
   expect_error(time_amplification(cn_data = test_data_cn_not_amp,
                                   multiplicity_data = test_data_mult,
-                                  mutation_data = NA,
+                                  mutation_data = test_data_muts,
                                   muts_type = "SBS1 and SBS5",
                                   sample_id = test_data_id,
                                   amplification_chrom = test_data_chrom,
@@ -245,7 +246,7 @@ test_that("AmplificationTimeR fails when region is not amplified in diploid samp
 test_that("AmplificationTimeR fails when region is not amplified in WGD sample.", {
   expect_error(time_amplification(cn_data = test_data_cn_not_amp_wgd,
                                   multiplicity_data = test_data_mult,
-                                  mutation_data = NA,
+                                  mutation_data = test_data_muts,
                                   muts_type = "SBS1 and SBS5",
                                   sample_id = test_data_id,
                                   amplification_chrom = test_data_chrom,
@@ -259,7 +260,7 @@ test_that("AmplificationTimeR fails when region is not amplified in WGD sample."
 test_that("AmplificationTimeR fails when region is not amplified in WGD sample with n2A.", {
   expect_error(time_amplification(cn_data = test_data_cn_not_amp_wgd_n2A,
                                   multiplicity_data = test_data_mult,
-                                  mutation_data = NA,
+                                  mutation_data = test_data_muts,
                                   muts_type = "SBS1 and SBS5",
                                   sample_id = test_data_id,
                                   amplification_chrom = test_data_chrom,
@@ -273,7 +274,7 @@ test_that("AmplificationTimeR fails when region is not amplified in WGD sample w
 test_that("AmplificationTimeR runs and produces a data.frame when nMaj2_A and nMin2_A are included and n2 has the higher CN value", {
   expect_equal(time_amplification(cn_data = test_data_cn_n2_higher,
                                   multiplicity_data = test_data_mult,
-                                  mutation_data = NA,
+                                  mutation_data = test_data_muts,
                                   muts_type = "SBS1 and SBS5",
                                   sample_id = test_data_id,
                                   amplification_chrom = test_data_chrom,
@@ -283,35 +284,36 @@ test_that("AmplificationTimeR runs and produces a data.frame when nMaj2_A and nM
                                   genome = "hg19")[,"highest_copy_number"],"2+1")
 })
 
+#### Check output ####
 # test output
 test_that("AmplificationTimeR runs and produces a data.frame with correct columns when all input is correct", {
-                                           expect_equal(colnames(time_amplification(cn_data = test_data_cn,
-                                                                                    multiplicity_data = test_data_mult,
-                                                                                    mutation_data = NA,
-                                                                                    muts_type = "SBS1 and SBS5",
-                                                                                    sample_id = test_data_id,
-                                                                                    amplification_chrom = test_data_chrom,
-                                                                                    amplification_start = test_data_start,
-                                                                                    amplification_stop = test_data_stop,
-                                                                                    is_WGD = test_data_status,
-                                                                                    genome = "hg19")),c("sample","region","highest_copy_number","event_order","num_mutations_used",
-                                                                                                                  "t_1","t_1_mean_bootstrap","t_1_lower_ci","t_1_upper_ci",
-                                                                                                                  "t_2","t_2_mean_bootstrap","t_2_lower_ci","t_2_upper_ci",
-                                                                                                                  "t_3","t_3_mean_bootstrap","t_3_lower_ci","t_3_upper_ci",
-                                                                                                                  "t_4","t_4_mean_bootstrap","t_4_lower_ci","t_4_upper_ci",
-                                                                                                                  "t_5","t_5_mean_bootstrap","t_5_lower_ci","t_5_upper_ci",
-                                                                                                                  "t_6","t_6_mean_bootstrap","t_6_lower_ci","t_6_upper_ci",
-                                                                                                                  "t_7","t_7_mean_bootstrap","t_7_lower_ci","t_7_upper_ci",
-                                                                                                                  "t_8","t_8_mean_bootstrap","t_8_lower_ci","t_8_upper_ci",
-                                                                                                                  "t_9","t_9_mean_bootstrap","t_9_lower_ci","t_9_upper_ci",
-                                                                                                                  "t_10","t_10_mean_bootstrap","t_10_lower_ci","t_10_upper_ci"))
-                                         })
+  expect_equal(colnames(time_amplification(cn_data = test_data_cn,
+                                           multiplicity_data = test_data_mult,
+                                           mutation_data = test_data_muts,
+                                           muts_type = "SBS1 and SBS5",
+                                           sample_id = test_data_id,
+                                           amplification_chrom = test_data_chrom,
+                                           amplification_start = test_data_start,
+                                           amplification_stop = test_data_stop,
+                                           is_WGD = test_data_status,
+                                           genome = "hg19")),c("sample","region","highest_copy_number","event_order","num_mutations_used","clonality_status",
+                                                               "t_1","t_1_median_bootstrap","t_1_lower_ci","t_1_upper_ci",
+                                                               "t_2","t_2_median_bootstrap","t_2_lower_ci","t_2_upper_ci",
+                                                               "t_3","t_3_median_bootstrap","t_3_lower_ci","t_3_upper_ci",
+                                                               "t_4","t_4_median_bootstrap","t_4_lower_ci","t_4_upper_ci",
+                                                               "t_5","t_5_median_bootstrap","t_5_lower_ci","t_5_upper_ci",
+                                                               "t_6","t_6_median_bootstrap","t_6_lower_ci","t_6_upper_ci",
+                                                               "t_7","t_7_median_bootstrap","t_7_lower_ci","t_7_upper_ci",
+                                                               "t_8","t_8_median_bootstrap","t_8_lower_ci","t_8_upper_ci",
+                                                               "t_9","t_9_median_bootstrap","t_9_lower_ci","t_9_upper_ci",
+                                                               "t_10","t_10_median_bootstrap","t_10_lower_ci","t_10_upper_ci"))
+})
 
-# *** Issue with this test is that bootstrap isn't reproducible because of seed - fix in later versions ***
+# test that expected output is correct when input is correct
 test_that("AmplificationTimeR produces expected output when all input is correct", {
   expect_equal(time_amplification(cn_data = test_data_cn,
                                   multiplicity_data = test_data_mult,
-                                  mutation_data = NA,
+                                  mutation_data = test_data_muts,
                                   muts_type = "SBS1 and SBS5",
                                   sample_id = test_data_id,
                                   amplification_chrom = test_data_chrom,
@@ -321,14 +323,56 @@ test_that("AmplificationTimeR produces expected output when all input is correct
                                   genome = "hg19"), test_output)
 })
 
-########
+######## Different copy number outputs ####
 # create tests for different copy numbers and test output
 ###
-# 2+1
+
+#### Not WGD ####
+#### Not WGD fails 
+# test that certain scenarios fail when sample is not WGD
+test_that("AmplificationTimeR fails when region is not timeable in diploid sample.", {
+  expect_equal(time_amplification(cn_data = test_data_cn_not_timeable,
+                                  multiplicity_data = test_data_mult,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = test_data_status,
+                                  genome = "hg19")[,"event_order"],"Cannot be timed")
+})
+#### 2+0 ####
+test_that("AmplificationTimeR runs and produces 2+0 highest output", {
+  expect_equal(time_amplification(cn_data = test_data_cn_2_0,
+                                  multiplicity_data = test_data_mult,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = test_data_status,
+                                  genome = "hg19")[,"highest_copy_number"],"2+0")
+  expect_equal(time_amplification(cn_data = test_data_cn_2_0,
+                                  multiplicity_data = test_data_mult,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = test_data_status,
+                                  genome = "hg19")[,"event_order"],"G")
+})
+
+# 2+1 has been tested many times
+
+#### 2+2 ####
 test_that("AmplificationTimeR runs and produces 2+2 highest output", {
   expect_equal(time_amplification(cn_data = test_data_cn_2_2,
                                   multiplicity_data = test_data_mult,
-                                  mutation_data = NA,
+                                  mutation_data = test_data_muts,
                                   muts_type = "SBS1 and SBS5",
                                   sample_id = test_data_id,
                                   amplification_chrom = test_data_chrom,
@@ -336,13 +380,23 @@ test_that("AmplificationTimeR runs and produces 2+2 highest output", {
                                   amplification_stop = test_data_stop,
                                   is_WGD = test_data_status,
                                   genome = "hg19")[,"highest_copy_number"],"2+2")
+  expect_equal(time_amplification(cn_data = test_data_cn_2_2,
+                                  multiplicity_data = test_data_mult,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = test_data_status,
+                                  genome = "hg19")[,"event_order"],"Cannot be timed")
 })
 
-# 3+1
+#### 3+1 ####
 test_that("AmplificationTimeR runs and produces 3+1 highest output", {
   expect_equal(time_amplification(cn_data = test_data_cn_3_1,
                                   multiplicity_data = test_data_mult,
-                                  mutation_data = NA,
+                                  mutation_data = test_data_muts,
                                   muts_type = "SBS1 and SBS5",
                                   sample_id = test_data_id,
                                   amplification_chrom = test_data_chrom,
@@ -350,14 +404,24 @@ test_that("AmplificationTimeR runs and produces 3+1 highest output", {
                                   amplification_stop = test_data_stop,
                                   is_WGD = test_data_status,
                                   genome = "hg19")[,"highest_copy_number"],"3+1")
+  expect_equal(time_amplification(cn_data = test_data_cn_3_1,
+                                  multiplicity_data = test_data_mult,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = test_data_status,
+                                  genome = "hg19")[,"event_order"],"GG")
 })
 
 
-# 3+2
+#### 3+2 ####
 test_that("AmplificationTimeR runs and produces 3+2 highest output", {
   expect_equal(time_amplification(cn_data = test_data_cn_3_2,
                                   multiplicity_data = test_data_mult,
-                                  mutation_data = NA,
+                                  mutation_data = test_data_muts,
                                   muts_type = "SBS1 and SBS5",
                                   sample_id = test_data_id,
                                   amplification_chrom = test_data_chrom,
@@ -365,14 +429,24 @@ test_that("AmplificationTimeR runs and produces 3+2 highest output", {
                                   amplification_stop = test_data_stop,
                                   is_WGD = test_data_status,
                                   genome = "hg19")[,"highest_copy_number"],"3+2")
+  expect_equal(time_amplification(cn_data = test_data_cn_3_2,
+                                  multiplicity_data = test_data_mult,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = test_data_status,
+                                  genome = "hg19")[,"event_order"],"Cannot be timed")
 })
 
 
-# 4+1
+#### 4+1 ####
 test_that("AmplificationTimeR runs and produces 4+1 highest output", {
   expect_equal(time_amplification(cn_data = test_data_cn_4_1,
                                   multiplicity_data = test_data_mult,
-                                  mutation_data = NA,
+                                  mutation_data = test_data_muts,
                                   muts_type = "SBS1 and SBS5",
                                   sample_id = test_data_id,
                                   amplification_chrom = test_data_chrom,
@@ -380,13 +454,370 @@ test_that("AmplificationTimeR runs and produces 4+1 highest output", {
                                   amplification_stop = test_data_stop,
                                   is_WGD = test_data_status,
                                   genome = "hg19")[,"highest_copy_number"],"4+1")
+  expect_equal(time_amplification(cn_data = test_data_cn_4_1,
+                                  multiplicity_data = test_data_mult,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = test_data_status,
+                                  genome = "hg19")[,"event_order"],"GGG - Unsure")
 })
 
-# 4+2
+#### 5+1 ####
+test_that("AmplificationTimeR runs and produces 5+1 highest output", {
+  expect_equal(time_amplification(cn_data = test_data_cn_5_1,
+                                  multiplicity_data = test_data_mult,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = test_data_status,
+                                  genome = "hg19")[,"highest_copy_number"],"5+1")
+  expect_equal(time_amplification(cn_data = test_data_cn_5_1,
+                                  multiplicity_data = test_data_mult,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = test_data_status,
+                                  genome = "hg19")[,"event_order"],"GGGG - Unsure")
+})
+#### 6+1 ####
+test_that("AmplificationTimeR runs and produces 6+1 highest output", {
+  expect_equal(time_amplification(cn_data = test_data_cn_6_1,
+                                  multiplicity_data = test_data_mult,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = test_data_status,
+                                  genome = "hg19")[,"highest_copy_number"],"6+1")
+  expect_equal(time_amplification(cn_data = test_data_cn_6_1,
+                                  multiplicity_data = test_data_mult,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = test_data_status,
+                                  genome = "hg19")[,"event_order"],"GGGGG - Unsure")
+})
+#### 7+1 ####
+test_that("AmplificationTimeR runs and produces 7+1 highest output", {
+  expect_equal(time_amplification(cn_data = test_data_cn_7_1,
+                                  multiplicity_data = test_data_mult,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = test_data_status,
+                                  genome = "hg19")[,"highest_copy_number"],"7+1")
+  expect_equal(time_amplification(cn_data = test_data_cn_7_1,
+                                  multiplicity_data = test_data_mult,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = test_data_status,
+                                  genome = "hg19")[,"event_order"],"GGGGGG - Unsure")
+})
+#### 8+1 ####
+test_that("AmplificationTimeR runs and produces 8+1 highest output", {
+  expect_equal(time_amplification(cn_data = test_data_cn_8_1,
+                                  multiplicity_data = test_data_mult,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = test_data_status,
+                                  genome = "hg19")[,"highest_copy_number"],"8+1")
+  expect_equal(time_amplification(cn_data = test_data_cn_8_1,
+                                  multiplicity_data = test_data_mult,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = test_data_status,
+                                  genome = "hg19")[,"event_order"],"GGGGGGG - Unsure")
+})
+#### 9+1 ####
+test_that("AmplificationTimeR runs and produces 9+1 highest output", {
+  expect_equal(time_amplification(cn_data = test_data_cn_9_1,
+                                  multiplicity_data = test_data_mult,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = test_data_status,
+                                  genome = "hg19")[,"highest_copy_number"],"9+1")
+  expect_equal(time_amplification(cn_data = test_data_cn_9_1,
+                                  multiplicity_data = test_data_mult,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = test_data_status,
+                                  genome = "hg19")[,"event_order"],"GGGGGGGG - Unsure")
+})
+#### 10+1 ####
+test_that("AmplificationTimeR runs and produces 10+1 highest output", {
+  expect_equal(time_amplification(cn_data = test_data_cn_10_1,
+                                  multiplicity_data = test_data_mult,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = test_data_status,
+                                  genome = "hg19")[,"highest_copy_number"],"10+1")
+  expect_equal(time_amplification(cn_data = test_data_cn_10_1,
+                                  multiplicity_data = test_data_mult,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = test_data_status,
+                                  genome = "hg19")[,"event_order"],"GGGGGGGGG - Unsure")
+})
+#### WGD ####
+#### 2+0 ####
+test_that("AmplificationTimeR runs and produces 2+0 highest output WGD", {
+  expect_equal(time_amplification(cn_data = test_data_cn_2_0,
+                                  multiplicity_data = test_data_mult,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"highest_copy_number"],"2+0")
+})
+
+#### 2+1 ####
+test_that("AmplificationTimeR runs and produces 2+1 highest output WGD", {
+  expect_equal(time_amplification(cn_data = test_data_cn,
+                                  multiplicity_data = test_data_mult,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"highest_copy_number"],"2+1")
+})
+
+#### 2+2 ####
+test_that("AmplificationTimeR runs and produces 2+2 highest output and is timed", {
+  expect_equal(time_amplification(cn_data = test_data_cn_2_2,
+                                  multiplicity_data = test_data_mult,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"highest_copy_number"],"2+2")
+  expect_equal(time_amplification(cn_data = test_data_cn_2_2,
+                                  multiplicity_data = test_data_mult,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"event_order"],"W")
+})
+
+#### 3+0 ####
+test_that("AmplificationTimeR runs and produces 3+0 highest output and is timed", {
+  expect_equal(time_amplification(cn_data = test_data_cn_3_0,
+                                  multiplicity_data = test_data_mult,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"highest_copy_number"],"3+0")
+  expect_equal(time_amplification(cn_data = test_data_cn_3_0,
+                                  multiplicity_data = test_data_mult,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"event_order"],"WG")
+})
+
+#### 3+1 ####
+test_that("AmplificationTimeR runs and produces 3+1 highest output and is timed", {
+  expect_equal(time_amplification(cn_data = test_data_cn_3_1,
+                                  multiplicity_data = test_data_mult,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"highest_copy_number"],"3+1")
+  expect_equal(time_amplification(cn_data = test_data_cn_3_1,
+                                  multiplicity_data = test_data_mult,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"event_order"],"WG")
+})
+#### 3+2 ####
+test_that("AmplificationTimeR runs and produces 3+2 highest output and is timed", {
+  expect_equal(time_amplification(cn_data = test_data_cn_3_2,
+                                  multiplicity_data = test_data_mult,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"highest_copy_number"],"3+2")
+  expect_equal(time_amplification(cn_data = test_data_cn_3_2,
+                                  multiplicity_data = test_data_mult,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"event_order"],"WG")
+})
+#### 4+0 ####
+test_that("AmplificationTimeR runs and produces 4+0 highest output and right order", {
+  expect_equal(time_amplification(cn_data = test_data_cn_4_0,
+                                  multiplicity_data = test_data_mult_4_x_WGG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"highest_copy_number",],"4+0")
+  expect_equal(time_amplification(cn_data = test_data_cn_4_0,
+                                  multiplicity_data = test_data_mult_4_x_WGG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"event_order",],"WGG") # fix once added
+  expect_equal(time_amplification(cn_data = test_data_cn_4_0,
+                                  multiplicity_data = test_data_mult_4_x_GW,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"highest_copy_number",],"4+0")
+  expect_equal(time_amplification(cn_data = test_data_cn_4_0,
+                                  multiplicity_data = test_data_mult_4_x_GW,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"event_order",],"GW") # fix once added
+})
+#### 4+1 ####
+test_that("AmplificationTimeR runs and produces 4+1 highest output and right order", {
+  expect_equal(time_amplification(cn_data = test_data_cn_4_1,
+                                  multiplicity_data = test_data_mult_4_x_WGG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"highest_copy_number",],"4+1")
+  expect_equal(time_amplification(cn_data = test_data_cn_4_1,
+                                  multiplicity_data = test_data_mult_4_x_WGG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"event_order",],"WGG") # fix once added
+  expect_equal(time_amplification(cn_data = test_data_cn_4_1,
+                                  multiplicity_data = test_data_mult_4_x_GW,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"highest_copy_number",],"4+1")
+  expect_equal(time_amplification(cn_data = test_data_cn_4_1,
+                                  multiplicity_data = test_data_mult_4_x_GW,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"event_order",],"GW") # fix once added
+})
+#### 4+2 ####
 test_that("AmplificationTimeR runs and produces 4+2 highest output and right order", {
   expect_equal(time_amplification(cn_data = test_data_cn_4_2,
-                                  multiplicity_data = test_data_mult_4_2_WGG,
-                                  mutation_data = NA,
+                                  multiplicity_data = test_data_mult_4_x_WGG,
+                                  mutation_data = test_data_muts,
                                   muts_type = "SBS1 and SBS5",
                                   sample_id = test_data_id,
                                   amplification_chrom = test_data_chrom,
@@ -395,8 +826,8 @@ test_that("AmplificationTimeR runs and produces 4+2 highest output and right ord
                                   is_WGD = TRUE,
                                   genome = "hg19")[,"highest_copy_number",],"4+2")
   expect_equal(time_amplification(cn_data = test_data_cn_4_2,
-                                  multiplicity_data = test_data_mult_4_2_WGG,
-                                  mutation_data = NA,
+                                  multiplicity_data = test_data_mult_4_x_WGG,
+                                  mutation_data = test_data_muts,
                                   muts_type = "SBS1 and SBS5",
                                   sample_id = test_data_id,
                                   amplification_chrom = test_data_chrom,
@@ -405,8 +836,8 @@ test_that("AmplificationTimeR runs and produces 4+2 highest output and right ord
                                   is_WGD = TRUE,
                                   genome = "hg19")[,"event_order",],"WGG") # fix once added
   expect_equal(time_amplification(cn_data = test_data_cn_4_2,
-                                  multiplicity_data = test_data_mult_4_2_GW,
-                                  mutation_data = NA,
+                                  multiplicity_data = test_data_mult_4_x_GW,
+                                  mutation_data = test_data_muts,
                                   muts_type = "SBS1 and SBS5",
                                   sample_id = test_data_id,
                                   amplification_chrom = test_data_chrom,
@@ -415,8 +846,8 @@ test_that("AmplificationTimeR runs and produces 4+2 highest output and right ord
                                   is_WGD = TRUE,
                                   genome = "hg19")[,"highest_copy_number",],"4+2")
   expect_equal(time_amplification(cn_data = test_data_cn_4_2,
-                                  multiplicity_data = test_data_mult_4_2_GW,
-                                  mutation_data = NA,
+                                  multiplicity_data = test_data_mult_4_x_GW,
+                                  mutation_data = test_data_muts,
                                   muts_type = "SBS1 and SBS5",
                                   sample_id = test_data_id,
                                   amplification_chrom = test_data_chrom,
@@ -427,11 +858,11 @@ test_that("AmplificationTimeR runs and produces 4+2 highest output and right ord
 })
 
 
-# 4+3
+#### 4+3 ####
 test_that("AmplificationTimeR runs and produces 4+3 highest output", {
   expect_equal(time_amplification(cn_data = test_data_cn_4_3,
                                   multiplicity_data = test_data_mult,
-                                  mutation_data = NA,
+                                  mutation_data = test_data_muts,
                                   muts_type = "SBS1 and SBS5",
                                   sample_id = test_data_id,
                                   amplification_chrom = test_data_chrom,
@@ -441,11 +872,11 @@ test_that("AmplificationTimeR runs and produces 4+3 highest output", {
                                   genome = "hg19")[,"highest_copy_number"],"4+3") # fix once added
 })
 
-# 4+4
+#### 4+4 ####
 test_that("AmplificationTimeR runs and produces 4+4 highest output", {
   expect_equal(time_amplification(cn_data = test_data_cn_4_4,
                                   multiplicity_data = test_data_mult,
-                                  mutation_data = NA,
+                                  mutation_data = test_data_muts,
                                   muts_type = "SBS1 and SBS5",
                                   sample_id = test_data_id,
                                   amplification_chrom = test_data_chrom,
@@ -454,12 +885,54 @@ test_that("AmplificationTimeR runs and produces 4+4 highest output", {
                                   is_WGD = test_data_status,
                                   genome = "hg19")[,"highest_copy_number"],"4+4")
 })
-
-# 5+1
+#### 5+0 ####
+test_that("AmplificationTimeR runs and produces 5+0 highest output and order", {
+  expect_equal(time_amplification(cn_data = test_data_cn_5_0,
+                                  multiplicity_data = test_data_mult_5_x_WGGG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"highest_copy_number"],"5+0")
+  expect_equal(time_amplification(cn_data = test_data_cn_5_0,
+                                  multiplicity_data = test_data_mult_5_x_WGGG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"event_order"],"WGGG")
+  expect_equal(time_amplification(cn_data = test_data_cn_5_0,
+                                  multiplicity_data = test_data_mult_5_x_GWG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"highest_copy_number"],"5+0")
+  expect_equal(time_amplification(cn_data = test_data_cn_5_0,
+                                  multiplicity_data = test_data_mult_5_x_GWG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"event_order"],"GWG")
+})
+#### 5+1 ####
 test_that("AmplificationTimeR runs and produces 5+1 highest output and order", {
   expect_equal(time_amplification(cn_data = test_data_cn_5_1,
-                                  multiplicity_data = test_data_mult_5_1_WGGG,
-                                  mutation_data = NA,
+                                  multiplicity_data = test_data_mult_5_x_WGGG,
+                                  mutation_data = test_data_muts,
                                   muts_type = "SBS1 and SBS5",
                                   sample_id = test_data_id,
                                   amplification_chrom = test_data_chrom,
@@ -468,8 +941,8 @@ test_that("AmplificationTimeR runs and produces 5+1 highest output and order", {
                                   is_WGD = TRUE,
                                   genome = "hg19")[,"highest_copy_number"],"5+1")
   expect_equal(time_amplification(cn_data = test_data_cn_5_1,
-                                  multiplicity_data = test_data_mult_5_1_WGGG,
-                                  mutation_data = NA,
+                                  multiplicity_data = test_data_mult_5_x_WGGG,
+                                  mutation_data = test_data_muts,
                                   muts_type = "SBS1 and SBS5",
                                   sample_id = test_data_id,
                                   amplification_chrom = test_data_chrom,
@@ -478,8 +951,8 @@ test_that("AmplificationTimeR runs and produces 5+1 highest output and order", {
                                   is_WGD = TRUE,
                                   genome = "hg19")[,"event_order"],"WGGG")
   expect_equal(time_amplification(cn_data = test_data_cn_5_1,
-                                  multiplicity_data = test_data_mult_5_1_GWG,
-                                  mutation_data = NA,
+                                  multiplicity_data = test_data_mult_5_x_GWG,
+                                  mutation_data = test_data_muts,
                                   muts_type = "SBS1 and SBS5",
                                   sample_id = test_data_id,
                                   amplification_chrom = test_data_chrom,
@@ -488,8 +961,8 @@ test_that("AmplificationTimeR runs and produces 5+1 highest output and order", {
                                   is_WGD = TRUE,
                                   genome = "hg19")[,"highest_copy_number"],"5+1")
   expect_equal(time_amplification(cn_data = test_data_cn_5_1,
-                                  multiplicity_data = test_data_mult_5_1_GWG,
-                                  mutation_data = NA,
+                                  multiplicity_data = test_data_mult_5_x_GWG,
+                                  mutation_data = test_data_muts,
                                   muts_type = "SBS1 and SBS5",
                                   sample_id = test_data_id,
                                   amplification_chrom = test_data_chrom,
@@ -499,11 +972,11 @@ test_that("AmplificationTimeR runs and produces 5+1 highest output and order", {
                                   genome = "hg19")[,"event_order"],"GWG")
 })
 
-# 5+2
+#### 5+2 ####
 test_that("AmplificationTimeR runs and produces 5+2 highest output and order", {
   expect_equal(time_amplification(cn_data = test_data_cn_5_2,
-                                  multiplicity_data = test_data_mult_5_2_WGGG,
-                                  mutation_data = NA,
+                                  multiplicity_data = test_data_mult_5_x_WGGG,
+                                  mutation_data = test_data_muts,
                                   muts_type = "SBS1 and SBS5",
                                   sample_id = test_data_id,
                                   amplification_chrom = test_data_chrom,
@@ -512,8 +985,8 @@ test_that("AmplificationTimeR runs and produces 5+2 highest output and order", {
                                   is_WGD = TRUE,
                                   genome = "hg19")[,"highest_copy_number"],"5+2")
   expect_equal(time_amplification(cn_data = test_data_cn_5_2,
-                                  multiplicity_data = test_data_mult_5_2_WGGG,
-                                  mutation_data = NA,
+                                  multiplicity_data = test_data_mult_5_x_WGGG,
+                                  mutation_data = test_data_muts,
                                   muts_type = "SBS1 and SBS5",
                                   sample_id = test_data_id,
                                   amplification_chrom = test_data_chrom,
@@ -522,8 +995,8 @@ test_that("AmplificationTimeR runs and produces 5+2 highest output and order", {
                                   is_WGD = TRUE,
                                   genome = "hg19")[,"event_order"],"WGGG")
   expect_equal(time_amplification(cn_data = test_data_cn_5_2,
-                                  multiplicity_data = test_data_mult_5_2_GWG,
-                                  mutation_data = NA,
+                                  multiplicity_data = test_data_mult_5_x_GWG,
+                                  mutation_data = test_data_muts,
                                   muts_type = "SBS1 and SBS5",
                                   sample_id = test_data_id,
                                   amplification_chrom = test_data_chrom,
@@ -532,8 +1005,8 @@ test_that("AmplificationTimeR runs and produces 5+2 highest output and order", {
                                   is_WGD = TRUE,
                                   genome = "hg19")[,"highest_copy_number"],"5+2")
   expect_equal(time_amplification(cn_data = test_data_cn_5_2,
-                                  multiplicity_data = test_data_mult_5_2_GWG,
-                                  mutation_data = NA,
+                                  multiplicity_data = test_data_mult_5_x_GWG,
+                                  mutation_data = test_data_muts,
                                   muts_type = "SBS1 and SBS5",
                                   sample_id = test_data_id,
                                   amplification_chrom = test_data_chrom,
@@ -542,12 +1015,74 @@ test_that("AmplificationTimeR runs and produces 5+2 highest output and order", {
                                   is_WGD = TRUE,
                                   genome = "hg19")[,"event_order"],"GWG")
 })
-
-# 6+1
+#### 6+0 ####
+test_that("AmplificationTimeR runs and produces 6+0 highest output and order", {
+  expect_equal(time_amplification(cn_data = test_data_cn_6_0,
+                                  multiplicity_data = test_data_mult_6_x_WGGGG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"highest_copy_number"],"6+0")
+  expect_equal(time_amplification(cn_data = test_data_cn_6_0,
+                                  multiplicity_data = test_data_mult_6_x_WGGGG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"event_order"],"WGGGG")
+  expect_equal(time_amplification(cn_data = test_data_cn_6_0,
+                                  multiplicity_data = test_data_mult_6_x_GWGG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"highest_copy_number"],"6+0")
+  expect_equal(time_amplification(cn_data = test_data_cn_6_0,
+                                  multiplicity_data = test_data_mult_6_x_GWGG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"event_order"],"GWGG")
+  expect_equal(time_amplification(cn_data = test_data_cn_6_0,
+                                  multiplicity_data = test_data_mult_6_x_GGW,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"highest_copy_number"],"6+0")
+  expect_equal(time_amplification(cn_data = test_data_cn_6_0,
+                                  multiplicity_data = test_data_mult_6_x_GGW,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"event_order"],"GGW")
+})
+#### 6+1 ####
 test_that("AmplificationTimeR runs and produces 6+1 highest output and order", {
   expect_equal(time_amplification(cn_data = test_data_cn_6_1,
-                                  multiplicity_data = test_data_mult_6_1_WGGGG,
-                                  mutation_data = NA,
+                                  multiplicity_data = test_data_mult_6_x_WGGGG,
+                                  mutation_data = test_data_muts,
                                   muts_type = "SBS1 and SBS5",
                                   sample_id = test_data_id,
                                   amplification_chrom = test_data_chrom,
@@ -556,8 +1091,8 @@ test_that("AmplificationTimeR runs and produces 6+1 highest output and order", {
                                   is_WGD = TRUE,
                                   genome = "hg19")[,"highest_copy_number"],"6+1")
   expect_equal(time_amplification(cn_data = test_data_cn_6_1,
-                                  multiplicity_data = test_data_mult_6_1_WGGGG,
-                                  mutation_data = NA,
+                                  multiplicity_data = test_data_mult_6_x_WGGGG,
+                                  mutation_data = test_data_muts,
                                   muts_type = "SBS1 and SBS5",
                                   sample_id = test_data_id,
                                   amplification_chrom = test_data_chrom,
@@ -566,8 +1101,8 @@ test_that("AmplificationTimeR runs and produces 6+1 highest output and order", {
                                   is_WGD = TRUE,
                                   genome = "hg19")[,"event_order"],"WGGGG")
   expect_equal(time_amplification(cn_data = test_data_cn_6_1,
-                                  multiplicity_data = test_data_mult_6_1_GWGG,
-                                  mutation_data = NA,
+                                  multiplicity_data = test_data_mult_6_x_GWGG,
+                                  mutation_data = test_data_muts,
                                   muts_type = "SBS1 and SBS5",
                                   sample_id = test_data_id,
                                   amplification_chrom = test_data_chrom,
@@ -576,8 +1111,8 @@ test_that("AmplificationTimeR runs and produces 6+1 highest output and order", {
                                   is_WGD = TRUE,
                                   genome = "hg19")[,"highest_copy_number"],"6+1")
   expect_equal(time_amplification(cn_data = test_data_cn_6_1,
-                                  multiplicity_data = test_data_mult_6_1_GWGG,
-                                  mutation_data = NA,
+                                  multiplicity_data = test_data_mult_6_x_GWGG,
+                                  mutation_data = test_data_muts,
                                   muts_type = "SBS1 and SBS5",
                                   sample_id = test_data_id,
                                   amplification_chrom = test_data_chrom,
@@ -586,8 +1121,8 @@ test_that("AmplificationTimeR runs and produces 6+1 highest output and order", {
                                   is_WGD = TRUE,
                                   genome = "hg19")[,"event_order"],"GWGG")
   expect_equal(time_amplification(cn_data = test_data_cn_6_1,
-                                  multiplicity_data = test_data_mult_6_1_GGW,
-                                  mutation_data = NA,
+                                  multiplicity_data = test_data_mult_6_x_GGW,
+                                  mutation_data = test_data_muts,
                                   muts_type = "SBS1 and SBS5",
                                   sample_id = test_data_id,
                                   amplification_chrom = test_data_chrom,
@@ -596,8 +1131,8 @@ test_that("AmplificationTimeR runs and produces 6+1 highest output and order", {
                                   is_WGD = TRUE,
                                   genome = "hg19")[,"highest_copy_number"],"6+1")
   expect_equal(time_amplification(cn_data = test_data_cn_6_1,
-                                  multiplicity_data = test_data_mult_6_1_GGW,
-                                  mutation_data = NA,
+                                  multiplicity_data = test_data_mult_6_x_GGW,
+                                  mutation_data = test_data_muts,
                                   muts_type = "SBS1 and SBS5",
                                   sample_id = test_data_id,
                                   amplification_chrom = test_data_chrom,
@@ -607,11 +1142,11 @@ test_that("AmplificationTimeR runs and produces 6+1 highest output and order", {
                                   genome = "hg19")[,"event_order"],"GGW")
 })
 
-# 6+2
+#### 6+2 ####
 test_that("AmplificationTimeR runs and produces 6+2 highest output and order", {
   expect_equal(time_amplification(cn_data = test_data_cn_6_2,
-                                  multiplicity_data = test_data_mult_6_2_WGGGG,
-                                  mutation_data = NA,
+                                  multiplicity_data = test_data_mult_6_x_WGGGG,
+                                  mutation_data = test_data_muts,
                                   muts_type = "SBS1 and SBS5",
                                   sample_id = test_data_id,
                                   amplification_chrom = test_data_chrom,
@@ -620,8 +1155,8 @@ test_that("AmplificationTimeR runs and produces 6+2 highest output and order", {
                                   is_WGD = TRUE,
                                   genome = "hg19")[,"highest_copy_number"],"6+2")
   expect_equal(time_amplification(cn_data = test_data_cn_6_2,
-                                  multiplicity_data = test_data_mult_6_2_WGGGG,
-                                  mutation_data = NA,
+                                  multiplicity_data = test_data_mult_6_x_WGGGG,
+                                  mutation_data = test_data_muts,
                                   muts_type = "SBS1 and SBS5",
                                   sample_id = test_data_id,
                                   amplification_chrom = test_data_chrom,
@@ -630,8 +1165,8 @@ test_that("AmplificationTimeR runs and produces 6+2 highest output and order", {
                                   is_WGD = TRUE,
                                   genome = "hg19")[,"event_order"],"WGGGG")
   expect_equal(time_amplification(cn_data = test_data_cn_6_2,
-                                  multiplicity_data = test_data_mult_6_2_GWGG,
-                                  mutation_data = NA,
+                                  multiplicity_data = test_data_mult_6_x_GWGG,
+                                  mutation_data = test_data_muts,
                                   muts_type = "SBS1 and SBS5",
                                   sample_id = test_data_id,
                                   amplification_chrom = test_data_chrom,
@@ -640,8 +1175,8 @@ test_that("AmplificationTimeR runs and produces 6+2 highest output and order", {
                                   is_WGD = TRUE,
                                   genome = "hg19")[,"highest_copy_number"],"6+2")
   expect_equal(time_amplification(cn_data = test_data_cn_6_2,
-                                  multiplicity_data = test_data_mult_6_2_GWGG,
-                                  mutation_data = NA,
+                                  multiplicity_data = test_data_mult_6_x_GWGG,
+                                  mutation_data = test_data_muts,
                                   muts_type = "SBS1 and SBS5",
                                   sample_id = test_data_id,
                                   amplification_chrom = test_data_chrom,
@@ -650,8 +1185,8 @@ test_that("AmplificationTimeR runs and produces 6+2 highest output and order", {
                                   is_WGD = TRUE,
                                   genome = "hg19")[,"event_order"],"GWGG")
   expect_equal(time_amplification(cn_data = test_data_cn_6_2,
-                                  multiplicity_data = test_data_mult_6_2_GGW,
-                                  mutation_data = NA,
+                                  multiplicity_data = test_data_mult_6_x_GGW,
+                                  mutation_data = test_data_muts,
                                   muts_type = "SBS1 and SBS5",
                                   sample_id = test_data_id,
                                   amplification_chrom = test_data_chrom,
@@ -660,8 +1195,8 @@ test_that("AmplificationTimeR runs and produces 6+2 highest output and order", {
                                   is_WGD = TRUE,
                                   genome = "hg19")[,"highest_copy_number"],"6+2")
   expect_equal(time_amplification(cn_data = test_data_cn_6_2,
-                                  multiplicity_data = test_data_mult_6_2_GGW,
-                                  mutation_data = NA,
+                                  multiplicity_data = test_data_mult_6_x_GGW,
+                                  mutation_data = test_data_muts,
                                   muts_type = "SBS1 and SBS5",
                                   sample_id = test_data_id,
                                   amplification_chrom = test_data_chrom,
@@ -670,22 +1205,459 @@ test_that("AmplificationTimeR runs and produces 6+2 highest output and order", {
                                   is_WGD = TRUE,
                                   genome = "hg19")[,"event_order"],"GGW")
 })
-
-# 9+2
-test_that("AmplificationTimeR runs and produces 9+2 highest output and order", {
-  expect_equal(time_amplification(cn_data = test_data_cn_9_2,
-                                  multiplicity_data = test_data_mult_9_2_WGGGGGGG,
-                                  mutation_data = NA,
+#### 7+0 ####
+test_that("AmplificationTimeR runs and produces 7+0 highest output and order", {
+  expect_equal(time_amplification(cn_data = test_data_cn_7_0,
+                                  multiplicity_data = test_data_mult_7_x_WGGGGG,
+                                  mutation_data = test_data_muts,
                                   muts_type = "SBS1 and SBS5",
                                   sample_id = test_data_id,
                                   amplification_chrom = test_data_chrom,
                                   amplification_start = test_data_start,
                                   amplification_stop = test_data_stop,
                                   is_WGD = TRUE,
-                                  genome = "hg19")[,"highest_copy_number"],"9+2")
-  expect_equal(time_amplification(cn_data = test_data_cn_9_2,
-                                  multiplicity_data = test_data_mult_9_2_WGGGGGGG,
-                                  mutation_data = NA,
+                                  genome = "hg19")[,"highest_copy_number"],"7+0")
+  expect_equal(time_amplification(cn_data = test_data_cn_7_0,
+                                  multiplicity_data = test_data_mult_7_x_WGGGGG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"event_order"],"WGGGGG")
+  expect_equal(time_amplification(cn_data = test_data_cn_7_0,
+                                  multiplicity_data = test_data_mult_7_x_GWGGG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"highest_copy_number"],"7+0")
+  expect_equal(time_amplification(cn_data = test_data_cn_7_0,
+                                  multiplicity_data = test_data_mult_7_x_GWGGG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"event_order"],"GWGGG")
+  expect_equal(time_amplification(cn_data = test_data_cn_7_0,
+                                  multiplicity_data = test_data_mult_7_x_GGWG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"highest_copy_number"],"7+0")
+  expect_equal(time_amplification(cn_data = test_data_cn_7_0,
+                                  multiplicity_data = test_data_mult_7_x_GGWG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"event_order"],"GGWG")
+})
+#### 7+1 ####
+test_that("AmplificationTimeR runs and produces 7+1 highest output and order", {
+  expect_equal(time_amplification(cn_data = test_data_cn_7_1,
+                                  multiplicity_data = test_data_mult_7_x_WGGGGG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"highest_copy_number"],"7+1")
+  expect_equal(time_amplification(cn_data = test_data_cn_7_1,
+                                  multiplicity_data = test_data_mult_7_x_WGGGGG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"event_order"],"WGGGGG")
+  expect_equal(time_amplification(cn_data = test_data_cn_7_1,
+                                  multiplicity_data = test_data_mult_7_x_GWGGG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"highest_copy_number"],"7+1")
+  expect_equal(time_amplification(cn_data = test_data_cn_7_1,
+                                  multiplicity_data = test_data_mult_7_x_GWGGG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"event_order"],"GWGGG")
+  expect_equal(time_amplification(cn_data = test_data_cn_7_1,
+                                  multiplicity_data = test_data_mult_7_x_GGWG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"highest_copy_number"],"7+1")
+  expect_equal(time_amplification(cn_data = test_data_cn_7_1,
+                                  multiplicity_data = test_data_mult_7_x_GGWG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"event_order"],"GGWG")
+})
+#### 7+2 ####
+test_that("AmplificationTimeR runs and produces 7+2 highest output and order", {
+  expect_equal(time_amplification(cn_data = test_data_cn_7_2,
+                                  multiplicity_data = test_data_mult_7_x_WGGGGG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"highest_copy_number"],"7+2")
+  expect_equal(time_amplification(cn_data = test_data_cn_7_2,
+                                  multiplicity_data = test_data_mult_7_x_WGGGGG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"event_order"],"WGGGGG")
+  expect_equal(time_amplification(cn_data = test_data_cn_7_2,
+                                  multiplicity_data = test_data_mult_7_x_GWGGG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"highest_copy_number"],"7+2")
+  expect_equal(time_amplification(cn_data = test_data_cn_7_2,
+                                  multiplicity_data = test_data_mult_7_x_GWGGG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"event_order"],"GWGGG")
+  expect_equal(time_amplification(cn_data = test_data_cn_7_2,
+                                  multiplicity_data = test_data_mult_7_x_GGWG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"highest_copy_number"],"7+2")
+  expect_equal(time_amplification(cn_data = test_data_cn_7_2,
+                                  multiplicity_data = test_data_mult_7_x_GGWG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"event_order"],"GGWG")
+})
+#### 8+0 ####
+test_that("AmplificationTimeR runs and produces 8+0 highest output and order", {
+  expect_equal(time_amplification(cn_data = test_data_cn_8_0,
+                                  multiplicity_data = test_data_mult_8_x_WGGGGGG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"highest_copy_number"],"8+0")
+  expect_equal(time_amplification(cn_data = test_data_cn_8_0,
+                                  multiplicity_data = test_data_mult_8_x_WGGGGGG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"event_order"],"WGGGGGG")
+  expect_equal(time_amplification(cn_data = test_data_cn_8_0,
+                                  multiplicity_data = test_data_mult_8_x_GWGGGG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"highest_copy_number"],"8+0")
+  expect_equal(time_amplification(cn_data = test_data_cn_8_0,
+                                  multiplicity_data = test_data_mult_8_x_GWGGGG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"event_order"],"GWGGGG")
+  expect_equal(time_amplification(cn_data = test_data_cn_8_0,
+                                  multiplicity_data = test_data_mult_8_x_GGWGG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"highest_copy_number"],"8+0")
+  expect_equal(time_amplification(cn_data = test_data_cn_8_0,
+                                  multiplicity_data = test_data_mult_8_x_GGWGG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"event_order"],"GGWGG")
+  expect_equal(time_amplification(cn_data = test_data_cn_8_0,
+                                  multiplicity_data = test_data_mult_8_x_GGGW,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"highest_copy_number"],"8+0")
+  expect_equal(time_amplification(cn_data = test_data_cn_8_0,
+                                  multiplicity_data = test_data_mult_8_x_GGGW,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"event_order"],"GGGW")
+})
+#### 8+1 ####
+test_that("AmplificationTimeR runs and produces 8+1 highest output and order", {
+  expect_equal(time_amplification(cn_data = test_data_cn_8_1,
+                                  multiplicity_data = test_data_mult_8_x_WGGGGGG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"highest_copy_number"],"8+1")
+  expect_equal(time_amplification(cn_data = test_data_cn_8_1,
+                                  multiplicity_data = test_data_mult_8_x_WGGGGGG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"event_order"],"WGGGGGG")
+  expect_equal(time_amplification(cn_data = test_data_cn_8_1,
+                                  multiplicity_data = test_data_mult_8_x_GWGGGG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"highest_copy_number"],"8+1")
+  expect_equal(time_amplification(cn_data = test_data_cn_8_1,
+                                  multiplicity_data = test_data_mult_8_x_GWGGGG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"event_order"],"GWGGGG")
+  expect_equal(time_amplification(cn_data = test_data_cn_8_1,
+                                  multiplicity_data = test_data_mult_8_x_GGWGG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"highest_copy_number"],"8+1")
+  expect_equal(time_amplification(cn_data = test_data_cn_8_1,
+                                  multiplicity_data = test_data_mult_8_x_GGWGG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"event_order"],"GGWGG")
+  expect_equal(time_amplification(cn_data = test_data_cn_8_1,
+                                  multiplicity_data = test_data_mult_8_x_GGGW,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"highest_copy_number"],"8+1")
+  expect_equal(time_amplification(cn_data = test_data_cn_8_1,
+                                  multiplicity_data = test_data_mult_8_x_GGGW,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"event_order"],"GGGW")
+})
+#### 8+2 ####
+test_that("AmplificationTimeR runs and produces 8+2 highest output and order", {
+  expect_equal(time_amplification(cn_data = test_data_cn_8_2,
+                                  multiplicity_data = test_data_mult_8_x_WGGGGGG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"highest_copy_number"],"8+2")
+  expect_equal(time_amplification(cn_data = test_data_cn_8_2,
+                                  multiplicity_data = test_data_mult_8_x_WGGGGGG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"event_order"],"WGGGGGG")
+  expect_equal(time_amplification(cn_data = test_data_cn_8_2,
+                                  multiplicity_data = test_data_mult_8_x_GWGGGG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"highest_copy_number"],"8+2")
+  expect_equal(time_amplification(cn_data = test_data_cn_8_2,
+                                  multiplicity_data = test_data_mult_8_x_GWGGGG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"event_order"],"GWGGGG")
+  expect_equal(time_amplification(cn_data = test_data_cn_8_2,
+                                  multiplicity_data = test_data_mult_8_x_GGWGG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"highest_copy_number"],"8+2")
+  expect_equal(time_amplification(cn_data = test_data_cn_8_2,
+                                  multiplicity_data = test_data_mult_8_x_GGWGG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"event_order"],"GGWGG")
+  expect_equal(time_amplification(cn_data = test_data_cn_8_2,
+                                  multiplicity_data = test_data_mult_8_x_GGGW,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"highest_copy_number"],"8+2")
+  expect_equal(time_amplification(cn_data = test_data_cn_8_2,
+                                  multiplicity_data = test_data_mult_8_x_GGGW,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"event_order"],"GGGW")
+})
+#### 9+0 ####
+test_that("AmplificationTimeR runs and produces 9+0 highest output and order", {
+  expect_equal(time_amplification(cn_data = test_data_cn_9_0,
+                                  multiplicity_data = test_data_mult_9_x_WGGGGGGG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"highest_copy_number"],"9+0")
+  expect_equal(time_amplification(cn_data = test_data_cn_9_0,
+                                  multiplicity_data = test_data_mult_9_x_WGGGGGGG,
+                                  mutation_data = test_data_muts,
                                   muts_type = "SBS1 and SBS5",
                                   sample_id = test_data_id,
                                   amplification_chrom = test_data_chrom,
@@ -693,19 +1665,19 @@ test_that("AmplificationTimeR runs and produces 9+2 highest output and order", {
                                   amplification_stop = test_data_stop,
                                   is_WGD = TRUE,
                                   genome = "hg19")[,"event_order"],"WGGGGGGG")
-  expect_equal(time_amplification(cn_data = test_data_cn_9_2,
-                                  multiplicity_data = test_data_mult_9_2_GWGGGGG,
-                                  mutation_data = NA,
+  expect_equal(time_amplification(cn_data = test_data_cn_9_0,
+                                  multiplicity_data = test_data_mult_9_x_GWGGGGG,
+                                  mutation_data = test_data_muts,
                                   muts_type = "SBS1 and SBS5",
                                   sample_id = test_data_id,
                                   amplification_chrom = test_data_chrom,
                                   amplification_start = test_data_start,
                                   amplification_stop = test_data_stop,
                                   is_WGD = TRUE,
-                                  genome = "hg19")[,"highest_copy_number"],"9+2")
-  expect_equal(time_amplification(cn_data = test_data_cn_9_2,
-                                  multiplicity_data = test_data_mult_9_2_GWGGGGG,
-                                  mutation_data = NA,
+                                  genome = "hg19")[,"highest_copy_number"],"9+0")
+  expect_equal(time_amplification(cn_data = test_data_cn_9_0,
+                                  multiplicity_data = test_data_mult_9_x_GWGGGGG,
+                                  mutation_data = test_data_muts,
                                   muts_type = "SBS1 and SBS5",
                                   sample_id = test_data_id,
                                   amplification_chrom = test_data_chrom,
@@ -713,19 +1685,19 @@ test_that("AmplificationTimeR runs and produces 9+2 highest output and order", {
                                   amplification_stop = test_data_stop,
                                   is_WGD = TRUE,
                                   genome = "hg19")[,"event_order"],"GWGGGGG")
-  expect_equal(time_amplification(cn_data = test_data_cn_9_2,
-                                  multiplicity_data = test_data_mult_9_2_GGWGGG,
-                                  mutation_data = NA,
+  expect_equal(time_amplification(cn_data = test_data_cn_9_0,
+                                  multiplicity_data = test_data_mult_9_x_GGWGGG,
+                                  mutation_data = test_data_muts,
                                   muts_type = "SBS1 and SBS5",
                                   sample_id = test_data_id,
                                   amplification_chrom = test_data_chrom,
                                   amplification_start = test_data_start,
                                   amplification_stop = test_data_stop,
                                   is_WGD = TRUE,
-                                  genome = "hg19")[,"highest_copy_number"],"9+2")
-  expect_equal(time_amplification(cn_data = test_data_cn_9_2,
-                                  multiplicity_data = test_data_mult_9_2_GGWGGG,
-                                  mutation_data = NA,
+                                  genome = "hg19")[,"highest_copy_number"],"9+0")
+  expect_equal(time_amplification(cn_data = test_data_cn_9_0,
+                                  multiplicity_data = test_data_mult_9_x_GGWGGG,
+                                  mutation_data = test_data_muts,
                                   muts_type = "SBS1 and SBS5",
                                   sample_id = test_data_id,
                                   amplification_chrom = test_data_chrom,
@@ -733,19 +1705,19 @@ test_that("AmplificationTimeR runs and produces 9+2 highest output and order", {
                                   amplification_stop = test_data_stop,
                                   is_WGD = TRUE,
                                   genome = "hg19")[,"event_order"],"GGWGGG")
-  expect_equal(time_amplification(cn_data = test_data_cn_9_2,
-                                  multiplicity_data = test_data_mult_9_2_GGGWG,
-                                  mutation_data = NA,
+  expect_equal(time_amplification(cn_data = test_data_cn_9_0,
+                                  multiplicity_data = test_data_mult_9_x_GGGWG,
+                                  mutation_data = test_data_muts,
                                   muts_type = "SBS1 and SBS5",
                                   sample_id = test_data_id,
                                   amplification_chrom = test_data_chrom,
                                   amplification_start = test_data_start,
                                   amplification_stop = test_data_stop,
                                   is_WGD = TRUE,
-                                  genome = "hg19")[,"highest_copy_number"],"9+2")
-  expect_equal(time_amplification(cn_data = test_data_cn_9_2,
-                                  multiplicity_data = test_data_mult_9_2_GGGWG,
-                                  mutation_data = NA,
+                                  genome = "hg19")[,"highest_copy_number"],"9+0")
+  expect_equal(time_amplification(cn_data = test_data_cn_9_0,
+                                  multiplicity_data = test_data_mult_9_x_GGGWG,
+                                  mutation_data = test_data_muts,
                                   muts_type = "SBS1 and SBS5",
                                   sample_id = test_data_id,
                                   amplification_chrom = test_data_chrom,
@@ -754,12 +1726,383 @@ test_that("AmplificationTimeR runs and produces 9+2 highest output and order", {
                                   is_WGD = TRUE,
                                   genome = "hg19")[,"event_order"],"GGGWG")
 })
-
-# 10+2
+#### 9+1 ####
+test_that("AmplificationTimeR runs and produces 9+1 highest output and order", {
+  expect_equal(time_amplification(cn_data = test_data_cn_9_1,
+                                  multiplicity_data = test_data_mult_9_x_WGGGGGGG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"highest_copy_number"],"9+1")
+  expect_equal(time_amplification(cn_data = test_data_cn_9_1,
+                                  multiplicity_data = test_data_mult_9_x_WGGGGGGG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"event_order"],"WGGGGGGG")
+  expect_equal(time_amplification(cn_data = test_data_cn_9_1,
+                                  multiplicity_data = test_data_mult_9_x_GWGGGGG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"highest_copy_number"],"9+1")
+  expect_equal(time_amplification(cn_data = test_data_cn_9_1,
+                                  multiplicity_data = test_data_mult_9_x_GWGGGGG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"event_order"],"GWGGGGG")
+  expect_equal(time_amplification(cn_data = test_data_cn_9_1,
+                                  multiplicity_data = test_data_mult_9_x_GGWGGG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"highest_copy_number"],"9+1")
+  expect_equal(time_amplification(cn_data = test_data_cn_9_1,
+                                  multiplicity_data = test_data_mult_9_x_GGWGGG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"event_order"],"GGWGGG")
+  expect_equal(time_amplification(cn_data = test_data_cn_9_1,
+                                  multiplicity_data = test_data_mult_9_x_GGGWG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"highest_copy_number"],"9+1")
+  expect_equal(time_amplification(cn_data = test_data_cn_9_1,
+                                  multiplicity_data = test_data_mult_9_x_GGGWG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"event_order"],"GGGWG")
+})
+#### 9+2 ####
+test_that("AmplificationTimeR runs and produces 9+2 highest output and order", {
+  expect_equal(time_amplification(cn_data = test_data_cn_9_2,
+                                  multiplicity_data = test_data_mult_9_x_WGGGGGGG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"highest_copy_number"],"9+2")
+  expect_equal(time_amplification(cn_data = test_data_cn_9_2,
+                                  multiplicity_data = test_data_mult_9_x_WGGGGGGG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"event_order"],"WGGGGGGG")
+  expect_equal(time_amplification(cn_data = test_data_cn_9_2,
+                                  multiplicity_data = test_data_mult_9_x_GWGGGGG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"highest_copy_number"],"9+2")
+  expect_equal(time_amplification(cn_data = test_data_cn_9_2,
+                                  multiplicity_data = test_data_mult_9_x_GWGGGGG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"event_order"],"GWGGGGG")
+  expect_equal(time_amplification(cn_data = test_data_cn_9_2,
+                                  multiplicity_data = test_data_mult_9_x_GGWGGG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"highest_copy_number"],"9+2")
+  expect_equal(time_amplification(cn_data = test_data_cn_9_2,
+                                  multiplicity_data = test_data_mult_9_x_GGWGGG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"event_order"],"GGWGGG")
+  expect_equal(time_amplification(cn_data = test_data_cn_9_2,
+                                  multiplicity_data = test_data_mult_9_x_GGGWG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"highest_copy_number"],"9+2")
+  expect_equal(time_amplification(cn_data = test_data_cn_9_2,
+                                  multiplicity_data = test_data_mult_9_x_GGGWG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"event_order"],"GGGWG")
+})
+#### 10+0 ####
+test_that("AmplificationTimeR runs and produces 10+0 highest output and order", {
+  expect_equal(time_amplification(cn_data = test_data_cn_10_0,
+                                  multiplicity_data = test_data_mult_10_x_WGGGGGGGG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"highest_copy_number"],"10+0")
+  expect_equal(time_amplification(cn_data = test_data_cn_10_0,
+                                  multiplicity_data = test_data_mult_10_x_WGGGGGGGG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"event_order"],"WGGGGGGGG")
+  expect_equal(time_amplification(cn_data = test_data_cn_10_0,
+                                  multiplicity_data = test_data_mult_10_x_GWGGGGGG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"highest_copy_number"],"10+0")
+  expect_equal(time_amplification(cn_data = test_data_cn_10_0,
+                                  multiplicity_data = test_data_mult_10_x_GWGGGGGG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"event_order"],"GWGGGGGG")
+  expect_equal(time_amplification(cn_data = test_data_cn_10_0,
+                                  multiplicity_data = test_data_mult_10_x_GGWGGGG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"highest_copy_number"],"10+0")
+  expect_equal(time_amplification(cn_data = test_data_cn_10_0,
+                                  multiplicity_data = test_data_mult_10_x_GGWGGGG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"event_order"],"GGWGGGG")
+  expect_equal(time_amplification(cn_data = test_data_cn_10_0,
+                                  multiplicity_data = test_data_mult_10_x_GGGWGG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"highest_copy_number"],"10+0")
+  expect_equal(time_amplification(cn_data = test_data_cn_10_0,
+                                  multiplicity_data = test_data_mult_10_x_GGGWGG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"event_order"],"GGGWGG")
+  expect_equal(time_amplification(cn_data = test_data_cn_10_0,
+                                  multiplicity_data = test_data_mult_10_x_GGGGW,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"highest_copy_number"],"10+0")
+  expect_equal(time_amplification(cn_data = test_data_cn_10_0,
+                                  multiplicity_data = test_data_mult_10_x_GGGGW,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"event_order"],"GGGGW")
+})
+#### 10+1 ####
+test_that("AmplificationTimeR runs and produces 10+1 highest output and order", {
+  expect_equal(time_amplification(cn_data = test_data_cn_10_1,
+                                  multiplicity_data = test_data_mult_10_x_WGGGGGGGG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"highest_copy_number"],"10+1")
+  expect_equal(time_amplification(cn_data = test_data_cn_10_1,
+                                  multiplicity_data = test_data_mult_10_x_WGGGGGGGG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"event_order"],"WGGGGGGGG")
+  expect_equal(time_amplification(cn_data = test_data_cn_10_1,
+                                  multiplicity_data = test_data_mult_10_x_GWGGGGGG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"highest_copy_number"],"10+1")
+  expect_equal(time_amplification(cn_data = test_data_cn_10_1,
+                                  multiplicity_data = test_data_mult_10_x_GWGGGGGG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"event_order"],"GWGGGGGG")
+  expect_equal(time_amplification(cn_data = test_data_cn_10_1,
+                                  multiplicity_data = test_data_mult_10_x_GGWGGGG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"highest_copy_number"],"10+1")
+  expect_equal(time_amplification(cn_data = test_data_cn_10_1,
+                                  multiplicity_data = test_data_mult_10_x_GGWGGGG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"event_order"],"GGWGGGG")
+  expect_equal(time_amplification(cn_data = test_data_cn_10_1,
+                                  multiplicity_data = test_data_mult_10_x_GGGWGG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"highest_copy_number"],"10+1")
+  expect_equal(time_amplification(cn_data = test_data_cn_10_1,
+                                  multiplicity_data = test_data_mult_10_x_GGGWGG,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"event_order"],"GGGWGG")
+  expect_equal(time_amplification(cn_data = test_data_cn_10_1,
+                                  multiplicity_data = test_data_mult_10_x_GGGGW,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"highest_copy_number"],"10+1")
+  expect_equal(time_amplification(cn_data = test_data_cn_10_1,
+                                  multiplicity_data = test_data_mult_10_x_GGGGW,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = TRUE,
+                                  genome = "hg19")[,"event_order"],"GGGGW")
+})
+#### 10+2 ####
 test_that("AmplificationTimeR runs and produces 10+2 highest output and order", {
   expect_equal(time_amplification(cn_data = test_data_cn_10_2,
-                                  multiplicity_data = test_data_mult_10_2_WGGGGGGGG,
-                                  mutation_data = NA,
+                                  multiplicity_data = test_data_mult_10_x_WGGGGGGGG,
+                                  mutation_data = test_data_muts,
                                   muts_type = "SBS1 and SBS5",
                                   sample_id = test_data_id,
                                   amplification_chrom = test_data_chrom,
@@ -768,8 +2111,8 @@ test_that("AmplificationTimeR runs and produces 10+2 highest output and order", 
                                   is_WGD = TRUE,
                                   genome = "hg19")[,"highest_copy_number"],"10+2")
   expect_equal(time_amplification(cn_data = test_data_cn_10_2,
-                                  multiplicity_data = test_data_mult_10_2_WGGGGGGGG,
-                                  mutation_data = NA,
+                                  multiplicity_data = test_data_mult_10_x_WGGGGGGGG,
+                                  mutation_data = test_data_muts,
                                   muts_type = "SBS1 and SBS5",
                                   sample_id = test_data_id,
                                   amplification_chrom = test_data_chrom,
@@ -778,8 +2121,8 @@ test_that("AmplificationTimeR runs and produces 10+2 highest output and order", 
                                   is_WGD = TRUE,
                                   genome = "hg19")[,"event_order"],"WGGGGGGGG")
   expect_equal(time_amplification(cn_data = test_data_cn_10_2,
-                                  multiplicity_data = test_data_mult_10_2_GWGGGGGG,
-                                  mutation_data = NA,
+                                  multiplicity_data = test_data_mult_10_x_GWGGGGGG,
+                                  mutation_data = test_data_muts,
                                   muts_type = "SBS1 and SBS5",
                                   sample_id = test_data_id,
                                   amplification_chrom = test_data_chrom,
@@ -788,8 +2131,8 @@ test_that("AmplificationTimeR runs and produces 10+2 highest output and order", 
                                   is_WGD = TRUE,
                                   genome = "hg19")[,"highest_copy_number"],"10+2")
   expect_equal(time_amplification(cn_data = test_data_cn_10_2,
-                                  multiplicity_data = test_data_mult_10_2_GWGGGGGG,
-                                  mutation_data = NA,
+                                  multiplicity_data = test_data_mult_10_x_GWGGGGGG,
+                                  mutation_data = test_data_muts,
                                   muts_type = "SBS1 and SBS5",
                                   sample_id = test_data_id,
                                   amplification_chrom = test_data_chrom,
@@ -798,8 +2141,8 @@ test_that("AmplificationTimeR runs and produces 10+2 highest output and order", 
                                   is_WGD = TRUE,
                                   genome = "hg19")[,"event_order"],"GWGGGGGG")
   expect_equal(time_amplification(cn_data = test_data_cn_10_2,
-                                  multiplicity_data = test_data_mult_10_2_GGWGGGG,
-                                  mutation_data = NA,
+                                  multiplicity_data = test_data_mult_10_x_GGWGGGG,
+                                  mutation_data = test_data_muts,
                                   muts_type = "SBS1 and SBS5",
                                   sample_id = test_data_id,
                                   amplification_chrom = test_data_chrom,
@@ -808,8 +2151,8 @@ test_that("AmplificationTimeR runs and produces 10+2 highest output and order", 
                                   is_WGD = TRUE,
                                   genome = "hg19")[,"highest_copy_number"],"10+2")
   expect_equal(time_amplification(cn_data = test_data_cn_10_2,
-                                  multiplicity_data = test_data_mult_10_2_GGWGGGG,
-                                  mutation_data = NA,
+                                  multiplicity_data = test_data_mult_10_x_GGWGGGG,
+                                  mutation_data = test_data_muts,
                                   muts_type = "SBS1 and SBS5",
                                   sample_id = test_data_id,
                                   amplification_chrom = test_data_chrom,
@@ -818,8 +2161,8 @@ test_that("AmplificationTimeR runs and produces 10+2 highest output and order", 
                                   is_WGD = TRUE,
                                   genome = "hg19")[,"event_order"],"GGWGGGG")
   expect_equal(time_amplification(cn_data = test_data_cn_10_2,
-                                  multiplicity_data = test_data_mult_10_2_GGGWGG,
-                                  mutation_data = NA,
+                                  multiplicity_data = test_data_mult_10_x_GGGWGG,
+                                  mutation_data = test_data_muts,
                                   muts_type = "SBS1 and SBS5",
                                   sample_id = test_data_id,
                                   amplification_chrom = test_data_chrom,
@@ -828,8 +2171,8 @@ test_that("AmplificationTimeR runs and produces 10+2 highest output and order", 
                                   is_WGD = TRUE,
                                   genome = "hg19")[,"highest_copy_number"],"10+2")
   expect_equal(time_amplification(cn_data = test_data_cn_10_2,
-                                  multiplicity_data = test_data_mult_10_2_GGGWGG,
-                                  mutation_data = NA,
+                                  multiplicity_data = test_data_mult_10_x_GGGWGG,
+                                  mutation_data = test_data_muts,
                                   muts_type = "SBS1 and SBS5",
                                   sample_id = test_data_id,
                                   amplification_chrom = test_data_chrom,
@@ -838,8 +2181,8 @@ test_that("AmplificationTimeR runs and produces 10+2 highest output and order", 
                                   is_WGD = TRUE,
                                   genome = "hg19")[,"event_order"],"GGGWGG")
   expect_equal(time_amplification(cn_data = test_data_cn_10_2,
-                                  multiplicity_data = test_data_mult_10_2_GGGGW,
-                                  mutation_data = NA,
+                                  multiplicity_data = test_data_mult_10_x_GGGGW,
+                                  mutation_data = test_data_muts,
                                   muts_type = "SBS1 and SBS5",
                                   sample_id = test_data_id,
                                   amplification_chrom = test_data_chrom,
@@ -848,8 +2191,8 @@ test_that("AmplificationTimeR runs and produces 10+2 highest output and order", 
                                   is_WGD = TRUE,
                                   genome = "hg19")[,"highest_copy_number"],"10+2")
   expect_equal(time_amplification(cn_data = test_data_cn_10_2,
-                                  multiplicity_data = test_data_mult_10_2_GGGGW,
-                                  mutation_data = NA,
+                                  multiplicity_data = test_data_mult_10_x_GGGGW,
+                                  mutation_data = test_data_muts,
                                   muts_type = "SBS1 and SBS5",
                                   sample_id = test_data_id,
                                   amplification_chrom = test_data_chrom,
@@ -857,4 +2200,22 @@ test_that("AmplificationTimeR runs and produces 10+2 highest output and order", 
                                   amplification_stop = test_data_stop,
                                   is_WGD = TRUE,
                                   genome = "hg19")[,"event_order"],"GGGGW")
+})
+
+
+#### Test C>G at CpG code ####
+library(BSgenome.Hsapiens.UCSC.hg19)
+test_that("AmplificationTimeR runs and produces a data.frame when all input is correct", {
+  expect_equal(class(
+    time_amplification(cn_data = test_data_cn_ctcpg,
+                       multiplicity_data = test_data_mult_ctcpg,
+                       mutation_data = test_data_muts_ctcpg,
+                       muts_type = "All",
+                       sample_id = test_data_id,
+                       amplification_chrom = test_data_chrom,
+                       amplification_start = test_data_start_ctcpg,
+                       amplification_stop = test_data_stop_ctcpg,
+                       is_WGD = test_data_status,
+                       genome = "hg19")
+  ),"data.frame")
 })
