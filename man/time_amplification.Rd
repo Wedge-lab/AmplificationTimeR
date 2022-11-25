@@ -53,7 +53,8 @@ A data frame containing approximate timing of each amplification, and the most l
 Wrapper function that times individual amplification events for a locus that has been gained multiple times.
 }
 \examples{
-data("AmplificationTimeRdata")
+library(BSgenome.Hsapiens.UCSC.hg19)
+data("demo_cn", "demo_mult", "demo_muts")
 
 time_amplification(
   cn_data = demo_cn,
