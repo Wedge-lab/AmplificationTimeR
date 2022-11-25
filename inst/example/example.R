@@ -1,4 +1,5 @@
-data("AmplificationTimeRdata")
+library(BSgenome.Hsapiens.UCSC.hg19)
+data("demo_cn", "demo_mult", "demo_muts")
 
 time_amplification(
   cn_data = demo_cn,
