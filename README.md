@@ -32,7 +32,7 @@ devtools::install_github("mjakobs/AmplificationTimeR")
 ## Input data
 For demonstration purposes we have included some data with the `AmplificationTimeR` package:
 ```r
-data(AmplificationTimeRdata)
+data(demo_cn, demo_mult, demo_muts)
 ```
 
 ### Copy number data
@@ -125,7 +125,7 @@ Either `"hg19"` or `"hg38"` depending on which is appropriate. This is required 
 library(AmplificationTimeR)
 library(BSgenome.Hsapiens.UCSC.hg19)
 
-data(AmplificationTimeRdata)
+data(demo_cn, demo_mult, demo_muts)
 
 segment_time <- time_amplification(
   cn_data = demo_cn,
