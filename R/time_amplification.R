@@ -1806,7 +1806,7 @@ time_amplification <- function(cn_data,
   }
   
   # get the highest copy number value - assume lower value has same timing
-  if(c("n2A_sum") %in% colnames(tmp_cn)){
+  if((c("n2A_sum") %in% colnames(tmp_cn)) & !is.na(tmp_cn$n2A_sum)){
     max_amplification <- names(which.max(tmp_cn[,c("n1A_sum","n2A_sum")]))
     if(max_amplification == c("n1A_sum")){
       max_amplification_split <- tmp_cn$n1A
