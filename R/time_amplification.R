@@ -1474,7 +1474,7 @@ get_order_events <- function(multiplicity_values, max_amplification_split, is_WG
     # WGGGGGG
     if((n3 > 0) & (n5 > 0) & (n7 > 0)){
       event_ordering <- "WGGGGGG"
-    }else if((n3 > 0) & (n5 > 0) & (n7 == 0)){# GWGGGG
+    }else if((n5 > 0) & (n7 == 0)){# GWGGGG
       event_ordering <- "GWGGGG"
     }else if((n3 > 0) & (n5 == 0) & (n7 == 0)){# GGWGG
       event_ordering <- "GGWGG"
@@ -1486,7 +1486,7 @@ get_order_events <- function(multiplicity_values, max_amplification_split, is_WG
     # WGGGGGG
     if((n3 > 0) & (n5 > 0) & (n7 > 0)){
       event_ordering <- "WGGGGGG"
-    }else if((n3 > 0) & (n5 > 0) & (n7 == 0)){# GWGGGG
+    }else if((n5 > 0) & (n7 == 0)){# GWGGGG
       event_ordering <- "GWGGGG"
     }else if((n3 > 0) & (n5 == 0) & (n7 == 0)){# GGWGG
       event_ordering <- "GGWGG"
@@ -1498,7 +1498,7 @@ get_order_events <- function(multiplicity_values, max_amplification_split, is_WG
     # WGGGGGG
     if((n3 > 0) & (n5 > 0) & (n7 > 0)){
       event_ordering <- "WGGGGGG"
-    }else if((n3 > 0) & (n5 > 0) & (n7 == 0)){# GWGGGG
+    }else if((n5 > 0) & (n7 == 0)){# GWGGGG
       event_ordering <- "GWGGGG"
     }else if((n3 > 0) & (n5 == 0) & (n7 == 0)){# GGWGG
       event_ordering <- "GGWGG"
@@ -1509,7 +1509,7 @@ get_order_events <- function(multiplicity_values, max_amplification_split, is_WG
   }else if(max_amplification_split == c("9+0") & is_WGD == TRUE){
     if((n4 > 0) & (n6 > 0) & (n8 > 0)){# WGGGGGGG
       event_ordering <- "WGGGGGGG"
-    }else if((n4 > 0) & (n6 > 0) & (n8 == 0)){# GWGGGGG
+    }else if((n6 > 0) & (n8 == 0)){# GWGGGGG
       event_ordering <- "GWGGGGG"
     }else if((n4 > 0) & (n6 == 0) & (n8 == 0)){# GGWGGG
       event_ordering <- "GGWGGG"
@@ -1519,7 +1519,7 @@ get_order_events <- function(multiplicity_values, max_amplification_split, is_WG
   }else if(max_amplification_split == c("9+1") & is_WGD == TRUE){
     if((n4 > 0) & (n6 > 0) & (n8 > 0)){# WGGGGGGG
       event_ordering <- "WGGGGGGG"
-    }else if((n4 > 0) & (n6 > 0) & (n8 == 0)){# GWGGGGG
+    }else if((n6 > 0) & (n8 == 0)){# GWGGGGG
       event_ordering <- "GWGGGGG"
     }else if((n4 > 0) & (n6 == 0) & (n8 == 0)){# GGWGGG
       event_ordering <- "GGWGGG"
@@ -1529,7 +1529,7 @@ get_order_events <- function(multiplicity_values, max_amplification_split, is_WG
   }else if(max_amplification_split == c("9+2") & is_WGD == TRUE){
     if((n4 > 0) & (n6 > 0) & (n8 > 0)){# WGGGGGGG
       event_ordering <- "WGGGGGGG"
-    }else if((n4 > 0) & (n6 > 0) & (n8 == 0)){# GWGGGGG
+    }else if((n6 > 0) & (n8 == 0)){# GWGGGGG
       event_ordering <- "GWGGGGG"
     }else if((n4 > 0) & (n6 == 0) & (n8 == 0)){# GGWGGG
       event_ordering <- "GGWGGG"
@@ -1540,9 +1540,9 @@ get_order_events <- function(multiplicity_values, max_amplification_split, is_WG
     # WGGGGGGGG  
     if((n3 > 0) & (n5 > 0) & (n7 > 0) & (n9 > 0)){
       event_ordering <- "WGGGGGGGG"
-    }else if((n3 > 0) & (n5 > 0) & (n7 > 0) & (n9 == 0)){# GWGGGGGG 
+    }else if((n7 > 0) & (n9 == 0)){# GWGGGGGG 
       event_ordering <- "GWGGGGGG"
-    }else if((n3 > 0) & (n5 > 0) & (n7 == 0) & (n9 == 0)){# GGWGGGG
+    }else if((n5 > 0) & (n7 == 0) & (n9 == 0)){# GGWGGGG
       event_ordering <- "GGWGGGG"
     }else if((n3 > 0) & (n5 == 0) & (n7 == 0) & (n9 == 0)){# GGGWGG
       event_ordering <- "GGGWGG"
@@ -1555,9 +1555,9 @@ get_order_events <- function(multiplicity_values, max_amplification_split, is_WG
     # WGGGGGGGG  
     if((n3 > 0) & (n5 > 0) & (n7 > 0) & (n9 > 0)){
       event_ordering <- "WGGGGGGGG"
-    }else if((n3 > 0) & (n5 > 0) & (n7 > 0) & (n9 == 0)){# GWGGGGGG 
+    }else if((n7 > 0) & (n9 == 0)){# GWGGGGGG 
       event_ordering <- "GWGGGGGG"
-    }else if((n3 > 0) & (n5 > 0) & (n7 == 0) & (n9 == 0)){# GGWGGGG
+    }else if((n5 > 0) & (n7 == 0) & (n9 == 0)){# GGWGGGG
       event_ordering <- "GGWGGGG"
     }else if((n3 > 0) & (n5 == 0) & (n7 == 0) & (n9 == 0)){# GGGWGG
       event_ordering <- "GGGWGG"
@@ -1570,9 +1570,9 @@ get_order_events <- function(multiplicity_values, max_amplification_split, is_WG
     # WGGGGGGGG  
     if((n3 > 0) & (n5 > 0) & (n7 > 0) & (n9 > 0)){
       event_ordering <- "WGGGGGGGG"
-    }else if((n3 > 0) & (n5 > 0) & (n7 > 0) & (n9 == 0)){# GWGGGGGG 
+    }else if((n7 > 0) & (n9 == 0)){# GWGGGGGG 
       event_ordering <- "GWGGGGGG"
-    }else if((n3 > 0) & (n5 > 0) & (n7 == 0) & (n9 == 0)){# GGWGGGG
+    }else if((n5 > 0) & (n7 == 0) & (n9 == 0)){# GGWGGGG
       event_ordering <- "GGWGGGG"
     }else if((n3 > 0) & (n5 == 0) & (n7 == 0) & (n9 == 0)){# GGGWGG
       event_ordering <- "GGGWGG"
