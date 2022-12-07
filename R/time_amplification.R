@@ -1914,101 +1914,101 @@ time_amplification <- function(cn_data,
       amplification_results_ci$t_1 <- single_time$t_1
       amplification_results_ci$t_1_median_bootstrap <- median(bootstrap_amplification$t_1, na.rm = TRUE)
       t_1_lower_ci <- confint(lm(t_1 ~ 1, bootstrap_amplification), level = 0.95)[1]
-      t_1_lower_ci_adj <- ((length(tmp_values)*t_1_lower_ci)/(5 + length(tmp_values)))
+      # t_1_lower_ci_adj <- ((length(tmp_values)*t_1_lower_ci)/(5 + length(tmp_values)))
       t_1_upper_ci <- confint(lm(t_1 ~ 1, bootstrap_amplification), level = 0.95)[2]
-      t_1_upper_ci_adj <- ((5 + (length(tmp_values)*t_1_upper_ci))/(5 + length(tmp_values)))
-      amplification_results_ci$t_1_lower_ci <- t_1_lower_ci_adj
-      amplification_results_ci$t_1_upper_ci <- t_1_upper_ci_adj
+      # t_1_upper_ci_adj <- ((5 + (length(tmp_values)*t_1_upper_ci))/(5 + length(tmp_values)))
+      amplification_results_ci$t_1_lower_ci <- t_1_lower_ci
+      amplification_results_ci$t_1_upper_ci <- t_1_upper_ci
     }
     if(!is.na(single_time$t_2)){
       amplification_results_ci$t_2 <- single_time$t_2
       amplification_results_ci$t_2_median_bootstrap <- median(bootstrap_amplification$t_2, na.rm = TRUE)
       t_2_lower_ci <- confint(lm(t_2 ~ 1, bootstrap_amplification), level = 0.95)[1]
-      t_2_lower_ci_adj <- ((length(tmp_values)*t_2_lower_ci)/(5 + length(tmp_values)))
+      # t_2_lower_ci_adj <- ((length(tmp_values)*t_2_lower_ci)/(5 + length(tmp_values)))
       t_2_upper_ci <- confint(lm(t_2 ~ 1, bootstrap_amplification), level = 0.95)[2]
-      t_2_upper_ci_adj <- ((5 + (length(tmp_values)*t_2_upper_ci))/(5 + length(tmp_values)))
-      amplification_results_ci$t_2_lower_ci <- t_2_lower_ci_adj
-      amplification_results_ci$t_2_upper_ci <- t_2_upper_ci_adj
+      # t_2_upper_ci_adj <- ((5 + (length(tmp_values)*t_2_upper_ci))/(5 + length(tmp_values)))
+      amplification_results_ci$t_2_lower_ci <- t_2_lower_ci
+      amplification_results_ci$t_2_upper_ci <- t_2_upper_ci
     }
     if(!is.na(single_time$t_3)){
       amplification_results_ci$t_3 <- single_time$t_3
       amplification_results_ci$t_3_median_bootstrap <- median(bootstrap_amplification$t_3, na.rm = TRUE)
       t_3_lower_ci <- confint(lm(t_3 ~ 1, bootstrap_amplification), level = 0.95)[1]
-      t_3_lower_ci_adj <- ((length(tmp_values)*t_3_lower_ci)/(5 + length(tmp_values)))
+      # t_3_lower_ci_adj <- ((length(tmp_values)*t_3_lower_ci)/(5 + length(tmp_values)))
       t_3_upper_ci <- confint(lm(t_3 ~ 1, bootstrap_amplification), level = 0.95)[2]
-      t_3_upper_ci_adj <- ((5 + (length(tmp_values)*t_3_upper_ci))/(5 + length(tmp_values)))
-      amplification_results_ci$t_3_lower_ci <- t_3_lower_ci_adj
-      amplification_results_ci$t_3_upper_ci <- t_3_upper_ci_adj
+      # t_3_upper_ci_adj <- ((5 + (length(tmp_values)*t_3_upper_ci))/(5 + length(tmp_values)))
+      amplification_results_ci$t_3_lower_ci <- t_3_lower_ci
+      amplification_results_ci$t_3_upper_ci <- t_3_upper_ci
     }
     if(!is.na(single_time$t_4)){
       amplification_results_ci$t_4 <- single_time$t_4
       amplification_results_ci$t_4_median_bootstrap <- median(bootstrap_amplification$t_4, na.rm = TRUE)
       t_4_lower_ci <- confint(lm(t_4 ~ 1, bootstrap_amplification), level = 0.95)[1]
-      t_4_lower_ci_adj <- ((length(tmp_values)*t_4_lower_ci)/(5 + length(tmp_values)))
+      # t_4_lower_ci_adj <- ((length(tmp_values)*t_4_lower_ci)/(5 + length(tmp_values)))
       t_4_upper_ci <- confint(lm(t_4 ~ 1, bootstrap_amplification), level = 0.95)[2]
-      t_4_upper_ci_adj <- ((5 + (length(tmp_values)*t_4_upper_ci))/(5 + length(tmp_values)))
-      amplification_results_ci$t_4_lower_ci <- t_4_lower_ci_adj
-      amplification_results_ci$t_4_upper_ci <- t_4_upper_ci_adj
+      # t_4_upper_ci_adj <- ((5 + (length(tmp_values)*t_4_upper_ci))/(5 + length(tmp_values)))
+      amplification_results_ci$t_4_lower_ci <- t_4_lower_ci
+      amplification_results_ci$t_4_upper_ci <- t_4_upper_ci
     }
     if(!is.na(single_time$t_5)){
       amplification_results_ci$t_5 <- single_time$t_5
       amplification_results_ci$t_5_median_bootstrap <- median(bootstrap_amplification$t_5, na.rm = TRUE)
       t_5_lower_ci <- confint(lm(t_5 ~ 1, bootstrap_amplification), level = 0.95)[1]
-      t_5_lower_ci_adj <- ((length(tmp_values)*t_5_lower_ci)/(5 + length(tmp_values)))
+      # t_5_lower_ci_adj <- ((length(tmp_values)*t_5_lower_ci)/(5 + length(tmp_values)))
       t_5_upper_ci <- confint(lm(t_5 ~ 1, bootstrap_amplification), level = 0.95)[2]
-      t_5_upper_ci_adj <- ((5 + (length(tmp_values)*t_5_upper_ci))/(5 + length(tmp_values)))
-      amplification_results_ci$t_5_lower_ci <- t_5_lower_ci_adj
-      amplification_results_ci$t_5_upper_ci <- t_5_upper_ci_adj
+      # t_5_upper_ci_adj <- ((5 + (length(tmp_values)*t_5_upper_ci))/(5 + length(tmp_values)))
+      amplification_results_ci$t_5_lower_ci <- t_5_lower_ci
+      amplification_results_ci$t_5_upper_ci <- t_5_upper_ci
     }
     if(!is.na(single_time$t_6)){
       amplification_results_ci$t_6 <- single_time$t_6
       amplification_results_ci$t_6_median_bootstrap <- median(bootstrap_amplification$t_6, na.rm = TRUE)
       t_6_lower_ci <- confint(lm(t_6 ~ 1, bootstrap_amplification), level = 0.95)[1]
-      t_6_lower_ci_adj <- ((length(tmp_values)*t_6_lower_ci)/(5 + length(tmp_values)))
+      # t_6_lower_ci_adj <- ((length(tmp_values)*t_6_lower_ci)/(5 + length(tmp_values)))
       t_6_upper_ci <- confint(lm(t_6 ~ 1, bootstrap_amplification), level = 0.95)[2]
-      t_6_upper_ci_adj <- ((5 + (length(tmp_values)*t_6_upper_ci))/(5 + length(tmp_values)))
-      amplification_results_ci$t_6_lower_ci <- t_6_lower_ci_adj
-      amplification_results_ci$t_6_upper_ci <- t_6_upper_ci_adj
+      # t_6_upper_ci_adj <- ((5 + (length(tmp_values)*t_6_upper_ci))/(5 + length(tmp_values)))
+      amplification_results_ci$t_6_lower_ci <- t_6_lower_ci
+      amplification_results_ci$t_6_upper_ci <- t_6_upper_ci
     }
     if(!is.na(single_time$t_7)){
       amplification_results_ci$t_7 <- single_time$t_7
       amplification_results_ci$t_7_median_bootstrap <- median(bootstrap_amplification$t_7, na.rm = TRUE)
       t_7_lower_ci <- confint(lm(t_7 ~ 1, bootstrap_amplification), level = 0.95)[1]
-      t_7_lower_ci_adj <- ((length(tmp_values)*t_7_lower_ci)/(5 + length(tmp_values)))
+      # t_7_lower_ci_adj <- ((length(tmp_values)*t_7_lower_ci)/(5 + length(tmp_values)))
       t_7_upper_ci <- confint(lm(t_7 ~ 1, bootstrap_amplification), level = 0.95)[2]
-      t_7_upper_ci_adj <- ((5 + (length(tmp_values)*t_7_upper_ci))/(5 + length(tmp_values)))
-      amplification_results_ci$t_7_lower_ci <- t_7_lower_ci_adj
-      amplification_results_ci$t_7_upper_ci <- t_7_upper_ci_adj
+      # t_7_upper_ci_adj <- ((5 + (length(tmp_values)*t_7_upper_ci))/(5 + length(tmp_values)))
+      amplification_results_ci$t_7_lower_ci <- t_7_lower_ci
+      amplification_results_ci$t_7_upper_ci <- t_7_upper_ci
     }
     if(!is.na(single_time$t_8)){
       amplification_results_ci$t_8 <- single_time$t_8
       amplification_results_ci$t_8_median_bootstrap <- median(bootstrap_amplification$t_8, na.rm = TRUE)
       t_8_lower_ci <- confint(lm(t_8 ~ 1, bootstrap_amplification), level = 0.95)[1]
-      t_8_lower_ci_adj <- ((length(tmp_values)*t_8_lower_ci)/(5 + length(tmp_values)))
+      # t_8_lower_ci_adj <- ((length(tmp_values)*t_8_lower_ci)/(5 + length(tmp_values)))
       t_8_upper_ci <- confint(lm(t_8 ~ 1, bootstrap_amplification), level = 0.95)[2]
-      t_8_upper_ci_adj <- ((5 + (length(tmp_values)*t_8_upper_ci))/(5 + length(tmp_values)))
-      amplification_results_ci$t_8_lower_ci <- t_8_lower_ci_adj
-      amplification_results_ci$t_8_upper_ci <- t_8_upper_ci_adj
+      # t_8_upper_ci_adj <- ((5 + (length(tmp_values)*t_8_upper_ci))/(5 + length(tmp_values)))
+      amplification_results_ci$t_8_lower_ci <- t_8_lower_ci
+      amplification_results_ci$t_8_upper_ci <- t_8_upper_ci
     }
     if(!is.na(single_time$t_9)){
       amplification_results_ci$t_9 <- single_time$t_9
       amplification_results_ci$t_9_median_bootstrap <- median(bootstrap_amplification$t_9, na.rm = TRUE)
       t_9_lower_ci <- confint(lm(t_9 ~ 1, bootstrap_amplification), level = 0.95)[1]
-      t_9_lower_ci_adj <- ((length(tmp_values)*t_9_lower_ci)/(5 + length(tmp_values)))
+      # t_9_lower_ci_adj <- ((length(tmp_values)*t_9_lower_ci)/(5 + length(tmp_values)))
       t_9_upper_ci <- confint(lm(t_9 ~ 1, bootstrap_amplification), level = 0.95)[2]
-      t_9_upper_ci_adj <- ((5 + (length(tmp_values)*t_9_upper_ci))/(5 + length(tmp_values)))
-      amplification_results_ci$t_9_lower_ci <- t_9_lower_ci_adj
-      amplification_results_ci$t_9_upper_ci <- t_9_upper_ci_adj
+      # t_9_upper_ci_adj <- ((5 + (length(tmp_values)*t_9_upper_ci))/(5 + length(tmp_values)))
+      amplification_results_ci$t_9_lower_ci <- t_9_lower_ci
+      amplification_results_ci$t_9_upper_ci <- t_9_upper_ci
     }
     if(!is.na(single_time$t_10)){
       amplification_results_ci$t_10 <- single_time$t_10
       amplification_results_ci$t_10_median_bootstrap <- median(bootstrap_amplification$t_10, na.rm = TRUE)
       t_10_lower_ci <- confint(lm(t_10 ~ 1, bootstrap_amplification), level = 0.95)[1]
-      t_10_lower_ci_adj <- ((length(tmp_values)*t_10_lower_ci)/(5 + length(tmp_values)))
+      # t_10_lower_ci_adj <- ((length(tmp_values)*t_10_lower_ci)/(5 + length(tmp_values)))
       t_10_upper_ci <- confint(lm(t_10 ~ 1, bootstrap_amplification), level = 0.95)[2]
-      t_10_upper_ci_adj <- ((5 + (length(tmp_values)*t_10_upper_ci))/(5 + length(tmp_values)))
-      amplification_results_ci$t_10_lower_ci <- t_10_lower_ci_adj
-      amplification_results_ci$t_10_upper_ci <- t_10_upper_ci_adj
+      # t_10_upper_ci_adj <- ((5 + (length(tmp_values)*t_10_upper_ci))/(5 + length(tmp_values)))
+      amplification_results_ci$t_10_lower_ci <- t_10_lower_ci
+      amplification_results_ci$t_10_upper_ci <- t_10_upper_ci
     }
     
   }
