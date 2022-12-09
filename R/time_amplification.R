@@ -1829,6 +1829,9 @@ time_amplification <- function(cn_data,
     if(nrow(tmp_mult) == 0){
       stop("Cannot subset 'multiplicity_data' for this region.  There are no clock-like mutations in this region.")
     }
+    if(nrow(tmp_mult) < 3){
+      stop("Cannot run analysis if there are fewer than 3 mutations in this region.")
+    }
     
   }
   
@@ -1850,6 +1853,9 @@ time_amplification <- function(cn_data,
     
     if(nrow(tmp_mult) == 0){
       stop("Cannot subset 'multiplicity_data' for this region.  There are no SBS1 and SBS5 mutations in this region.")
+    }
+    if(nrow(tmp_mult) < 3){
+      stop("Cannot run analysis if there are fewer than 3 mutations in this region.")
     }
   }
   
