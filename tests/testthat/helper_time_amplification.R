@@ -25,7 +25,7 @@ test_data_stop <- 20
 test_data_status <- FALSE
 
 test_output <- as.data.frame(matrix(nrow = 1, ncol = 46, data = c("test_data","1:1-20","2+1","G","20","clonal",
-                                                                  "0.6","0.6000000","0.56804424","0.59995967",
+                                                                  "0.6","0.58400196","0.56804424","0.59995967",
                                                                   NA,NA,NA,NA,
                                                                   NA,NA,NA,NA,
                                                                   NA,NA,NA,NA,

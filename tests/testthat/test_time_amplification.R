@@ -297,16 +297,16 @@ test_that("AmplificationTimeR runs and produces a data.frame with correct column
                                            amplification_stop = test_data_stop,
                                            is_WGD = test_data_status,
                                            genome = "hg19")),c("sample","region","highest_copy_number","event_order","num_mutations_used","clonality_status",
-                                                               "t_1","t_1_median_bootstrap","t_1_lower_ci","t_1_upper_ci",
-                                                               "t_2","t_2_median_bootstrap","t_2_lower_ci","t_2_upper_ci",
-                                                               "t_3","t_3_median_bootstrap","t_3_lower_ci","t_3_upper_ci",
-                                                               "t_4","t_4_median_bootstrap","t_4_lower_ci","t_4_upper_ci",
-                                                               "t_5","t_5_median_bootstrap","t_5_lower_ci","t_5_upper_ci",
-                                                               "t_6","t_6_median_bootstrap","t_6_lower_ci","t_6_upper_ci",
-                                                               "t_7","t_7_median_bootstrap","t_7_lower_ci","t_7_upper_ci",
-                                                               "t_8","t_8_median_bootstrap","t_8_lower_ci","t_8_upper_ci",
-                                                               "t_9","t_9_median_bootstrap","t_9_lower_ci","t_9_upper_ci",
-                                                               "t_10","t_10_median_bootstrap","t_10_lower_ci","t_10_upper_ci"))
+                                                               "t_1","t_1_mean_bootstrap","t_1_lower_ci","t_1_upper_ci",
+                                                               "t_2","t_2_mean_bootstrap","t_2_lower_ci","t_2_upper_ci",
+                                                               "t_3","t_3_mean_bootstrap","t_3_lower_ci","t_3_upper_ci",
+                                                               "t_4","t_4_mean_bootstrap","t_4_lower_ci","t_4_upper_ci",
+                                                               "t_5","t_5_mean_bootstrap","t_5_lower_ci","t_5_upper_ci",
+                                                               "t_6","t_6_mean_bootstrap","t_6_lower_ci","t_6_upper_ci",
+                                                               "t_7","t_7_mean_bootstrap","t_7_lower_ci","t_7_upper_ci",
+                                                               "t_8","t_8_mean_bootstrap","t_8_lower_ci","t_8_upper_ci",
+                                                               "t_9","t_9_mean_bootstrap","t_9_lower_ci","t_9_upper_ci",
+                                                               "t_10","t_10_mean_bootstrap","t_10_lower_ci","t_10_upper_ci"))
 })
 
 # test that expected output is correct when input is correct
