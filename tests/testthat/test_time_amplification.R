@@ -609,6 +609,30 @@ test_that("AmplificationTimeR runs and produces 6+1 highest output", {
                                   is_WGD = test_data_status,
                                   genome = "hg19")[,"event_order"],"GGGGG - Unsure")
 })
+#### 7+0 ####
+test_that("AmplificationTimeR runs and produces 7+0 highest output", {
+  expect_equal(time_amplification(cn_data = test_data_cn_7_0,
+                                  multiplicity_data = test_data_mult,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = test_data_status,
+                                  genome = "hg19")[,"highest_copy_number"],"7+0")
+  expect_equal(time_amplification(cn_data = test_data_cn_7_0,
+                                  multiplicity_data = test_data_mult,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = test_data_status,
+                                  genome = "hg19")[,"event_order"],"GGGGGG - Unsure")
+})
+
 #### 7+1 ####
 test_that("AmplificationTimeR runs and produces 7+1 highest output", {
   expect_equal(time_amplification(cn_data = test_data_cn_7_1,
