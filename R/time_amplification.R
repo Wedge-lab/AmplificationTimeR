@@ -142,6 +142,16 @@ time_amplification_maths <- function(mult_data, max_amp, is_WGD, ordering_event)
     amplification_results$t_1 <- t_1
     amplification_results$t_2 <- t_2
     
+  }else if(max_amplification_split == c("4+0") & is_WGD == FALSE & order_event %in% c("GGG", "GGG - Unsure")){
+    
+    t_1 <- (4*(n4))/(n1 + 2*n2 + 3*n3 + 4*n4)
+    t_2 <- (4*(n3 + n4))/(n1 + 2*n2 + 3*n3 + 4*n4)
+    t_3 <- (4*(n2 + n3 + n4))/(n1 + 2*n2 + 3*n3 + 4*n4)
+    
+    amplification_results$t_1 <- t_1
+    amplification_results$t_2 <- t_2
+    amplification_results$t_3 <- t_3
+    
   }else if(max_amplification_split == c("4+1") & is_WGD == FALSE & order_event %in% c("GGG", "GGG - Unsure")){
     
     t_1 <- (5*(n4))/(n1 + 2*n2 + 3*n3 + 4*n4)
