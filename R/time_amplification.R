@@ -184,6 +184,19 @@ time_amplification_maths <- function(mult_data, max_amp, is_WGD, ordering_event)
     amplification_results$t_3 <- t_3
     amplification_results$t_4 <- t_4
     
+  }else if(max_amplification_split == c("6+0") & is_WGD == FALSE & order_event %in% c("GGGGG","GGGGG - Unsure")){
+    t_1 <- (6*n6)/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6)
+    t_2 <- (6*(n5 + n6))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6)
+    t_3 <- (6*(n4 + n5 + n6))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6)
+    t_4 <- (6*(n3 + n4 + n5 + n6))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6)
+    t_5 <- (6*(n2 + n3 + n4 + n5 + n6))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6)
+    
+    amplification_results$t_1 <- t_1
+    amplification_results$t_2 <- t_2
+    amplification_results$t_3 <- t_3
+    amplification_results$t_4 <- t_4
+    amplification_results$t_5 <- t_5
+    
   }else if(max_amplification_split == c("6+1") & is_WGD == FALSE & order_event %in% c("GGGGG","GGGGG - Unsure")){
     t_1 <- (7*n6)/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6)
     t_2 <- (7*(n5 + n6))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6)
