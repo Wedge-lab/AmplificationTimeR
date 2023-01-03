@@ -274,6 +274,25 @@ time_amplification_maths <- function(mult_data, max_amp, is_WGD, ordering_event)
     amplification_results$t_6 <- t_6
     amplification_results$t_7 <- t_7
     
+  }else if(max_amplification_split == c("9+0") & is_WGD == FALSE & order_event %in% c("GGGGGGGG","GGGGGGGG - Unsure")){
+    t_1 <- (9*n9)/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 9*n9)
+    t_2 <- (9*(n8 + n9))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 9*n9)
+    t_3 <- (9*(n7 + n8 + n9))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 9*n9)
+    t_4 <- (9*(n6 + n7 + n8 + n9))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 9*n9)
+    t_5 <- (9*(n5 + n6 + n7 + n8 + n9))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 9*n9)
+    t_6 <- (9*(n4 + n5 + n6 + n7 + n8 + n9))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 9*n9)
+    t_7 <- (9*(n3 + n4 + n5 + n6 + n7 + n8 + n9))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 9*n9)
+    t_8 <- (9*(n2 + n3 + n4 + n5 + n6 + n7 + n8 + n9))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 9*n9)
+    
+    amplification_results$t_1 <- t_1
+    amplification_results$t_2 <- t_2
+    amplification_results$t_3 <- t_3
+    amplification_results$t_4 <- t_4
+    amplification_results$t_5 <- t_5
+    amplification_results$t_6 <- t_6
+    amplification_results$t_7 <- t_7
+    amplification_results$t_8 <- t_8
+    
   }else if(max_amplification_split == c("9+1") & is_WGD == FALSE & order_event %in% c("GGGGGGGG","GGGGGGGG - Unsure")){
     t_1 <- (10*n9)/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 9*n9)
     t_2 <- (10*(n8 + n9))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 6*n6 + 7*n7 + 8*n8 + 9*n9)
