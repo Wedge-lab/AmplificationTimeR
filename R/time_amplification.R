@@ -162,6 +162,17 @@ time_amplification_maths <- function(mult_data, max_amp, is_WGD, ordering_event)
     amplification_results$t_2 <- t_2
     amplification_results$t_3 <- t_3
     
+  }else if(max_amplification_split == c("5+0") & is_WGD == FALSE & order_event %in% c("GGGG","GGGG - Unsure")){
+    t_1 <- (5*(n5))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5)
+    t_2 <- (5*(n4 + n5))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5)
+    t_3 <- (5*(n3 + n4 + n5))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5)
+    t_4 <- (5*(n2 + n3 + n4 + n5))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5)
+    
+    amplification_results$t_1 <- t_1
+    amplification_results$t_2 <- t_2
+    amplification_results$t_3 <- t_3
+    amplification_results$t_4 <- t_4
+    
   }else if(max_amplification_split == c("5+1") & is_WGD == FALSE & order_event %in% c("GGGG","GGGG - Unsure")){
     t_1 <- (6*(n5))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5)
     t_2 <- (6*(n4 + n5))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5)
