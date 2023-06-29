@@ -1,11 +1,11 @@
 # AmplificationTimeR
 <!-- badges: start -->
-  [![Codecov test coverage](https://codecov.io/gh/mjakobs/AmplificationTimeR/branch/main/graph/badge.svg)](https://app.codecov.io/gh/mjakobs/AmplificationTimeR?branch=main)
-  [![R-CMD-check](https://github.com/mjakobs/AmplificationTimeR/actions/workflows/check-standard.yml/badge.svg)](https://github.com/mjakobs/AmplificationTimeR/actions/workflows/check-standard.yml)
+  [![Codecov test coverage](https://codecov.io/gh/Wedge-lab/AmplificationTimeR/branch/main/graph/badge.svg)](https://app.codecov.io/gh/Wedge-lab/AmplificationTimeR?branch=main)
+  [![R-CMD-check](https://github.com/Wedge-lab/AmplificationTimeR/actions/workflows/check-standard.yml/badge.svg)](https://github.com/Wedge-lab/AmplificationTimeR/actions/workflows/check-standard.yml)
   <!-- badges: end -->
 
 ## Citation
-If you use `AmplificationTimeR` in your work, please cite xyz.  
+If you use `AmplificationTimeR` in your work, please cite our manuscript (currently under review - details TBC).  
 
 ## Introduction
 `AmplificationTimeR` is an R package for timing individual amplification and whole genome duplication events affecting regions of the tumour genome that have been focally amplified.  
@@ -26,7 +26,7 @@ To install `AmplificationTimeR` run:
 ```
 if (!require("devtools", quietly = TRUE))
     install.packages("devtools")
-devtools::install_github("mjakobs/AmplificationTimeR")
+devtools::install_github("Wedge-lab/AmplificationTimeR")
 ```
 
 ## Input data
