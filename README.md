@@ -13,13 +13,15 @@ If you use `AmplificationTimeR` in your work, please cite our manuscript (curren
 ## Installation
 `AmplificationTimeR` requires the following packages to be installed before use:
 ```
+if (!require("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
 if (!require("SomaticSignatures", quietly = TRUE))
-    install.packages("SomaticSignatures")
+    BiocManager::install("SomaticSignatures")
 if (!require("BSgenome.Hsapiens.UCSC.hg19", quietly = TRUE))
-    install.packages("BSgenome.Hsapiens.UCSC.hg19")
+    BiocManager::install("BSgenome.Hsapiens.UCSC.hg19")
     # OR
 if (!require("BSgenome.Hsapiens.UCSC.hg38", quietly = TRUE))
-    install.packages("BSgenome.Hsapiens.UCSC.hg38")    
+    BiocManager::install("BSgenome.Hsapiens.UCSC.hg38")    
 ```
 
 To install `AmplificationTimeR` run:
