@@ -2078,7 +2078,7 @@ time_amplification <- function(cn_data,
                                            "t_6","t_7","t_8","t_9","t_10")
     
     for(b in 1:nrow(bootstrap_amplification)){
-      set.seed(b) # makes bootstrap results reproducible, so multiple runs will produce same values
+      
       temp_multsample <- sample(tmp_values, length(tmp_values), replace = TRUE)
       bootstrap_amplification[b,1:12] <- time_amplification_maths(mult_data = temp_multsample, 
                                                                   max_amp = max_amplification_split,
