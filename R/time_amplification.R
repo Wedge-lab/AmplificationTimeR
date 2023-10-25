@@ -648,10 +648,10 @@ time_amplification_maths <- function(mult_data, max_amp, is_WGD, ordering_event)
       amplification_results$t_4 <- t_4
       amplification_results$t_5 <- t_5
     }else if((order_event == "GGWG")){
-      t_1 <- (7*n7)/(n1 + 2*n2 - n3 + n5 + 3*n7)
-      t_2 <- (7*(n5 + n7))/(n1 + 2*n2 - n3 + n5 + 3*n7)
-      t_3 <- (7*(n3 + n5 + n7))/(n1 + 2*n2 - n3 + n5 + 3*n7)
-      t_4 <- (7*(n2 - n3 + n7))/(n1 + 2*n2 - n3 + n5 + 3*n7)
+      t_1 <- (7*n7)/(n1 + 2*n2 + 3*n3 + 5*n5 + 7*n7)
+      t_2 <- (7*(n5 + n7))/(n1 + 2*n2 + 3*n3 + 5*n5 + 7*n7)
+      t_3 <- (7*(n3 + n5 + n7))/(n1 + 2*n2 + 3*n3 + 5*n5 + 7*n7)
+      t_4 <- (7*(n2 - n3 + n7))/(n1 + 2*n2 + 3*n3 + 5*n5 + 7*n7)
       
       amplification_results$t_1 <- t_1
       amplification_results$t_2 <- t_2
