@@ -400,9 +400,9 @@ time_amplification_maths <- function(mult_data, max_amp, is_WGD, ordering_event)
   }else if(max_amplification_split == c("4+0") & is_WGD == TRUE){ 
     # WGG
     if(order_event == "WGG"){
-      t_1 <- (4*n4)/(3*n1 + 2*n2 + n3 + 4*n4)
-      t_2 <- (4*(n1 + n4))/(3*n1 + 2*n2 + n3 + 4*n4)
-      t_3 <- (4*(n1 + n2 + n4))/(3*n1 + 2*n2 + n3 + 4*n4)
+      t_1 <- (4*n4)/(n1 + 2*n2 + 3*n3 + 4*n4)
+      t_2 <- (4*(n3 + n4))/(n1 + 2*n2 + 3*n3 + 4*n4)
+      t_3 <- (4*(n2 + n3 + n4))/(n1 + 2*n2 + 3*n3 + 4*n4)
       
       amplification_results$t_1 <- t_1
       amplification_results$t_2 <- t_2
