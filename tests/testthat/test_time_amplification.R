@@ -311,6 +311,7 @@ test_that("AmplificationTimeR runs and produces a data.frame with correct column
 
 # test that expected output is correct when input is correct
 test_that("AmplificationTimeR produces expected output when all input is correct", {
+  set.seed(1) # need this for consistency because there is random bootstrap sampling that happens
   expect_equal(time_amplification(cn_data = test_data_cn,
                                   multiplicity_data = test_data_mult,
                                   mutation_data = test_data_muts,
