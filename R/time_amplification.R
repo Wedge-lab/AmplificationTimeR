@@ -2072,8 +2072,9 @@ time_amplification <- function(cn_data,
   # Prepare output table
   
   if(is_amplified == TRUE){
-    amplification_results_ci <- as.data.frame(matrix(nrow=1, ncol = 46))
+    amplification_results_ci <- as.data.frame(matrix(nrow=1, ncol = 47))
     colnames(amplification_results_ci) <- c("sample","region","highest_copy_number","event_order","num_mutations_used","clonality_status",
+                                            "flags",
                                             "t_1","t_1_mean_bootstrap","t_1_lower_ci","t_1_upper_ci",
                                             "t_2","t_2_mean_bootstrap","t_2_lower_ci","t_2_upper_ci",
                                             "t_3","t_3_mean_bootstrap","t_3_lower_ci","t_3_upper_ci",
@@ -2097,8 +2098,8 @@ time_amplification <- function(cn_data,
     single_time <- time_amplification_maths(mult_data = tmp_values, 
                                             max_amp = max_amplification_split, 
                                             is_WGD = is_WGD, 
-                                            ordering_event = event_ordering)
-    amplification_results_ci$event_order <- event_ordering                                                                                         
+                                            ordering_event = event_ordering[1])
+    amplification_results_ci$event_order <- event_ordering[1]                                                                                         
     
     ############################################################################
     # Get a bootstrap estimate of amplification times
@@ -2114,7 +2115,7 @@ time_amplification <- function(cn_data,
       bootstrap_amplification[b,1:12] <- time_amplification_maths(mult_data = temp_multsample, 
                                                                   max_amp = max_amplification_split,
                                                                   is_WGD = is_WGD,
-                                                                  ordering_event = event_ordering)
+                                                                  ordering_event = event_ordering[1])
     }
     
     ############################################################################
@@ -2220,6 +2221,42 @@ time_amplification <- function(cn_data,
       # t_10_upper_ci_adj <- ((5 + (length(tmp_values)*t_10_upper_ci))/(5 + length(tmp_values)))
       amplification_results_ci$t_10_lower_ci <- t_10_lower_ci
       amplification_results_ci$t_10_upper_ci <- t_10_upper_ci
+    }
+    
+    # Create flag for whether events are in order or not and whether they exceed 1
+    calculated_times <- c(amplification_results_ci$t_1_mean_bootstrap,
+                          amplification_results_ci$t_2_mean_bootstrap,
+                          amplification_results_ci$t_3_mean_bootstrap,
+                          amplification_results_ci$t_4_mean_bootstrap,
+                          amplification_results_ci$t_5_mean_bootstrap,
+                          amplification_results_ci$t_6_mean_bootstrap,
+                          amplification_results_ci$t_7_mean_bootstrap,
+                          amplification_results_ci$t_8_mean_bootstrap,
+                          amplification_results_ci$t_9_mean_bootstrap,
+                          amplification_results_ci$t_10_mean_bootstrap)
+    calculated_times <- calculated_times[!is.na(calculated_times)]
+    
+    # Order flag
+    if(all(calculated_times == sort(calculated_times))){
+      order_flag <- NA
+    }else{
+      order_flag <- "Points not in order"
+    }
+    
+    # Time above 1
+    if(any(calculated_times > 1)){
+      time_flag <- "Time > 1"
+    }else{
+      time_flag <- NA
+    }
+    
+    #Combine flags
+    flags_used <- c(order_flag, time_flag, multiplicity_flag)
+    flags_used <- flags_used[!is.na(flags_used)]
+    if(length(flags_used) == 0){
+      amplification_results_ci$flags <- NA
+    }else{
+      amplification_results_ci$flags <- paste(flags_used, sep = ",")
     }
     
   }
