@@ -1385,127 +1385,127 @@ get_order_events <- function(multiplicity_values, max_amplification_split, is_WG
   event_ordering <- NA
   if(max_amplification_split == c("2+0") & is_WGD == FALSE){ ######## start with non-WGD
     
-    event_ordering <- "G"
+    event_ordering <- c("G",NA)
     
   }else if(max_amplification_split == c("2+1") & is_WGD == FALSE){ 
     
-    event_ordering <- "G"
+    event_ordering <- c("G",NA)
     
   }else if(max_amplification_split == c("3+0") & is_WGD == FALSE){
     
-    event_ordering <- "GG"
+    event_ordering <- c("GG",NA)
     
   }else if(max_amplification_split == c("3+1") & is_WGD == FALSE){
     
-    event_ordering <- "GG"
+    event_ordering <- c("GG",NA)
     
   }else if(max_amplification_split == c("4+0") & is_WGD == FALSE){
     
-    event_ordering <- "GGG"
+    event_ordering <- c("GGG",NA)
     
     if((n1 == 0)|(n2 == 0)|(n3 == 0)|(n4 == 0)){
-      event_ordering <- "GGG - Unsure"
+      event_ordering <- c("GGG","Missing multiplicity states")
     }
     
   }else if(max_amplification_split == c("4+1") & is_WGD == FALSE){
     
-    event_ordering <- "GGG"
+    event_ordering <- c("GGG",NA)
     
     if((n1 == 0)|(n2 == 0)|(n3 == 0)|(n4 == 0)){
-      event_ordering <- "GGG - Unsure"
+      event_ordering <- c("GGG","Missing multiplicity states")
     }
     
   }else if(max_amplification_split == c("5+0") & is_WGD == FALSE){
     
-    event_ordering <- "GGGG"
+    event_ordering <- c("GGGG",NA)
     
     if((n1 == 0)|(n2 == 0)|(n3 == 0)|(n4 == 0)|(n5 == 0)){
-      event_ordering <- "GGGG - Unsure"
+      event_ordering <- c("GGGG","Missing multiplicity states")
     }
     
   }else if(max_amplification_split == c("5+1") & is_WGD == FALSE){
     
-    event_ordering <- "GGGG"
+    event_ordering <- c("GGGG",NA)
     
     if((n1 == 0)|(n2 == 0)|(n3 == 0)|(n4 == 0)|(n5 == 0)){
-      event_ordering <- "GGGG - Unsure"
+      event_ordering <- c("GGGG","Missing multiplicity states")
     }
     
   }else if(max_amplification_split == c("6+0") & is_WGD == FALSE){
     
-    event_ordering <- "GGGGG"
+    event_ordering <- c("GGGGG",NA)
     
     if((n1 == 0)|(n2 == 0)|(n3 == 0)|(n4 == 0)|(n5 == 0)|(n6 == 0)){
-      event_ordering <- "GGGGG - Unsure"
+      event_ordering <- c("GGGGG","Missing multiplicity states")
     }
     
   }else if(max_amplification_split == c("6+1") & is_WGD == FALSE){
     
-    event_ordering <- "GGGGG"
+    event_ordering <- c("GGGGG",NA)
     
     if((n1 == 0)|(n2 == 0)|(n3 == 0)|(n4 == 0)|(n5 == 0)|(n6 == 0)){
-      event_ordering <- "GGGGG - Unsure"
+      event_ordering <- c("GGGGG","Missing multiplicity states")
     }
     
   }else if(max_amplification_split == c("7+0") & is_WGD == FALSE){
     
-    event_ordering <- "GGGGGG"
+    event_ordering <- c("GGGGGG",NA)
     
     if((n1 == 0)|(n2 == 0)|(n3 == 0)|(n4 == 0)|(n5 == 0)|(n6 == 0)|(n7 == 0)){
-      event_ordering <- "GGGGGG - Unsure"
+      event_ordering <- c("GGGGGG","Missing multiplicity states")
     }
     
   }else if(max_amplification_split == c("7+1") & is_WGD == FALSE){
     
-    event_ordering <- "GGGGGG"
+    event_ordering <- c("GGGGGG",NA)
     
     if((n1 == 0)|(n2 == 0)|(n3 == 0)|(n4 == 0)|(n5 == 0)|(n6 == 0)|(n7 == 0)){
-      event_ordering <- "GGGGGG - Unsure"
+      event_ordering <- c("GGGGGG","Missing multiplicity states")
     }
     
   }else if(max_amplification_split == c("8+0") & is_WGD == FALSE){
     
-    event_ordering <- "GGGGGGG"
+    event_ordering <- c("GGGGGGG",NA)
     
     if((n1 == 0)|(n2 == 0)|(n3 == 0)|(n4 == 0)|(n5 == 0)|(n6 == 0)|(n7 == 0)|(n8 == 0)){
-      event_ordering <- "GGGGGGG - Unsure"
+      event_ordering <- c("GGGGGGG","Missing multiplicity states")
     }
     
   }else if(max_amplification_split == c("8+1") & is_WGD == FALSE){
     
-    event_ordering <- "GGGGGGG"
+    event_ordering <- c("GGGGGGG",NA)
     
     if((n1 == 0)|(n2 == 0)|(n3 == 0)|(n4 == 0)|(n5 == 0)|(n6 == 0)|(n7 == 0)|(n8 == 0)){
-      event_ordering <- "GGGGGGG - Unsure"
+      event_ordering <- c("GGGGGGG","Missing multiplicity states")
     }
     
   }else if(max_amplification_split == c("9+0") & is_WGD == FALSE){
     
-    event_ordering <- "GGGGGGGG"
+    event_ordering <- c("GGGGGGGG",NA)
     
     if((n1 == 0)|(n2 == 0)|(n3 == 0)|(n4 == 0)|(n5 == 0)|(n6 == 0)|(n7 == 0)|(n8 == 0)|(n9 == 0)){
-      event_ordering <- "GGGGGGGG - Unsure"
+      event_ordering <- c("GGGGGGGG","Missing multiplicity states")
     }
     
   }else if(max_amplification_split == c("9+1") & is_WGD == FALSE){
     
-    event_ordering <- "GGGGGGGG"
+    event_ordering <- c("GGGGGGGG",NA)
     
     if((n1 == 0)|(n2 == 0)|(n3 == 0)|(n4 == 0)|(n5 == 0)|(n6 == 0)|(n7 == 0)|(n8 == 0)|(n9 == 0)){
-      event_ordering <- "GGGGGGGG - Unsure"
+      event_ordering <- c("GGGGGGGG","Missing multiplicity states")
     }
     
   }else if(max_amplification_split == c("10+0") & is_WGD == FALSE){
     
-    event_ordering <- "GGGGGGGGG"
+    event_ordering <- c("GGGGGGGGG",NA)
     
     if((n1 == 0)|(n2 == 0)|(n3 == 0)|(n4 == 0)|(n5 == 0)|(n6 == 0)|(n7 == 0)|(n8 == 0)|(n9 == 0)|(n10 == 0)){
-      event_ordering <- "GGGGGGGGG - Unsure"
+      event_ordering <- c("GGGGGGGGG","Missing multiplicity states")
     }
     
   }else if(max_amplification_split == c("10+1") & is_WGD == FALSE){
     
-    event_ordering <- "GGGGGGGGG"
+    event_ordering <- c("GGGGGGGGG",NA)
     
     if((n1 == 0)|(n2 == 0)|(n3 == 0)|(n4 == 0)|(n5 == 0)|(n6 == 0)|(n7 == 0)|(n8 == 0)|(n9 == 0)|(n10 == 0)){
       event_ordering <- "GGGGGGGGG - Unsure"
@@ -1513,281 +1513,281 @@ get_order_events <- function(multiplicity_values, max_amplification_split, is_WG
     
   }else if(max_amplification_split == c("2+0") & is_WGD == TRUE){ ####### WGD onwards, with further options
     
-    event_ordering <- "W"
+    event_ordering <- c("W",NA)
     
   }else if(max_amplification_split == c("2+1") & is_WGD == TRUE){ 
     
-    event_ordering <- "W"
+    event_ordering <- c("W",NA)
     
   }else if(max_amplification_split == c("2+2") & is_WGD == TRUE){ 
     
-    event_ordering <- "W"
+    event_ordering <- c("W",NA)
     
   }else if(max_amplification_split == c("3+0") & is_WGD == TRUE){ 
     
-    event_ordering <- "WG"
+    event_ordering <- c("WG",NA)
     
   }else if(max_amplification_split == c("3+1") & is_WGD == TRUE){ 
     
-    event_ordering <- "WG"
+    event_ordering <- c("WG",NA)
     
   }else if(max_amplification_split == c("3+2") & is_WGD == TRUE){ 
     
-    event_ordering <- "WG"
+    event_ordering <- c("WG",NA)
     
   }else if(max_amplification_split == c("4+0") & is_WGD == TRUE){ 
     
     # WGG
     if(n3 > 0){
-      event_ordering <- "WGG"
+      event_ordering <- c("WGG",NA)
     }else if(n3 == 0){# GW
-      event_ordering <- "GW"
+      event_ordering <- c("GW",NA)
     }
     
   }else if(max_amplification_split == c("4+1") & is_WGD == TRUE){ 
     
     # WGG
     if(n3 > 0){
-      event_ordering <- "WGG"
+      event_ordering <- c("WGG",NA)
     }else if(n3 == 0){# GW
-      event_ordering <- "GW"
+      event_ordering <- c("GW",NA)
     }
     
   }else if(max_amplification_split == c("4+2") & is_WGD == TRUE){
     # WGG
     if(n3 > 0){
-      event_ordering <- "WGG"
+      event_ordering <- c("WGG",NA)
     }else if(n3 == 0){# GW
-      event_ordering <- "GW"
+      event_ordering <- c("GW",NA)
     }
     
   }else if(max_amplification_split == c("5+0") & is_WGD == TRUE){
     # WGGG
     if(n4 > 0){
-      event_ordering <- "WGGG"
+      event_ordering <- c("WGGG",NA)
     }else if(n4 == 0){# GWG
-      event_ordering <- "GWG"
+      event_ordering <- c("GWG",NA)
     }
     
   }else if(max_amplification_split == c("5+1") & is_WGD == TRUE){
     # WGGG
     if(n4 > 0){
-      event_ordering <- "WGGG"
+      event_ordering <- c("WGGG",NA)
     }else if(n4 == 0){# GWG
-      event_ordering <- "GWG"
+      event_ordering <- c("GWG",NA)
     }
     
   }else if(max_amplification_split == c("5+2") & is_WGD == TRUE){
     # WGGG
     if(n4 > 0){
-      event_ordering <- "WGGG"
+      event_ordering <- c("WGGG",NA)
     }else if(n4 == 0){# GWG
-      event_ordering <- "GWG"
+      event_ordering <- c("GWG",NA)
     }
     
   }else if(max_amplification_split == c("6+0") & is_WGD == TRUE){
     # WGGGG
     if((n3 > 0) & (n5 > 0)){
-      event_ordering <- "WGGGG"
+      event_ordering <- c("WGGGG",NA)
     }else if((n3 > 0) & (n5 == 0)){# GWGG
-      event_ordering <- "GWGG"
+      event_ordering <- c("GWGG",NA)
     }else if((n3 == 0) & (n5 == 0)){# GGW
-      event_ordering <- "GGW"
+      event_ordering <- c("GGW",NA)
     }else{
-      event_ordering <- "Order uncertain and cannot be timed"
+      event_ordering <- c("Order uncertain and cannot be timed",NA)
     }
     
   }else if(max_amplification_split == c("6+1") & is_WGD == TRUE){
     # WGGGG
     if((n3 > 0) & (n5 > 0)){
-      event_ordering <- "WGGGG"
+      event_ordering <- c("WGGGG",NA)
     }else if((n3 > 0) & (n5 == 0)){# GWGG
-      event_ordering <- "GWGG"
+      event_ordering <- c("GWGG",NA)
     }else if((n3 == 0) & (n5 == 0)){# GGW
-      event_ordering <- "GGW"
+      event_ordering <- c("GGW",NA)
     }else{
-      event_ordering <- "Order uncertain and cannot be timed"
+      event_ordering <- c("Order uncertain and cannot be timed",NA)
     }
     
   }else if(max_amplification_split == c("6+2") & is_WGD == TRUE){
     # WGGGG
     if((n3 > 0) & (n5 > 0)){
-      event_ordering <- "WGGGG"
+      event_ordering <- c("WGGGG",NA)
     }else if((n3 > 0) & (n5 == 0)){# GWGG
-      event_ordering <- "GWGG"
+      event_ordering <- c("GWGG",NA)
     }else if((n3 == 0) & (n5 == 0)){# GGW
-      event_ordering <- "GGW"
+      event_ordering <- c("GGW",NA)
     }else{
-      event_ordering <- "Order uncertain and cannot be timed"
+      event_ordering <- c("Order uncertain and cannot be timed",NA)
     }
     
   }else if(max_amplification_split == c("7+0") & is_WGD == TRUE){
     # WGGGGG
     if((n4 > 0) & (n6 > 0)){
-      event_ordering <- "WGGGGG"
+      event_ordering <- c("WGGGGG",NA)
     }else if((n4 > 0) & (n6 == 0)){# GWGGG
-      event_ordering <- "GWGGG"
+      event_ordering <- c("GWGGG",NA)
     }else if((n4 == 0) & (n6 == 0)){# GGWG
-      event_ordering <- "GGWG"
+      event_ordering <- c("GGWG",NA)
     }else{
-      event_ordering <- "Order uncertain and cannot be timed"
+      event_ordering <- c("Order uncertain and cannot be timed",NA)
     }
     
   }else if(max_amplification_split == c("7+1") & is_WGD == TRUE){
     # WGGGGG
     if((n4 > 0) & (n6 > 0)){
-      event_ordering <- "WGGGGG"
+      event_ordering <- c("WGGGGG",NA)
     }else if((n4 > 0) & (n6 == 0)){# GWGGG
-      event_ordering <- "GWGGG"
+      event_ordering <- c("GWGGG",NA)
     }else if((n4 == 0) & (n6 == 0)){# GGWG
-      event_ordering <- "GGWG"
+      event_ordering <- c("GGWG",NA)
     }else{
-      event_ordering <- "Order uncertain and cannot be timed"
+      event_ordering <- c("Order uncertain and cannot be timed",NA)
     }
     
   }else if(max_amplification_split == c("7+2") & is_WGD == TRUE){
     # WGGGGG
     if((n4 > 0) & (n6 > 0)){
-      event_ordering <- "WGGGGG"
+      event_ordering <- c("WGGGGG",NA)
     }else if((n4 > 0) & (n6 == 0)){# GWGGG
-      event_ordering <- "GWGGG"
+      event_ordering <- c("GWGGG",NA)
     }else if((n4 == 0) & (n6 == 0)){# GGWG
-      event_ordering <- "GGWG"
+      event_ordering <- c("GGWG",NA)
     }else{
-      event_ordering <- "Order uncertain and cannot be timed"
+      event_ordering <- c("Order uncertain and cannot be timed",NA)
     }
     
   }else if(max_amplification_split == c("8+0") & is_WGD == TRUE){
     # WGGGGGG
     if((n3 > 0) & (n5 > 0) & (n7 > 0)){
-      event_ordering <- "WGGGGGG"
+      event_ordering <- c("WGGGGGG",NA)
     }else if((n5 > 0) & (n7 == 0)){# GWGGGG
-      event_ordering <- "GWGGGG"
+      event_ordering <- c("GWGGGG",NA)
     }else if((n3 > 0) & (n5 == 0) & (n7 == 0)){# GGWGG
-      event_ordering <- "GGWGG"
+      event_ordering <- c("GGWGG",NA)
     }else if((n3 == 0) & (n5 == 0) & (n7 == 0)){# GGGW
-      event_ordering <- "GGGW"
+      event_ordering <- c("GGGW",NA)
     }else{
-      event_ordering <- "Order uncertain and cannot be timed"
+      event_ordering <- c("Order uncertain and cannot be timed",NA)
     }
     
   }else if(max_amplification_split == c("8+1") & is_WGD == TRUE){
     # WGGGGGG
     if((n3 > 0) & (n5 > 0) & (n7 > 0)){
-      event_ordering <- "WGGGGGG"
+      event_ordering <- c("WGGGGGG",NA)
     }else if((n5 > 0) & (n7 == 0)){# GWGGGG
-      event_ordering <- "GWGGGG"
+      event_ordering <- c("GWGGGG",NA)
     }else if((n3 > 0) & (n5 == 0) & (n7 == 0)){# GGWGG
-      event_ordering <- "GGWGG"
+      event_ordering <- c("GGWGG",NA)
     }else if((n3 == 0) & (n5 == 0) & (n7 == 0)){# GGGW
-      event_ordering <- "GGGW"
+      event_ordering <- c("GGGW",NA)
     }else{
-      event_ordering <- "Order uncertain and cannot be timed"
+      event_ordering <- c("Order uncertain and cannot be timed",NA)
     }
     
   }else if(max_amplification_split == c("8+2") & is_WGD == TRUE){
     # WGGGGGG
     if((n3 > 0) & (n5 > 0) & (n7 > 0)){
-      event_ordering <- "WGGGGGG"
+      event_ordering <- c("WGGGGGG",NA)
     }else if((n5 > 0) & (n7 == 0)){# GWGGGG
-      event_ordering <- "GWGGGG"
+      event_ordering <- c("GWGGGG",NA)
     }else if((n3 > 0) & (n5 == 0) & (n7 == 0)){# GGWGG
-      event_ordering <- "GGWGG"
+      event_ordering <- c("GGWGG",NA)
     }else if((n3 == 0) & (n5 == 0) & (n7 == 0)){# GGGW
-      event_ordering <- "GGGW"
+      event_ordering <- c("GGGW",NA)
     }else{
-      event_ordering <- "Order uncertain and cannot be timed"
+      event_ordering <- c("Order uncertain and cannot be timed",NA)
     }
     
   }else if(max_amplification_split == c("9+0") & is_WGD == TRUE){
     if((n4 > 0) & (n6 > 0) & (n8 > 0)){# WGGGGGGG
-      event_ordering <- "WGGGGGGG"
+      event_ordering <- c("WGGGGGGG",NA)
     }else if((n6 > 0) & (n8 == 0)){# GWGGGGG
-      event_ordering <- "GWGGGGG"
+      event_ordering <- c("GWGGGGG",NA)
     }else if((n4 > 0) & (n6 == 0) & (n8 == 0)){# GGWGGG
-      event_ordering <- "GGWGGG"
+      event_ordering <- c("GGWGGG",NA)
     }else if((n4 == 0) & (n6 == 0) & (n8 == 0)){# GGGWG
-      event_ordering <- "GGGWG"
+      event_ordering <- c("GGGWG",NA)
     }else{
-      event_ordering <- "Order uncertain and cannot be timed"
+      event_ordering <- c("Order uncertain and cannot be timed",NA)
     }
     
   }else if(max_amplification_split == c("9+1") & is_WGD == TRUE){
     if((n4 > 0) & (n6 > 0) & (n8 > 0)){# WGGGGGGG
-      event_ordering <- "WGGGGGGG"
+      event_ordering <- c("WGGGGGGG",NA)
     }else if((n6 > 0) & (n8 == 0)){# GWGGGGG
-      event_ordering <- "GWGGGGG"
+      event_ordering <- c("GWGGGGG",NA)
     }else if((n4 > 0) & (n6 == 0) & (n8 == 0)){# GGWGGG
-      event_ordering <- "GGWGGG"
+      event_ordering <- c("GGWGGG",NA)
     }else if((n4 == 0) & (n6 == 0) & (n8 == 0)){# GGGWG
-      event_ordering <- "GGGWG"
+      event_ordering <- c("GGGWG",NA)
     }else{
-      event_ordering <- "Order uncertain and cannot be timed"
+      event_ordering <- c("Order uncertain and cannot be timed",NA)
     }
     
   }else if(max_amplification_split == c("9+2") & is_WGD == TRUE){
     if((n4 > 0) & (n6 > 0) & (n8 > 0)){# WGGGGGGG
-      event_ordering <- "WGGGGGGG"
+      event_ordering <- c("WGGGGGGG",NA)
     }else if((n6 > 0) & (n8 == 0)){# GWGGGGG
-      event_ordering <- "GWGGGGG"
+      event_ordering <- c("GWGGGGG",NA)
     }else if((n4 > 0) & (n6 == 0) & (n8 == 0)){# GGWGGG
-      event_ordering <- "GGWGGG"
+      event_ordering <- c("GGWGGG",NA)
     }else if((n4 == 0) & (n6 == 0) & (n8 == 0)){# GGGWG
-      event_ordering <- "GGGWG"
+      event_ordering <- c("GGGWG",NA)
     }else{
-      event_ordering <- "Order uncertain and cannot be timed"
+      event_ordering <- c("Order uncertain and cannot be timed",NA)
     }
     
   }else if(max_amplification_split == c("10+0") & is_WGD == TRUE){
     # WGGGGGGGG  
     if((n3 > 0) & (n5 > 0) & (n7 > 0) & (n9 > 0)){
-      event_ordering <- "WGGGGGGGG"
+      event_ordering <- c("WGGGGGGGG",NA)
     }else if((n7 > 0) & (n9 == 0)){# GWGGGGGG 
-      event_ordering <- "GWGGGGGG"
+      event_ordering <- c("GWGGGGGG",NA)
     }else if((n5 > 0) & (n7 == 0) & (n9 == 0)){# GGWGGGG
-      event_ordering <- "GGWGGGG"
+      event_ordering <- c("GGWGGGG",NA)
     }else if((n3 > 0) & (n5 == 0) & (n7 == 0) & (n9 == 0)){# GGGWGG
-      event_ordering <- "GGGWGG"
+      event_ordering <- c("GGGWGG",NA)
     }else if((n3 == 0) & (n5 == 0) & (n7 == 0) & (n9 == 0)){# GGGGW
-      event_ordering <- "GGGGW"
+      event_ordering <- c("GGGGW",NA)
     }else{
-      event_ordering <- "Order uncertain and cannot be timed"
+      event_ordering <- c("Order uncertain and cannot be timed",NA)
     }
     
   }else if(max_amplification_split == c("10+1") & is_WGD == TRUE){
     # WGGGGGGGG  
     if((n3 > 0) & (n5 > 0) & (n7 > 0) & (n9 > 0)){
-      event_ordering <- "WGGGGGGGG"
+      event_ordering <- c("WGGGGGGGG",NA)
     }else if((n7 > 0) & (n9 == 0)){# GWGGGGGG 
-      event_ordering <- "GWGGGGGG"
+      event_ordering <- c("GWGGGGGG",NA)
     }else if((n5 > 0) & (n7 == 0) & (n9 == 0)){# GGWGGGG
-      event_ordering <- "GGWGGGG"
+      event_ordering <- c("GGWGGGG",NA)
     }else if((n3 > 0) & (n5 == 0) & (n7 == 0) & (n9 == 0)){# GGGWGG
-      event_ordering <- "GGGWGG"
+      event_ordering <- c("GGGWGG",NA)
     }else if((n3 == 0) & (n5 == 0) & (n7 == 0) & (n9 == 0)){# GGGGW
-      event_ordering <- "GGGGW"
+      event_ordering <- c("GGGGW",NA)
     }else{
-      event_ordering <- "Order uncertain and cannot be timed"
+      event_ordering <- c("Order uncertain and cannot be timed",NA)
     }
     
   }else if(max_amplification_split == c("10+2") & is_WGD == TRUE){
     # WGGGGGGGG  
     if((n3 > 0) & (n5 > 0) & (n7 > 0) & (n9 > 0)){
-      event_ordering <- "WGGGGGGGG"
+      event_ordering <- c("WGGGGGGGG",NA)
     }else if((n7 > 0) & (n9 == 0)){# GWGGGGGG 
-      event_ordering <- "GWGGGGGG"
+      event_ordering <- c("GWGGGGGG",NA)
     }else if((n5 > 0) & (n7 == 0) & (n9 == 0)){# GGWGGGG
-      event_ordering <- "GGWGGGG"
+      event_ordering <- c("GGWGGGG",NA)
     }else if((n3 > 0) & (n5 == 0) & (n7 == 0) & (n9 == 0)){# GGGWGG
-      event_ordering <- "GGGWGG"
+      event_ordering <- c("GGGWGG",NA)
     }else if((n3 == 0) & (n5 == 0) & (n7 == 0) & (n9 == 0)){# GGGGW
-      event_ordering <- "GGGGW"
+      event_ordering <- c("GGGGW",NA)
     }else{
-      event_ordering <- "Order uncertain and cannot be timed"
+      event_ordering <- c("Order uncertain and cannot be timed",NA)
     }
     
   }else{
-    event_ordering <- "Cannot be timed"
+    event_ordering <- c("Cannot be timed",NA)
   }
   
   return(event_ordering)
@@ -2249,6 +2249,9 @@ time_amplification <- function(cn_data,
     }else{
       time_flag <- NA
     }
+    
+    # Missing multiplicity states flag
+    multiplicity_flag <- event_ordering[2]
     
     #Combine flags
     flags_used <- c(order_flag, time_flag, multiplicity_flag)
