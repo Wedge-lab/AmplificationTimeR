@@ -1524,7 +1524,7 @@ get_order_events <- function(multiplicity_values, max_amplification_split, is_WG
     event_ordering <- c("GGGGGGGGG",NA)
     
     if((n1 == 0)|(n2 == 0)|(n3 == 0)|(n4 == 0)|(n5 == 0)|(n6 == 0)|(n7 == 0)|(n8 == 0)|(n9 == 0)|(n10 == 0)){
-      event_ordering <- "GGGGGGGGG - Unsure"
+      event_ordering <- c("GGGGGGGGG","Missing multiplicity states")
     }
     
   }else if(max_amplification_split == c("2+0") & is_WGD == TRUE){ ####### WGD onwards, with further options
