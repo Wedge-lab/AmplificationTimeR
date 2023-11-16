@@ -1960,7 +1960,7 @@ get_order_events <- function(multiplicity_values, max_amplification_split, is_WG
     }else if((n6 > 0) & (n8 == 0)){# GWGGGGG
       event_ordering <- c("GWGGGGG",NA)
       
-      if((n1 == 0)|(n2 == 0)|(n3 == 0)|(n5 == 0)|(n7 == 0)|(n9 == 0)){
+      if((n1 == 0)|(n2 == 0)|(n3 == 0)|(n4 == 0)|(n5 == 0)|(n7 == 0)|(n9 == 0)){
         event_ordering <- c("GWGGGGG","Missing multiplicity states")
       }
       
@@ -1993,7 +1993,7 @@ get_order_events <- function(multiplicity_values, max_amplification_split, is_WG
     }else if((n6 > 0) & (n8 == 0)){# GWGGGGG
       event_ordering <- c("GWGGGGG",NA)
       
-      if((n1 == 0)|(n2 == 0)|(n3 == 0)|(n5 == 0)|(n7 == 0)|(n9 == 0)){
+      if((n1 == 0)|(n2 == 0)|(n3 == 0)|(n4 == 0)|(n5 == 0)|(n7 == 0)|(n9 == 0)){
         event_ordering <- c("GWGGGGG","Missing multiplicity states")
       }
       
@@ -2026,7 +2026,7 @@ get_order_events <- function(multiplicity_values, max_amplification_split, is_WG
     }else if((n6 > 0) & (n8 == 0)){# GWGGGGG
       event_ordering <- c("GWGGGGG",NA)
       
-      if((n1 == 0)|(n2 == 0)|(n3 == 0)|(n5 == 0)|(n7 == 0)|(n9 == 0)){
+      if((n1 == 0)|(n2 == 0)|(n3 == 0)|(n4 == 0)|(n5 == 0)|(n7 == 0)|(n9 == 0)){
         event_ordering <- c("GWGGGGG","Missing multiplicity states")
       }
       
@@ -2060,14 +2060,14 @@ get_order_events <- function(multiplicity_values, max_amplification_split, is_WG
     }else if((n7 > 0) & (n9 == 0)){# GWGGGGGG 
       event_ordering <- c("GWGGGGGG",NA)
       
-      if((n1 == 0)|(n2 == 0)|(n4 == 0)|(n6 == 0)|(n8 == 0)|(n10 == 0)){
+      if((n1 == 0)|(n2 == 0)|(n3 == 0)|(n4 == 0)|(n5 == 0)|(n6 == 0)|(n8 == 0)|(n10 == 0)){
         event_ordering <- c("GWGGGGGG","Missing multiplicity states")
       }
       
     }else if((n5 > 0) & (n7 == 0) & (n9 == 0)){# GGWGGGG
       event_ordering <- c("GGWGGGG",NA)
       
-      if((n1 == 0)|(n2 == 0)|(n4 == 0)|(n6 == 0)|(n8 == 0)|(n10 == 0)){
+      if((n1 == 0)|(n2 == 0)|(n3 == 0)|(n4 == 0)|(n6 == 0)|(n8 == 0)|(n10 == 0)){
         event_ordering <- c("GGWGGGG","Missing multiplicity states")
       }
       
@@ -2101,14 +2101,14 @@ get_order_events <- function(multiplicity_values, max_amplification_split, is_WG
     }else if((n7 > 0) & (n9 == 0)){# GWGGGGGG 
       event_ordering <- c("GWGGGGGG",NA)
       
-      if((n1 == 0)|(n2 == 0)|(n4 == 0)|(n6 == 0)|(n8 == 0)|(n10 == 0)){
+      if((n1 == 0)|(n2 == 0)|(n3 == 0)|(n4 == 0)|(n5 == 0)|(n6 == 0)|(n8 == 0)|(n10 == 0)){
         event_ordering <- c("GWGGGGGG","Missing multiplicity states")
       }
       
     }else if((n5 > 0) & (n7 == 0) & (n9 == 0)){# GGWGGGG
       event_ordering <- c("GGWGGGG",NA)
       
-      if((n1 == 0)|(n2 == 0)|(n4 == 0)|(n6 == 0)|(n8 == 0)|(n10 == 0)){
+      if((n1 == 0)|(n2 == 0)|(n3 == 0)|(n4 == 0)|(n6 == 0)|(n8 == 0)|(n10 == 0)){
         event_ordering <- c("GGWGGGG","Missing multiplicity states")
       }
       
@@ -2142,14 +2142,14 @@ get_order_events <- function(multiplicity_values, max_amplification_split, is_WG
     }else if((n7 > 0) & (n9 == 0)){# GWGGGGGG 
       event_ordering <- c("GWGGGGGG",NA)
       
-      if((n1 == 0)|(n2 == 0)|(n4 == 0)|(n6 == 0)|(n8 == 0)|(n10 == 0)){
+      if((n1 == 0)|(n2 == 0)|(n3 == 0)|(n4 == 0)|(n5 == 0)|(n6 == 0)|(n8 == 0)|(n10 == 0)){
         event_ordering <- c("GWGGGGGG","Missing multiplicity states")
       }
       
     }else if((n5 > 0) & (n7 == 0) & (n9 == 0)){# GGWGGGG
       event_ordering <- c("GGWGGGG",NA)
       
-      if((n1 == 0)|(n2 == 0)|(n4 == 0)|(n6 == 0)|(n8 == 0)|(n10 == 0)){
+      if((n1 == 0)|(n2 == 0)|(n3 == 0)|(n4 == 0)|(n6 == 0)|(n8 == 0)|(n10 == 0)){
         event_ordering <- c("GGWGGGG","Missing multiplicity states")
       }
       
