@@ -2644,7 +2644,7 @@ time_amplification <- function(cn_data,
     if(length(flags_used) == 0){
       amplification_results_ci$flags <- NA
     }else{
-      amplification_results_ci$flags <- paste(flags_used, sep = ",")
+      amplification_results_ci$flags <- paste(flags_used, collapse = ",")
     }
     
   }
