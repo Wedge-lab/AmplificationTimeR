@@ -52,7 +52,8 @@ test_output$t_1 <- as.numeric(test_output$t_1)
 test_output$t_1_mean_bootstrap <- as.numeric(test_output$t_1_mean_bootstrap)
 test_output$t_1_lower_ci <- as.numeric(test_output$t_1_lower_ci)
 test_output$t_1_upper_ci <- as.numeric(test_output$t_1_upper_ci)
-test_output[,11:46]<- as.logical(test_output[,11:46])
+test_output$flags <- as.logical(test_output$flags)
+test_output[,12:47]<- as.logical(test_output[,12:47])
 
 test_data_cn_incorrect <- test_data_cn
 colnames(test_data_cn_incorrect) <- c("chr","startpos","endpos","nMaj1_A","x")
