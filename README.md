@@ -4,6 +4,9 @@
   [![R-CMD-check](https://github.com/Wedge-lab/AmplificationTimeR/actions/workflows/check-standard.yml/badge.svg)](https://github.com/Wedge-lab/AmplificationTimeR/actions/workflows/check-standard.yml)
   <!-- badges: end -->
 
+* auto-gen TOC:
+{:toc}
+
 ## Citation
 If you use `AmplificationTimeR` in your work, please cite our manuscript (currently under review - details TBC).  
 
