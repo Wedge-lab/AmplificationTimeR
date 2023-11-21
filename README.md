@@ -184,6 +184,6 @@ We have provided a number of flags to assist users in identifying `Amplification
 
 | Flag                              | Description |
 | --------------------------------- | ----------- |
-| "Points not in order"             | This flag indicates that one or more time points have been timed in the wrong order (e.g. `t_2_median_bootsrap` occurs after `t_3_median_bootstrap`).  |
+| "Points not in order"             | This flag indicates that one or more time points have been timed in the wrong order (e.g. `t_2_median_bootsrap` occurs after `t_3_median_bootstrap`). This may indicate that an incorrect order of events has been inferred based on the available data, potentially due to copy number losses occurring after gains. |
 | "Time > 1"                        | Occasionally, `AmplificationTimeR` will provide timing estimates that exceed 1. Such time estimates may represent events that happened very late in the lifetime of the tumour. |
-| "Missing multiplicity states"     | This flag will be raised if one or more multiplicity states that are expected to be present are not identified in the segment. This situation can arise when gains happen in close succession without any mutations occurring between gain events. |
+| "Missing multiplicity states"     | This flag will be raised if one or more multiplicity states that are expected to be present are not identified in the segment. This situation can arise when gains happen in close succession without any mutations occurring between gain events. Alternatively, this may indicate that an incorrect order of events has been inferred from the data available. |
