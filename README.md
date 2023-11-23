@@ -4,6 +4,22 @@
   [![R-CMD-check](https://github.com/Wedge-lab/AmplificationTimeR/actions/workflows/check-standard.yml/badge.svg)](https://github.com/Wedge-lab/AmplificationTimeR/actions/workflows/check-standard.yml)
   <!-- badges: end -->
 
+- [AmplificationTimeR](#amplificationtimer)
+  - [Citation](#citation)
+  - [Introduction](#introduction)
+  - [Installation](#installation)
+  - [Input data](#input-data)
+    - [Copy number data](#copy-number-data)
+    - [Multiplicity data](#multiplicity-data)
+    - [Mutation data](#mutation-data)
+    - [A Note on Mutation Types](#a-note-on-mutation-types)
+    - [Coordinates for a region of interest](#coordinates-for-a-region-of-interest)
+    - [WGD status](#wgd-status)
+    - [Reference genome](#reference-genome)
+    - [Example](#example)
+    - [Output flags](#output-flags)
+
+
 ## Citation
 If you use `AmplificationTimeR` in your work, please cite our manuscript (currently under review - details TBC).  
 
@@ -129,6 +145,10 @@ library(BSgenome.Hsapiens.UCSC.hg19)
 
 data(demo_cn, demo_mult, demo_muts)
 
+amp_chrom <- 1
+amp_start <- 50100
+amp_stop <- 1500000
+
 segment_time <- time_amplification(
   cn_data = demo_cn,
   multiplicity_data = demo_mult,
@@ -145,21 +165,26 @@ segment_time <- time_amplification(
 ```r
 segment_time
 
-## Data frame with 1 row and 46 columns
-##        sample        region highest_copy_number event_order num_mutations_used
-## 1 test_sample 1:50000-1e+06                 2+1           W                  4
-##   clonality_status t_1 t_1_median_bootstrap t_1_lower_ci t_1_upper_ci t_2
-## 1           clonal   0                    0            0    0.5555556  NA
-##   t_2_median_bootstrap t_2_lower_ci t_2_upper_ci t_3 t_3_median_bootstrap
-## 1                   NA           NA           NA  NA                   NA
-##   t_3_lower_ci t_3_upper_ci t_4 t_4_median_bootstrap t_4_lower_ci t_4_upper_ci t_5
-## 1           NA           NA  NA                   NA           NA           NA  NA
-##   t_5_median_bootstrap t_5_lower_ci t_5_upper_ci t_6 t_6_median_bootstrap
-## 1                   NA           NA           NA  NA                   NA
-##   t_6_lower_ci t_6_upper_ci t_7 t_7_median_bootstrap t_7_lower_ci t_7_upper_ci t_8
-## 1           NA           NA  NA                   NA           NA           NA  NA
-##   t_8_median_bootstrap t_8_lower_ci t_8_upper_ci t_9 t_9_median_bootstrap
-## 1                   NA           NA           NA  NA                   NA
-##   t_9_lower_ci t_9_upper_ci t_10 t_10_median_bootstrap t_10_lower_ci t_10_upper_ci
-## 1           NA           NA   NA                    NA            NA            NA
+## Data frame with 1 row and 47 columns
+##        sample        region highest_copy_number event_order num_mutations_used clonality_status flags t_1
+## 1 test_sample 1:50000-1e+06                 2+1           W                  4           clonal    NA   0
+##   t_1_mean_bootstrap t_1_lower_ci t_1_upper_ci t_2 t_2_mean_bootstrap t_2_lower_ci t_2_upper_ci t_3
+## 1                  0            0            0  NA                 NA           NA           NA  NA
+##   t_3_mean_bootstrap t_3_lower_ci t_3_upper_ci t_4 t_4_mean_bootstrap t_4_lower_ci t_4_upper_ci t_5
+## 1                 NA           NA           NA  NA                 NA           NA           NA  NA
+##   t_5_mean_bootstrap t_5_lower_ci t_5_upper_ci t_6 t_6_mean_bootstrap t_6_lower_ci t_6_upper_ci t_7
+## 1                 NA           NA           NA  NA                 NA           NA           NA  NA
+##   t_7_mean_bootstrap t_7_lower_ci t_7_upper_ci t_8 t_8_mean_bootstrap t_8_lower_ci t_8_upper_ci t_9
+## 1                 NA           NA           NA  NA                 NA           NA           NA  NA
+##   t_9_mean_bootstrap t_9_lower_ci t_9_upper_ci t_10 t_10_mean_bootstrap t_10_lower_ci t_10_upper_ci
+## 1                 NA           NA           NA   NA                  NA            NA            NA
 ```
+### Output flags
+We have provided a number of flags to assist users in identifying `AmplificationTimeR` results that may warrant further investigation. 
+
+| Flag                              | Description |
+| --------------------------------- | ----------- |
+| "Points not in order"             | This flag indicates that one or more time points have been timed in the wrong order (e.g. `t_2_median_bootsrap` occurs after `t_3_median_bootstrap`). This may indicate that an incorrect order of events has been inferred based on the available data, potentially due to copy number losses occurring after gains. |
+| "Time > 1"                        | Occasionally, `AmplificationTimeR` will provide timing estimates that exceed 1. Such time estimates may represent events that happened very late in the lifetime of the tumour. This may indicate that an incorrect order of events has been inferred based on the available data. |
+| "Time < 0"                        | Occasionally, `AmplificationTimeR` will provide negative timing estimates. Such time estimates may represent a violation of the assumptions on which `AmplificationTimeR` is based. Equally, this may indicate that an incorrect order of events has been inferred based on the available data. |
+| "Missing multiplicity states"     | This flag will be raised if one or more multiplicity states that are expected to be present are not identified in the segment. This situation can arise when gains happen in close succession without any mutations occurring between gain events. Alternatively, this may indicate that an incorrect order of events has been inferred from the data available. |

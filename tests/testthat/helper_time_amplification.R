@@ -24,8 +24,8 @@ test_data_start <- 1
 test_data_stop <- 20
 test_data_status <- FALSE
 
-test_output <- as.data.frame(matrix(nrow = 1, ncol = 46, data = c("test_data","1:1-20","2+1","G","20","clonal",
-                                                                  "0.6","0.58400196","0.56804424","0.59995967",
+test_output <- as.data.frame(matrix(nrow = 1, ncol = 47, data = c("test_data","1:1-20","2+1","G","20","clonal",NA,
+                                                                  "0.6","0.5885336","0.57154744","0.60551977",
                                                                   NA,NA,NA,NA,
                                                                   NA,NA,NA,NA,
                                                                   NA,NA,NA,NA,
@@ -35,7 +35,8 @@ test_output <- as.data.frame(matrix(nrow = 1, ncol = 46, data = c("test_data","1
                                                                   NA,NA,NA,NA,
                                                                   NA,NA,NA,NA,
                                                                   NA,NA,NA,NA)))
-colnames(test_output) <- c("sample","region","highest_copy_number","event_order","num_mutations_used","clonality_status",
+colnames(test_output) <- c("sample","region","highest_copy_number","event_order",
+                           "num_mutations_used","clonality_status","flags",
                            "t_1","t_1_mean_bootstrap","t_1_lower_ci","t_1_upper_ci",
                            "t_2","t_2_mean_bootstrap","t_2_lower_ci","t_2_upper_ci",
                            "t_3","t_3_mean_bootstrap","t_3_lower_ci","t_3_upper_ci",
@@ -51,7 +52,8 @@ test_output$t_1 <- as.numeric(test_output$t_1)
 test_output$t_1_mean_bootstrap <- as.numeric(test_output$t_1_mean_bootstrap)
 test_output$t_1_lower_ci <- as.numeric(test_output$t_1_lower_ci)
 test_output$t_1_upper_ci <- as.numeric(test_output$t_1_upper_ci)
-test_output[,11:46]<- as.logical(test_output[,11:46])
+test_output$flags <- as.logical(test_output$flags)
+test_output[,12:47]<- as.logical(test_output[,12:47])
 
 test_data_cn_incorrect <- test_data_cn
 colnames(test_data_cn_incorrect) <- c("chr","startpos","endpos","nMaj1_A","x")

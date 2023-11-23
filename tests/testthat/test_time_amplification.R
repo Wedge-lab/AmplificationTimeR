@@ -296,7 +296,8 @@ test_that("AmplificationTimeR runs and produces a data.frame with correct column
                                            amplification_start = test_data_start,
                                            amplification_stop = test_data_stop,
                                            is_WGD = test_data_status,
-                                           genome = "hg19")),c("sample","region","highest_copy_number","event_order","num_mutations_used","clonality_status",
+                                           genome = "hg19")),c("sample","region","highest_copy_number","event_order",
+                                                               "num_mutations_used","clonality_status","flags",
                                                                "t_1","t_1_mean_bootstrap","t_1_lower_ci","t_1_upper_ci",
                                                                "t_2","t_2_mean_bootstrap","t_2_lower_ci","t_2_upper_ci",
                                                                "t_3","t_3_mean_bootstrap","t_3_lower_ci","t_3_upper_ci",
@@ -311,6 +312,7 @@ test_that("AmplificationTimeR runs and produces a data.frame with correct column
 
 # test that expected output is correct when input is correct
 test_that("AmplificationTimeR produces expected output when all input is correct", {
+  set.seed(1) # need this for consistency because there is random bootstrap sampling that happens
   expect_equal(time_amplification(cn_data = test_data_cn,
                                   multiplicity_data = test_data_mult,
                                   mutation_data = test_data_muts,
@@ -487,7 +489,17 @@ test_that("AmplificationTimeR runs and produces 4+0 highest output", {
                                   amplification_start = test_data_start,
                                   amplification_stop = test_data_stop,
                                   is_WGD = test_data_status,
-                                  genome = "hg19")[,"event_order"],"GGG - Unsure")
+                                  genome = "hg19")[,"event_order"],"GGG")
+  expect_equal(time_amplification(cn_data = test_data_cn_4_0,
+                                  multiplicity_data = test_data_mult,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = test_data_status,
+                                  genome = "hg19")[,"flags"],"Missing multiplicity states")
 })
 
 #### 4+1 ####
@@ -511,7 +523,17 @@ test_that("AmplificationTimeR runs and produces 4+1 highest output", {
                                   amplification_start = test_data_start,
                                   amplification_stop = test_data_stop,
                                   is_WGD = test_data_status,
-                                  genome = "hg19")[,"event_order"],"GGG - Unsure")
+                                  genome = "hg19")[,"event_order"],"GGG")
+               expect_equal(time_amplification(cn_data = test_data_cn_4_1,
+                                               multiplicity_data = test_data_mult,
+                                               mutation_data = test_data_muts,
+                                               muts_type = "SBS1 and SBS5",
+                                               sample_id = test_data_id,
+                                               amplification_chrom = test_data_chrom,
+                                               amplification_start = test_data_start,
+                                               amplification_stop = test_data_stop,
+                                               is_WGD = test_data_status,
+                                               genome = "hg19")[,"flags"],"Missing multiplicity states")
 })
 
 #### 5+0 ####
@@ -535,7 +557,17 @@ test_that("AmplificationTimeR runs and produces 5+0 highest output", {
                                   amplification_start = test_data_start,
                                   amplification_stop = test_data_stop,
                                   is_WGD = test_data_status,
-                                  genome = "hg19")[,"event_order"],"GGGG - Unsure")
+                                  genome = "hg19")[,"event_order"],"GGGG")
+  expect_equal(time_amplification(cn_data = test_data_cn_5_0,
+                                  multiplicity_data = test_data_mult,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = test_data_status,
+                                  genome = "hg19")[,"flags"],"Missing multiplicity states")
 })
 
 #### 5+1 ####
@@ -559,7 +591,17 @@ test_that("AmplificationTimeR runs and produces 5+1 highest output", {
                                   amplification_start = test_data_start,
                                   amplification_stop = test_data_stop,
                                   is_WGD = test_data_status,
-                                  genome = "hg19")[,"event_order"],"GGGG - Unsure")
+                                  genome = "hg19")[,"event_order"],"GGGG")
+  expect_equal(time_amplification(cn_data = test_data_cn_5_1,
+                                  multiplicity_data = test_data_mult,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = test_data_status,
+                                  genome = "hg19")[,"flags"],"Time > 1,Missing multiplicity states")
 })
 
 #### 6+0 ####
@@ -583,7 +625,17 @@ test_that("AmplificationTimeR runs and produces 6+0 highest output", {
                                   amplification_start = test_data_start,
                                   amplification_stop = test_data_stop,
                                   is_WGD = test_data_status,
-                                  genome = "hg19")[,"event_order"],"GGGGG - Unsure")
+                                  genome = "hg19")[,"event_order"],"GGGGG")
+  expect_equal(time_amplification(cn_data = test_data_cn_6_0,
+                                  multiplicity_data = test_data_mult,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = test_data_status,
+                                  genome = "hg19")[,"flags"],"Time > 1,Missing multiplicity states")
 })
 
 #### 6+1 ####
@@ -607,7 +659,17 @@ test_that("AmplificationTimeR runs and produces 6+1 highest output", {
                                   amplification_start = test_data_start,
                                   amplification_stop = test_data_stop,
                                   is_WGD = test_data_status,
-                                  genome = "hg19")[,"event_order"],"GGGGG - Unsure")
+                                  genome = "hg19")[,"event_order"],"GGGGG")
+  expect_equal(time_amplification(cn_data = test_data_cn_6_1,
+                                  multiplicity_data = test_data_mult,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = test_data_status,
+                                  genome = "hg19")[,"flags"],"Time > 1,Missing multiplicity states")
 })
 #### 7+0 ####
 test_that("AmplificationTimeR runs and produces 7+0 highest output", {
@@ -630,7 +692,17 @@ test_that("AmplificationTimeR runs and produces 7+0 highest output", {
                                   amplification_start = test_data_start,
                                   amplification_stop = test_data_stop,
                                   is_WGD = test_data_status,
-                                  genome = "hg19")[,"event_order"],"GGGGGG - Unsure")
+                                  genome = "hg19")[,"event_order"],"GGGGGG")
+  expect_equal(time_amplification(cn_data = test_data_cn_7_0,
+                                  multiplicity_data = test_data_mult,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = test_data_status,
+                                  genome = "hg19")[,"flags"],"Time > 1,Missing multiplicity states")
 })
 
 #### 7+1 ####
@@ -654,7 +726,17 @@ test_that("AmplificationTimeR runs and produces 7+1 highest output", {
                                   amplification_start = test_data_start,
                                   amplification_stop = test_data_stop,
                                   is_WGD = test_data_status,
-                                  genome = "hg19")[,"event_order"],"GGGGGG - Unsure")
+                                  genome = "hg19")[,"event_order"],"GGGGGG")
+  expect_equal(time_amplification(cn_data = test_data_cn_7_1,
+                                  multiplicity_data = test_data_mult,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = test_data_status,
+                                  genome = "hg19")[,"flags"],"Time > 1,Missing multiplicity states")
 })
 #### 8+0 ####
 test_that("AmplificationTimeR runs and produces 8+0 highest output", {
@@ -677,7 +759,17 @@ test_that("AmplificationTimeR runs and produces 8+0 highest output", {
                                   amplification_start = test_data_start,
                                   amplification_stop = test_data_stop,
                                   is_WGD = test_data_status,
-                                  genome = "hg19")[,"event_order"],"GGGGGGG - Unsure")
+                                  genome = "hg19")[,"event_order"],"GGGGGGG")
+  expect_equal(time_amplification(cn_data = test_data_cn_8_0,
+                                  multiplicity_data = test_data_mult,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = test_data_status,
+                                  genome = "hg19")[,"flags"],"Time > 1,Missing multiplicity states")
 })
 
 #### 8+1 ####
@@ -701,7 +793,17 @@ test_that("AmplificationTimeR runs and produces 8+1 highest output", {
                                   amplification_start = test_data_start,
                                   amplification_stop = test_data_stop,
                                   is_WGD = test_data_status,
-                                  genome = "hg19")[,"event_order"],"GGGGGGG - Unsure")
+                                  genome = "hg19")[,"event_order"],"GGGGGGG")
+  expect_equal(time_amplification(cn_data = test_data_cn_8_1,
+                                  multiplicity_data = test_data_mult,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = test_data_status,
+                                  genome = "hg19")[,"flags"],"Time > 1,Missing multiplicity states")
 })
 
 #### 9+0 ####
@@ -725,7 +827,17 @@ test_that("AmplificationTimeR runs and produces 9+0 highest output", {
                                   amplification_start = test_data_start,
                                   amplification_stop = test_data_stop,
                                   is_WGD = test_data_status,
-                                  genome = "hg19")[,"event_order"],"GGGGGGGG - Unsure")
+                                  genome = "hg19")[,"event_order"],"GGGGGGGG")
+  expect_equal(time_amplification(cn_data = test_data_cn_9_0,
+                                  multiplicity_data = test_data_mult,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = test_data_status,
+                                  genome = "hg19")[,"flags"],"Time > 1,Missing multiplicity states")
 })
 
 #### 9+1 ####
@@ -749,7 +861,17 @@ test_that("AmplificationTimeR runs and produces 9+1 highest output", {
                                   amplification_start = test_data_start,
                                   amplification_stop = test_data_stop,
                                   is_WGD = test_data_status,
-                                  genome = "hg19")[,"event_order"],"GGGGGGGG - Unsure")
+                                  genome = "hg19")[,"event_order"],"GGGGGGGG")
+  expect_equal(time_amplification(cn_data = test_data_cn_9_1,
+                                  multiplicity_data = test_data_mult,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = test_data_status,
+                                  genome = "hg19")[,"flags"],"Time > 1,Missing multiplicity states")
 })
 
 #### 10+0 ####
@@ -773,7 +895,17 @@ test_that("AmplificationTimeR runs and produces 10+0 highest output", {
                                   amplification_start = test_data_start,
                                   amplification_stop = test_data_stop,
                                   is_WGD = test_data_status,
-                                  genome = "hg19")[,"event_order"],"GGGGGGGGG - Unsure")
+                                  genome = "hg19")[,"event_order"],"GGGGGGGGG")
+  expect_equal(time_amplification(cn_data = test_data_cn_10_0,
+                                  multiplicity_data = test_data_mult,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = test_data_status,
+                                  genome = "hg19")[,"flags"],"Time > 1,Missing multiplicity states")
 })
 
 #### 10+1 ####
@@ -797,7 +929,17 @@ test_that("AmplificationTimeR runs and produces 10+1 highest output", {
                                   amplification_start = test_data_start,
                                   amplification_stop = test_data_stop,
                                   is_WGD = test_data_status,
-                                  genome = "hg19")[,"event_order"],"GGGGGGGGG - Unsure")
+                                  genome = "hg19")[,"event_order"],"GGGGGGGGG")
+  expect_equal(time_amplification(cn_data = test_data_cn_10_1,
+                                  multiplicity_data = test_data_mult,
+                                  mutation_data = test_data_muts,
+                                  muts_type = "SBS1 and SBS5",
+                                  sample_id = test_data_id,
+                                  amplification_chrom = test_data_chrom,
+                                  amplification_start = test_data_start,
+                                  amplification_stop = test_data_stop,
+                                  is_WGD = test_data_status,
+                                  genome = "hg19")[,"flags"],"Time > 1,Missing multiplicity states")
 })
 #### WGD ####
 #### 2+0 ####
