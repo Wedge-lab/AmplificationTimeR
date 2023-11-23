@@ -2635,11 +2635,18 @@ time_amplification <- function(cn_data,
       time_flag <- NA
     }
     
+    # Time below 0
+    if(any(calculated_times < 0)){
+      time_flag_0 <- "Time < 0"
+    }else{
+      time_flag_0 <- NA
+    }
+    
     # Missing multiplicity states flag
     multiplicity_flag <- event_ordering[2]
     
     #Combine flags
-    flags_used <- c(order_flag, time_flag, multiplicity_flag)
+    flags_used <- c(order_flag, time_flag, time_flag_0, multiplicity_flag)
     flags_used <- flags_used[!is.na(flags_used)]
     if(length(flags_used) == 0){
       amplification_results_ci$flags <- NA
