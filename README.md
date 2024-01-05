@@ -57,66 +57,85 @@ data(demo_cn, demo_mult, demo_muts)
 Copy number data should be derived from [`Battenberg`](https://github.com/Wedge-lab/battenberg) and must contain the following columns at the very least: `"chr"`, `"startpos"`, `"endpos"`, `"nMaj1_A"`, `"nMin1_A"`. `"nMaj2_A"` and `"nMin2_A"` should be included if applicable.  Other columns may be present but the 5 columns listed above are a core requirement. 
 ```r
 demo_cn
-##    chr startpos endpos nMaj1_A nMin1_A
-## 1   1    50000  1e+06       2       1
+
+##   chr startpos endpos nMaj1_A nMin1_A
+## 1   1    50000  1e+06       5       2
 ```
 
 ### Multiplicity data
 Multiplicity data should be derived from [`dpclust3p`](https://github.com/Wedge-lab/dpclust3p). The multiplicity data frame must have the following columns at a minimum: `"chr"`, `"end"`, and `"no.chrs.bearing.mut"`. Other columns may be present. 
 
 ```r
-deom_mult
+head(demo_mult,20)
 
-##    chr   end no.chrs.bearing.mut
-## 1    1 57682                   2
-## 2    1 57683                   2
-## 3    1 57684                   2
-## 4    1 57685                   2
-## 5    1 57686                   2
-## 6    1 57687                   1
-## 7    1 57688                   1
-## 8    1 57689                   1
-## 9    1 57690                   1
-## 10   1 57691                   1
-## 11   1 57692                   1
-## 12   1 57693                   1
-## 13   1 57694                   1
-## 14   1 57695                   1
-## 15   1 57696                   1
-## 16   1 57697                   1
-## 17   1 57698                   1
-## 18   1 57699                   1
-## 19   1 57700                   1
-## 20   1 57701                   1
+##    chr    end no.chrs.bearing.mut
+## 1    1  57682                   1
+## 2    1  62417                   1
+## 3    1  67153                   1
+## 4    1  71888                   1
+## 5    1  76623                   1
+## 6    1  81358                   1
+## 7    1  86094                   1
+## 8    1  90829                   1
+## 9    1  95564                   1
+## 10   1 100299                   1
+## 11   1 105035                   1
+## 12   1 109770                   1
+## 13   1 114505                   1
+## 14   1 119240                   1
+## 15   1 123976                   1
+## 16   1 128711                   1
+## 17   1 133446                   1
+## 18   1 138182                   1
+## 19   1 142917                   1
+## 20   1 147652                   1
+```
+```r
+str(demo_mult)
+ 
+## 'data.frame':	200 obs. of  3 variables:
+##  $ chr                : num  1 1 1 1 1 1 1 1 1 1 ...
+##  $ end                : num  57682 62417 67153 71888 76623 ...
+##  $ no.chrs.bearing.mut: num  1 1 1 1 1 1 1 1 1 1 ...
 ```
 
 ### Mutation data
 The mutation data frame should contain either all mutations present in the sample or region, or only mutations attributed to mutational signatures SBS1 and SBS5. The presence of the following columns is required:`"chr"`, `"start"`, `"end"`, `"ref"`, `"alt"`. Other columns may be present. 
 
 ```r
-demo_muts
+head(demo_muts, 20)
 
-##    chr start   end ref alt
-## 1    1 57682 57682   C   T
-## 2    1 57683 57683   C   T
-## 3    1 57684 57684   C   T
-## 4    1 57685 57685   C   T
-## 5    1 57686 57686   C   T
-## 6    1 57687 57687   C   T
-## 7    1 57688 57688   C   T
-## 8    1 57689 57689   C   T
-## 9    1 57690 57690   C   T
-## 10   1 57691 57691   C   T
-## 11   1 57692 57692   C   T
-## 12   1 57693 57693   C   T
-## 13   1 57694 57694   C   T
-## 14   1 57695 57695   C   T
-## 15   1 57696 57696   C   T
-## 16   1 57697 57697   A   G
-## 17   1 57698 57698   A   G
-## 18   1 57699 57699   A   G
-## 19   1 57700 57700   A   G
-## 20   1 57701 57701   A   G
+##    chr  start    end ref alt
+## 1    1  57682  57682   C   T
+## 2    1  62417  62417   C   T
+## 3    1  67153  67153   C   T
+## 4    1  71888  71888   C   T
+## 5    1  76623  76623   A   G
+## 6    1  81358  81358   C   T
+## 7    1  86094  86094   C   T
+## 8    1  90829  90829   C   T
+## 9    1  95564  95564   C   T
+## 10   1 100299 100299   A   G
+## 11   1 105035 105035   C   T
+## 12   1 109770 109770   C   T
+## 13   1 114505 114505   C   T
+## 14   1 119240 119240   C   T
+## 15   1 123976 123976   A   G
+## 16   1 128711 128711   C   T
+## 17   1 133446 133446   C   T
+## 18   1 138182 138182   C   T
+## 19   1 142917 142917   C   T
+## 20   1 147652 147652   A   G
+```
+```r
+str(demo_muts)
+
+## 'data.frame':	200 obs. of  5 variables:
+##  $ chr  : num  1 1 1 1 1 1 1 1 1 1 ...
+##  $ start: num  57682 62417 67153 71888 76623 ...
+##  $ end  : num  57682 62417 67153 71888 76623 ...
+##  $ ref  : chr  "C" "C" "C" "C" ...
+##  $ alt  : chr  "T" "T" "T" "T" ...
 ```
 
 ### A Note on Mutation Types
@@ -135,7 +154,7 @@ amp_stop <- 1500000
 A `TRUE` or `FALSE` logical value encoding whether a sample has been identified as whole genome duplicated or not. 
 
 ### Reference genome
-Either `"hg19"` or `"hg38"` depending on which is appropriate. This is required so that `AmplificationTimeR` can filter mutations for C>T variants occurring specifically at CpG sites, to ensre that only clock-like mutations are used. 
+Either `"hg19"` or `"hg38"` depending on which is appropriate. This is required so that `AmplificationTimeR` can filter mutations for C>T variants occurring specifically at CpG sites, to ensure that only clock-like mutations are used. 
 
 ### Example
 
@@ -165,19 +184,19 @@ segment_time <- time_amplification(
 ```r
 segment_time
 
-## Data frame with 1 row and 47 columns
-##        sample        region highest_copy_number event_order num_mutations_used clonality_status flags t_1
-## 1 test_sample 1:50000-1e+06                 2+1           W                  4           clonal    NA   0
-##   t_1_mean_bootstrap t_1_lower_ci t_1_upper_ci t_2 t_2_mean_bootstrap t_2_lower_ci t_2_upper_ci t_3
-## 1                  0            0            0  NA                 NA           NA           NA  NA
-##   t_3_mean_bootstrap t_3_lower_ci t_3_upper_ci t_4 t_4_mean_bootstrap t_4_lower_ci t_4_upper_ci t_5
-## 1                 NA           NA           NA  NA                 NA           NA           NA  NA
-##   t_5_mean_bootstrap t_5_lower_ci t_5_upper_ci t_6 t_6_mean_bootstrap t_6_lower_ci t_6_upper_ci t_7
-## 1                 NA           NA           NA  NA                 NA           NA           NA  NA
-##   t_7_mean_bootstrap t_7_lower_ci t_7_upper_ci t_8 t_8_mean_bootstrap t_8_lower_ci t_8_upper_ci t_9
-## 1                 NA           NA           NA  NA                 NA           NA           NA  NA
-##   t_9_mean_bootstrap t_9_lower_ci t_9_upper_ci t_10 t_10_mean_bootstrap t_10_lower_ci t_10_upper_ci
-## 1                 NA           NA           NA   NA                  NA            NA            NA
+## Data frame with 1 row and 4 columns
+##        sample        region highest_copy_number event_order num_mutations_used clonality_status flags      t_1
+## 1 test_sample 1:50000-1e+06                 5+2        WGGG                 34           clonal    NA 0.893617
+##   t_1_mean_bootstrap t_1_lower_ci t_1_upper_ci      t_2 t_2_mean_bootstrap t_2_lower_ci t_2_upper_ci      t_3
+## 1          0.8827177    0.8723866    0.8930488 0.893617          0.8827177    0.8723866    0.8930488 0.893617
+##   t_3_mean_bootstrap t_3_lower_ci t_3_upper_ci      t_4 t_4_mean_bootstrap t_4_lower_ci t_4_upper_ci t_5
+## 1          0.8827177    0.8723866    0.8930488 0.893617          0.9165478    0.8942302    0.9388653  NA
+##   t_5_mean_bootstrap t_5_lower_ci t_5_upper_ci t_6 t_6_mean_bootstrap t_6_lower_ci t_6_upper_ci t_7 t_7_mean_bootstrap
+## 1                 NA           NA           NA  NA                 NA           NA           NA  NA                 NA
+##   t_7_lower_ci t_7_upper_ci t_8 t_8_mean_bootstrap t_8_lower_ci t_8_upper_ci t_9 t_9_mean_bootstrap t_9_lower_ci
+## 1           NA           NA  NA                 NA           NA           NA  NA                 NA           NA
+##   t_9_upper_ci t_10 t_10_mean_bootstrap t_10_lower_ci t_10_upper_ci
+## 1           NA   NA                  NA            NA            NA
 ```
 ### Output flags
 We have provided a number of flags to assist users in identifying `AmplificationTimeR` results that may warrant further investigation. 
