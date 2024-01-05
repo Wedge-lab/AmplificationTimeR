@@ -715,7 +715,7 @@ time_amplification_maths <- function(mult_data, max_amp, is_WGD, ordering_event)
       t_1 <- (9*n7)/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 7*n7)
       t_2 <- (9*(n5 + n7))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 7*n7)
       t_3 <- (9*(n4 + n5 + n7))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 7*n7)
-      t_4 <- (9*(n3 + n3 + n5 + n7))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 7*n7)
+      t_4 <- (9*(n3 + n4 + n5 + n7))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 7*n7)
       t_5 <- (9*(n2 + n3 + n4 - n5))/(n1 + 2*n2 + 3*n3 + 4*n4 + 5*n5 + 7*n7)
       
       amplification_results$t_1 <- t_1
