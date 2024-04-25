@@ -21,7 +21,9 @@
 
 
 ## Citation
-If you use `AmplificationTimeR` in your work, please cite our manuscript (currently under review - details TBC).  
+If you use `AmplificationTimeR` in your work, please cite our manuscript:
+
+> G Maria Jakobsdottir, Stefan C Dentro, Robert G Bristow, David C Wedge, AmplificationTimeR: An R Package for Timing Sequential Amplification Events, Bioinformatics, 2024;, btae281, https://doi.org/10.1093/bioinformatics/btae281
 
 ## Introduction
 `AmplificationTimeR` is an R package for timing individual amplification and whole genome duplication events affecting regions of the tumour genome that have been focally amplified.  
