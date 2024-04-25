@@ -4,6 +4,8 @@
   [![R-CMD-check](https://github.com/Wedge-lab/AmplificationTimeR/actions/workflows/check-standard.yml/badge.svg)](https://github.com/Wedge-lab/AmplificationTimeR/actions/workflows/check-standard.yml)
   <!-- badges: end -->
 
+ <img src="man/AmplificationTimeR_hexagon.png" align="right" width="250" />
+
 - [AmplificationTimeR](#amplificationtimer)
   - [Citation](#citation)
   - [Introduction](#introduction)
