@@ -1,0 +1,30 @@
+year = sub("-.*","",meta$Date)
+note <- sprintf("R package version %s", meta$Version)
+
+bibentry(
+  bibtype  = "Article",
+  title    = "AmplificationTimeR: An R Package for Timing Sequential Amplification Events",
+  author   = c(person(c("G.", "Maria"), "Jakobsdottir"),
+                    person(c("Stefan", "C."), "Dentro"),
+                    person(c("Robert","G."), "Bristow"),
+                    person(c("David","C."), "Wedge")),
+  journal  = "Bioinformatics",
+  year     = "2024",
+  volume   = "40",
+  number   = "6",
+  pages    = "btae281",
+  publisher="Oxford University Press",
+  doi      = "10.1093/bioinformatics/btae281",
+  note     = note
+)
+
+bibentry(bibtype = "manual",
+  title   = "AmplificationTimeR",
+  author  = c(person(c("G.", "Maria"), "Jakobsdottir"),
+                    person(c("Stefan", "C."), "Dentro"),
+                    person(c("Robert","G."), "Bristow"),
+                    person(c("David","C."), "Wedge")),
+  year    = year,
+  note    = note,
+  url     = "https://github.com/Wedge-lab/AmplificationTimeR"
+)
